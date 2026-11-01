@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adaptive Reuse Atlas</title>
+  <!-- Has to run before first paint, or the page would flash the resting state and then jump
+       to state 1. Without scripts the class never appears and the resting state is the page. -->
+  <script>
+    try {
+      if (sessionStorage.getItem('intro-paused') !== '1') document.documentElement.classList.add('intro-pending');
+    } catch {
+      document.documentElement.classList.add('intro-pending');
+    }
+  </script>
+  <link rel="preload" href="/fonts/abel-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/do-hyeon-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/landing.css">
+  <script type="module" src="/js/landing.js" onerror="document.documentElement.classList.remove('intro-pending')"></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+{{{header}}}
+
+  <main id="main" class="landing-page">
+    <section class="landing-hero" aria-labelledby="landing-headline" data-landing-hero>
+      <h1 class="landing-headline" id="landing-headline">Buildings<br>over<br>What<br>Have Been<br>Built</h1>
+
+      <div class="landing-stage" role="img" aria-label="Four heritage buildings with contemporary additions: the Reichstag, Coal Drops, the Elbphilharmonie and the Port House." data-landing-stage>
+        <picture>
+          <source media="(min-width: 900px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+          <img class="landing-flat" src="{{flat_src}}" srcset="{{flat_srcset}}" sizes="100vw" width="{{flat_width}}" height="{{flat_height}}" fetchpriority="high" alt="">
+        </picture>
+{{{layers}}}
+      </div>
+    </section>
+
+    <div class="landing-foot">
+      <div class="intro-note">
+        <p>An open dataset of heritage adaptive reuse case studies that honor the past and anticipate the future.</p>
+        <a class="action-chip" href="/case-studies/">Explore now</a>
+      </div>
+      <button class="action-chip landing-toggle" type="button" data-intro-toggle hidden>Pause animation</button>
+    </div>
+  </main>
+
+{{{footer}}}
+</body>
+</html>

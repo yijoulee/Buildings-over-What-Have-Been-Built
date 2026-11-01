@@ -1,0 +1,162 @@
+/*
+  Design tokens from Figma frame "case" (node 63:3, 1440px wide).
+
+  The upper bound of every clamp() is the Figma value. The lower bounds are not in Figma:
+  they are proposals for the 320px floor, because the frame only shows the desktop end.
+  Rem values assume a 16px root; the Figma px value follows in a comment.
+*/
+
+:root {
+  /* ── Colour ─────────────────────────────────────────── */
+  --colour-tone: #bf0121;           /* Figma variable "tone" */
+  --colour-bg: #f2f2f3;             /* Figma variable "BG" */
+  --colour-surface: #ffffff;        /* section panels, heading boxes */
+  --colour-ink: #000000;            /* body text, panel borders, rules */
+  --colour-on-tone: #ffffff;        /* nav and footer chip text */
+  --colour-nav-scrim: #f2f2f31a;    /* nav bar fill, BG at 10% */
+  --colour-on-scrim: #ffffff;       /* case card metadata */
+  --colour-logo-detail: #d5d2d2;    /* secondary fill in the logo */
+  /* Figma is 40%, which gives white text only 2.85:1 over a bright photo. 55% gives
+     4.76:1 over pure white, so AA holds for any image without re-checking each one. */
+  --colour-card-scrim: rgb(0 0 0 / 0.55);
+  /* Behind the map dialog. The design's 25% was chosen on a light canvas and barely
+     registers on the dark map, where 50% takes land from 38 to 19. */
+  --colour-backdrop: rgb(0 0 0 / 0.5);
+  --colour-grid: rgb(0 0 0 / 0.4);  /* landing page grid lines */
+  --colour-control-border: #222222; /* search, Filter and Sort outlines */
+  --colour-placeholder: rgb(0 0 0 / 0.6); /* Figma is 53%, which is 4.43:1 on white */
+
+  /* ── Font families ──────────────────────────────────── */
+  --font-display: "Do Hyeon", "Arial Narrow", sans-serif;  /* h2, h5 */
+  --font-text: "Abel", "Arial Narrow", sans-serif;         /* h1, h6, caption */
+
+  /* ── Type sizes ─────────────────────────────────────── */
+  --font-size-h1: clamp(2.25rem, 1.5rem + 3.33vw, 4rem);          /* 64 */
+  --font-size-h2: clamp(1.75rem, 1.5rem + 1.11vw, 2.5rem);        /* 40 */
+  --font-size-h5: 1.25rem;                                        /* 20, labels and nav chips */
+  --font-size-h6: clamp(1.125rem, 1.08rem + 0.22vw, 1.25rem);     /* 20, body text */
+  --font-size-caption: 1rem;                                      /* 16 */
+  --font-size-strategy: 0.6875rem;                                /* 11, text in the Strategy box */
+  /* 64 on the 1140 grid. In container units so it scales with the composition it overlaps;
+     only resolves inside .landing-hero. */
+  --font-size-landing: clamp(2.25rem, 64 / 1140 * 100cqi, 4rem);
+
+  /* ── Line heights (Figma line height / size) ────────── */
+  --line-height-h1: 1.28;       /* rendered box is 82/64; the variable says 100/64 */
+  --line-height-h2: 1.2;        /* 48/40 */
+  --line-height-h5: 1.5;        /* 30/20 */
+  --line-height-h6: 1.2;        /* 24/20 */
+  --line-height-caption: 1.25;  /* Figma is 16/16, which collides once a caption wraps */
+  --line-height-strategy: 1.09; /* 12/11 */
+  --line-height-landing: 0.875; /* 56/64 */
+
+  /* ── Letter spacing ─────────────────────────────────── */
+  /* Fluid because heavy tracking breaks words apart on narrow screens. The max is the
+     Figma percentage; the vw term reaches that max at 1440px. */
+  --tracking-h1: clamp(0.08em, 0.889vw, 0.2em);   /* 20% */
+  --tracking-h2: clamp(0.04em, 0.278vw, 0.1em);   /* 10% */
+  --tracking-h5: clamp(0.05em, 0.139vw, 0.1em);   /* 10% */
+  --tracking-h6: 0.05em;                          /* 5% */
+  --tracking-caption: 0.05em;                     /* 5% */
+
+  /* ── Spacing scale ──────────────────────────────────── */
+  --space-3xs: 0.3125rem;   /* 5, caption and chip block padding */
+  --space-2xs: 0.4375rem;   /* 7, caption and chip inline padding */
+  --space-xs: 0.75rem;      /* 12, between paragraphs */
+  --space-sm: 0.875rem;     /* 14, between nav chips */
+  --space-md: 1rem;         /* 16, image to caption */
+  --space-lg: 1.125rem;     /* 18, panel inset (Figma ranges 14 to 22) */
+  --space-xl: 1.5rem;       /* 24, between columns, heading box to body */
+  --space-2xl: 3.75rem;     /* 60, between footer chips */
+  --space-list-indent: 1.875rem;                          /* 30 */
+  --space-section: clamp(2.5rem, 2rem + 2.78vw, 4.5rem);  /* 72, between sections */
+  --space-card-row: clamp(1.5rem, 0.75rem + 3.33vw, 5rem);  /* 80, between card rows */
+  --space-card-inset: 0.625rem; /* 10, case card text inset */
+  --space-card-line: 0.25rem;   /* 4, between metadata lines; with 20px type, Figma's 24 pitch */
+  --space-page: clamp(1rem, 12.76vw - 2.11rem, 9.375rem); /* 150, page margin */
+  --space-chip-inline: 0.5rem;  /* 8, Head to and Explore now */
+  --space-landing-gap: 1.25rem; /* 20, landing stage to intro note */
+  --space-map-card-top: 4.125rem;    /* 66, card top to image, leaving room for the close cross */
+  --space-map-card-inline: 1.8125rem; /* 29, card side to image and text */
+  --space-map-card-end: 3.8125rem;   /* 61, Head to link to card bottom */
+  --space-map-card-gap: 1.25rem;     /* 20, title to details */
+  --space-map-card-line: 0.5rem;     /* 8, between detail rows; with 24 lines, Figma's 32 pitch */
+  /* Centres the 44 target on Figma's cross, whose middle is 32.5 down and 36.5 in. */
+  --space-map-card-close-block: 0.6563rem;
+  --space-map-card-close-inline: 0.906rem;
+
+  /* ── Border weights ─────────────────────────────────── */
+  --border-hairline: 1px;   /* panels, heading boxes, caption boxes, rules */
+  --border-corner: 5px;     /* image frame corner marks */
+  --border-strategy: 7px;   /* Strategy box outer band */
+  --border-control: 0.5px;  /* search, Filter and Sort outlines */
+  --border-cell: 2px;       /* boxes attached to the travelling inserts */
+  --border-chip-hover: 2px; /* Head to and Explore now, on hover */
+  --stroke-landing: 0.03125em; /* 2 at 64, so 1 shows outside the glyph as in Figma */
+
+  /* ── Radii ──────────────────────────────────────────── */
+  --radius-none: 0;         /* panels, heading boxes, caption boxes, nav chips */
+  --radius-chip: 0.5rem;    /* 8, tag chips */
+  --radius-control: 0.375rem; /* 6, search, Filter and Sort */
+  --radius-card: 0.625rem;  /* 10, map pop-up */
+
+  /* ── Effects ────────────────────────────────────────── */
+  --shadow-chip: -4px -4px 6px #ffffffe5, 2.8px 2.8px 10px #0d227733;  /* Figma "button" */
+  --shadow-chip-flat: -4px -4px 6px transparent, 2.8px 2.8px 10px transparent; /* the same, faded out */
+  --blur-nav: 10px;
+  --shadow-control: inset -2px 2px 8px #ffffff;       /* Filter and Sort */
+  --shadow-input: inset 2px 2px 4px rgb(0 0 0 / 0.1); /* search */
+
+  /* ── Motion ─────────────────────────────────────────── */
+  /* From the prototype's hover trigger: Smart Animate, ease-in, 400ms. */
+  --motion-card-duration: 400ms;
+  --motion-card-easing: ease-in;
+  --motion-chip-duration: 300ms; /* action chip hover, Smart Animate, ease-in, in the prototype */
+
+  /* ── Component sizes ────────────────────────────────── */
+  --size-corner-mark: 1rem;     /* 16 */
+  --size-chip: 1.9375rem;       /* 31, visible height of tag and nav chips */
+  --size-heading-box: 4.3125rem;/* 69 */
+  --size-caption-box: 1.625rem; /* 26 */
+  --size-strategy-box: 2.9375rem; /* 47 */
+  --size-target-min: 2.75rem;   /* 44, from CLAUDE.md; the 31px chips must reach it */
+  --size-control: 1.875rem;     /* 30, visible height of search, Filter and Sort */
+  --size-search: 23.6875rem;    /* 379 */
+  --size-logo: 7.25rem;         /* 116 */
+  --size-card-min: 19rem;       /* 304, narrowest card before the grid drops a column */
+  --size-filter-panel: 22rem;   /* 352, not in Figma: the frame has no open state */
+  --card-aspect: 364 / 251;
+  --card-scrim-rest: 0.626;     /* resting scrim width, 228/364 */
+  --size-map: clamp(24rem, 40vh + 30vw, 45.9375rem);  /* 735 */
+  --size-map-button: 2.5rem;    /* 40 */
+  --size-pin: 2.5rem;           /* 40 */
+  --size-map-card-width: 25rem; /* 400 */
+  --size-map-card-height: 37.5rem; /* 600 */
+  --size-map-card-close: 0.9375rem; /* 15, the visible cross */
+  --size-map-card-image-min: 7.5rem; /* 120, not in Figma: the most a short screen may shrink it */
+  --map-card-image-aspect: 342 / 236;
+
+  --size-landing-text: 33.125rem; /* 530 */
+
+  /* Figma's landing stage and grid. Unitless: they're ratios, so the composition scales whole. */
+  --landing-stage-width: 1235;
+  --landing-stage-height: 666;
+  --landing-grid-width: 1140;
+  --landing-grid-columns: 12;
+  --landing-module: 95;
+
+  /* OpenStreetMap's tiles are light and CARTO's dark ones now need an API key, so the
+     design's dark map is made by filtering the tile layer. Markers aren't affected. */
+  --map-tile-filter: invert(1) grayscale(1) contrast(0.8) brightness(0.75);
+  /* The sea after that filter, so the space beyond the world's edge reads as more sea. */
+  --colour-map-void: #323232;
+
+  /* ── Layout ─────────────────────────────────────────── */
+  --content-max: 90rem;         /* 1440 */
+
+  /* Breakpoints, from CLAUDE.md. Reference only: custom properties don't work inside
+     @media conditions, so stylesheets must repeat these numbers in their queries. */
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 900px;
+  --breakpoint-lg: 1200px;
+}

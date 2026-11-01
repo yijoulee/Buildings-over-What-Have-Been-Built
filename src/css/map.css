@@ -1,0 +1,364 @@
+/* The page mustn't shift sideways when scrolling locks behind the dialog, or the card and
+   pin would no longer line up with the marker. */
+html {
+  scrollbar-gutter: stable;
+}
+
+html:has(.map-dialog[open]) {
+  overflow: hidden;
+}
+
+.map-page {
+  display: grid;
+  gap: var(--space-xl);
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--space-page);
+}
+
+.map-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding-block-start: var(--space-xl);
+  border-block-start: var(--border-hairline) solid var(--colour-ink);
+}
+
+/* Isolated so Leaflet's high z-indexes stay inside the map, below the overlaid controls. */
+.map-canvas {
+  isolation: isolate;
+  block-size: var(--size-map);
+  background: var(--colour-map-void);
+  font-family: var(--font-text);
+}
+
+.map-canvas .leaflet-tile-pane {
+  filter: var(--map-tile-filter);
+}
+
+.map-canvas .leaflet-control-attribution {
+  background: var(--colour-surface);
+  color: var(--colour-ink);
+  font-size: var(--font-size-strategy);
+}
+
+.map-canvas .leaflet-control-attribution a {
+  color: var(--colour-tone);
+}
+
+/* ── Markers ────────────────────────────────────────────── */
+/* Leaflet's own class draws a white box on div icons. */
+.map-marker {
+  border: 0;
+  background: none;
+}
+
+/* The light outline keeps a dark red pin distinct against a dark map. */
+.map-pin {
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-target-min);
+  block-size: var(--size-target-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--colour-tone);
+  cursor: pointer;
+  filter: drop-shadow(0 0 1px var(--colour-on-tone));
+}
+
+.map-pin svg {
+  inline-size: var(--size-pin);
+  block-size: var(--size-pin);
+}
+
+.map-pin:focus-visible,
+.map-cluster:focus-visible {
+  outline-color: var(--colour-on-tone);
+}
+
+.map-pin--active {
+  position: fixed;
+  inset-block-start: var(--pin-y);
+  inset-inline-start: var(--pin-x);
+  z-index: 1;
+  pointer-events: none;
+  /* Grows from the pin's tip, so it still points at the same place. */
+  transform: scale(1.3);
+  transform-origin: 50% 80%;
+  filter: drop-shadow(0 0 2px var(--colour-on-tone)) drop-shadow(0 0 6px var(--colour-on-tone));
+}
+
+.map-cluster {
+  inline-size: var(--size-target-min);
+  block-size: var(--size-target-min);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--colour-tone);
+  color: var(--colour-on-tone);
+  cursor: pointer;
+  filter: drop-shadow(0 0 1px var(--colour-on-tone));
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+}
+
+/* ── Fullscreen and locate ──────────────────────────────── */
+.map-buttons {
+  position: absolute;
+  inset-block-start: calc(var(--space-xl) + var(--space-xs));
+  inset-inline-end: var(--space-xs);
+  z-index: 1;
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.map-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-map-button);
+  block-size: var(--size-map-button);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-chip);
+  background: var(--colour-surface);
+  color: var(--colour-ink);
+  cursor: pointer;
+}
+
+.map-button:focus-visible {
+  outline-color: var(--colour-on-tone);
+}
+
+.map-button svg {
+  inline-size: 62.5%;
+  block-size: 62.5%;
+}
+
+.map-button::after {
+  content: "";
+  position: absolute;
+  inset: calc((var(--size-map-button) - var(--size-target-min)) / 2);
+}
+
+.map-message {
+  position: absolute;
+  inset-block-start: calc(var(--space-xl) + var(--space-xs));
+  inset-inline-start: var(--space-xs);
+  z-index: 1;
+  padding: var(--space-3xs) var(--space-2xs);
+  background: var(--colour-surface);
+  font-size: var(--font-size-caption);
+}
+
+.map-shell:fullscreen {
+  padding: 0;
+  border: 0;
+  background: var(--colour-ink);
+}
+
+.map-shell:fullscreen .map-canvas {
+  flex: 1;
+  block-size: auto;
+}
+
+.map-shell:fullscreen .map-buttons {
+  inset-block-start: var(--space-xs);
+}
+
+/* ── Controls ───────────────────────────────────────────── */
+/* Beneath the map on phones, where they'd cover most of it. They stay first in the DOM so
+   keyboard users reach them before every marker. */
+.map-shell .controls {
+  order: 1;
+}
+
+.map-shell .map-canvas {
+  order: 0;
+}
+
+@media (min-width: 600px) {
+  .map-shell .controls {
+    position: absolute;
+    inset-block-start: calc(var(--space-xl) + var(--space-xs));
+    inset-inline: var(--space-xs) calc(var(--size-target-min) + 2 * var(--space-xs));
+    z-index: 1;
+  }
+
+  .map-shell:fullscreen .controls {
+    inset-block-start: var(--space-xs);
+  }
+
+  .map-shell .controls__status {
+    flex: 0 0 auto;
+    gap: var(--space-md);
+    padding-inline: var(--space-2xs);
+    background: var(--colour-bg);
+    border-radius: var(--radius-control);
+    min-block-size: var(--size-control);
+  }
+}
+
+/* ── Dialog ─────────────────────────────────────────────── */
+/* Sized to the card and placed by map.js. It must stay untransformed: a transform would make
+   it the containing block for the fixed pin inside it. */
+.map-dialog {
+  position: fixed;
+  inset-block-start: var(--card-y, 0);
+  inset-inline-start: var(--card-x, 0);
+  inset-block-end: auto;
+  inset-inline-end: auto;
+  inline-size: min(var(--size-map-card-width), 100vw - 2 * var(--space-md));
+  block-size: min(var(--size-map-card-height), 100dvh - 2 * var(--space-md));
+  max-inline-size: none;
+  max-block-size: none;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: none;
+}
+
+.map-dialog::backdrop {
+  background: var(--colour-backdrop);
+}
+
+.map-card {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  padding: var(--space-map-card-top) var(--space-map-card-inline) var(--space-map-card-end);
+  overflow-y: auto;
+  background: var(--colour-bg);
+  border-radius: var(--radius-card);
+}
+
+/* Shrinks before the card has to scroll, so a short screen loses image and not the link. */
+.map-card__image {
+  flex: 0 1 auto;
+  inline-size: 100%;
+  min-block-size: var(--size-map-card-image-min);
+  aspect-ratio: var(--map-card-image-aspect);
+  object-fit: cover;
+}
+
+.map-card__body {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  padding-block-start: var(--space-md);
+}
+
+.map-card__title {
+  font-weight: 400;
+}
+
+.map-card .card-meta {
+  align-self: start;
+  gap: var(--space-map-card-line);
+  margin-block: var(--space-map-card-gap);
+  color: var(--colour-ink);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h6);
+}
+
+/* Line height 1 because two fonts sharing a line sit on different baselines, which would
+   otherwise stretch the row past Figma's pitch. */
+.map-card .card-meta dt {
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+/* Pushed to the foot, so the link stays put whichever rows a case study has. */
+.map-card .action-chip {
+  margin-block-start: auto;
+}
+
+/* The visible cross is smaller than a finger, so the button around it is what meets 44px. */
+.map-card__close {
+  position: absolute;
+  inset-block-start: var(--space-map-card-close-block);
+  inset-inline-end: var(--space-map-card-close-inline);
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-target-min);
+  block-size: var(--size-target-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--colour-ink);
+  cursor: pointer;
+}
+
+.map-card__close:focus-visible {
+  outline-offset: calc(-1 * var(--space-3xs));
+}
+
+.map-card__close svg {
+  inline-size: var(--size-map-card-close);
+  block-size: var(--size-map-card-close);
+}
+
+/* A bottom sheet on phones: beside-the-marker placement stops meaning anything here. The space
+   beneath the link is Figma's for a floating card, and a sheet can't spare it. */
+@media (max-width: 599px) {
+  .map-dialog {
+    inset-block: auto 0;
+    inset-inline: 0;
+    inline-size: 100%;
+    block-size: min(var(--size-map-card-height), 75dvh);
+  }
+
+  .map-card {
+    padding-block-end: var(--space-xl);
+    border-end-start-radius: var(--radius-none);
+    border-end-end-radius: var(--radius-none);
+  }
+}
+
+/* ── Fallback list ──────────────────────────────────────── */
+.map-list {
+  margin: 0;
+  padding-inline-start: var(--space-list-indent);
+}
+
+/* With a working map the list is for screen readers. A link that can take keyboard focus
+   while invisible fails accessibility, so each one shows itself when focused. */
+@media (scripting: enabled) {
+  html:not(.map-unavailable) .map-list {
+    padding: 0;
+    list-style: none;
+  }
+
+  html:not(.map-unavailable) .map-list a:not(:focus) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  html:not(.map-unavailable) .map-list a:focus {
+    position: fixed;
+    inset-block-end: var(--space-md);
+    inset-inline-start: var(--space-md);
+    z-index: 2;
+    padding: var(--space-xs) var(--space-md);
+    background: var(--colour-surface);
+  }
+}
+
+@media (scripting: none) {
+  .map-shell {
+    display: none;
+  }
+}
+
+.map-unavailable .map-shell {
+  display: none;
+}

@@ -1,0 +1,146 @@
+# Sveltia CMS. Mirrors scripts/schema.js and content/taxonomy.yml; `npm run build` warns if
+# the option lists here drift from the taxonomy. Rules no field can express are in rules.js.
+
+backend:
+  name: github
+  repo: yijoulee/Buildings-over-What-Have-Been-Built
+  branch: main
+
+media_folder: /content/images
+public_folder: ''
+
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          # High because build.js encodes these again. 2880 is twice the largest published width.
+          quality: 90
+          width: 2880
+          height: 2880
+
+# The site's slugs are lowercase ASCII, so "Musée" has to become "musee", not "musée".
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+output:
+  omit_empty_optional_fields: true
+
+# Anchors, so the two pairs of matrix fields and the five sections can't drift from each other.
+x-options:
+  # Select fields have no option groups, so the category leads each label to keep them together.
+  function: &function_options
+    - { label: 'Transport: Train Station', value: Train Station }
+    - { label: 'Transport: Cruise Terminal', value: Cruise Terminal }
+    - { label: 'Industry & Energy: Power Station', value: Power Station }
+    - { label: 'Industry & Energy: Gasometer', value: Gasometer }
+    - { label: 'Industry & Energy: Fuel Depot', value: Fuel Depot }
+    - { label: 'Industry & Energy: Warehouse', value: Warehouse }
+    - { label: 'Religious: Church', value: Church }
+    - { label: 'Religious: Temple', value: Temple }
+    - { label: 'Defensive: Defensive Wall', value: Defensive Wall }
+    - { label: 'Defensive: Castle', value: Castle }
+    - { label: 'Cultural & Civic: Museum', value: Museum }
+    - { label: 'Cultural & Civic: Theatre', value: Theatre }
+    - { label: 'Cultural & Civic: Congress Hall', value: Congress Hall }
+    - { label: 'Cultural & Civic: Archaeological Site', value: Archaeological Site }
+    - { label: 'Residential: House', value: House }
+    - { label: 'Residential: Collective Housing', value: Collective Housing }
+    - { label: 'Residential: Hostel', value: Hostel }
+    - { label: 'Commercial: Office Building', value: Office Building }
+  form_geometry: &form_geometry_options [Rectangular, Circular, Triangular, Curved, Irregular]
+  form_organisation: &form_organisation_options [Linear, Radial, Clustered, Grid, Centralized]
+  strategy: &strategy_options
+    - Function Follows Form
+    - Disconnect
+    - Horizontal Proliferation
+    - Infill
+    - Overlap
+    - Explode and Reorganise
+
+  section_fields: &section_fields
+    - name: body
+      label: Body
+      widget: markdown
+      # Only what scripts/markdown.js keeps. Anything else would be flattened to plain text.
+      buttons: [bold, italic, code, link, bulleted-list, numbered-list]
+      editor_components: []
+    - name: figure
+      label: Figure
+      widget: select
+      required: false
+      options: [separate, comparison]
+      hint: 'Comparison needs exactly two images, each with a label. Checked when you save.'
+    - name: layout
+      label: Layout
+      widget: select
+      required: false
+      options: [text-left, image-left]
+      hint: 'Leave empty to alternate by section.'
+    - name: images
+      label: Images
+      label_singular: Image
+      widget: list
+      required: false
+      max: 2
+      summary: '{{fields.caption}}'
+      fields:
+        - { name: src, label: Image, widget: image }
+        - { name: caption, label: Caption, widget: string }
+        - { name: label, label: Label, widget: string, required: false, hint: 'Such as Before or After. Required for a comparison.' }
+
+collections:
+  - name: case-studies
+    label: Case Studies
+    label_singular: Case Study
+    folder: content/case-studies
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    delete: true
+    slug: '{{title}}'
+    identifier_field: title
+    summary: '{{title}} ({{city}}, {{country}})'
+    sortable_fields: [title, city, year_sort]
+    # One folder per case study, with src holding the filename alone, as validate.js expects.
+    media_folder: /content/images/{{slug}}
+    public_folder: ''
+    fields:
+      # Written by rules.js from the entry's filename, since no field can read it.
+      - { name: slug, label: Slug, widget: hidden }
+      - { name: title, label: Title, widget: string }
+      - { name: architect, label: Architect, widget: string, hint: 'Unknown is a permitted value.' }
+      - { name: area_m2, label: Area (m²), widget: number, value_type: float, required: false }
+      - { name: year_completed, label: Year completed, widget: string, required: false, hint: 'Shown on the page, such as 1986 or 7th Century.' }
+      - { name: year_sort, label: Year for sorting, widget: number, value_type: int, required: false, hint: 'A whole number; negative for BCE. Required when Year completed is filled in. Checked when you save.' }
+      - { name: city, label: City, widget: string }
+      - { name: country, label: Country, widget: string }
+      - name: coordinates
+        label: Coordinates
+        label_singular: Coordinate
+        widget: list
+        min: 2
+        max: 2
+        hint: 'Exactly two: latitude first, then longitude, in decimal degrees.'
+        field: { name: value, label: Value, widget: number, value_type: float, min: -180, max: 180 }
+      - { name: location_note, label: Location note, widget: string, required: false, hint: 'Use when the point is approximate.' }
+      - { name: original_function, label: Original function, widget: select, options: *function_options }
+      - { name: original_form_geometry, label: Original form geometry, widget: select, options: *form_geometry_options }
+      - { name: original_form_organisation, label: Original form organisation, widget: select, options: *form_organisation_options }
+      - { name: new_function, label: New function, widget: select, options: *function_options }
+      - { name: new_form_geometry, label: New form geometry, widget: select, options: *form_geometry_options }
+      - { name: new_form_organisation, label: New form organisation, widget: select, options: *form_organisation_options }
+      - { name: strategy, label: Strategy, widget: select, multiple: true, min: 1, options: *strategy_options }
+      - name: sections
+        label: Sections
+        widget: object
+        fields:
+          - { name: introduction, label: Introduction, widget: object, fields: *section_fields }
+          - { name: reuse_goal, label: Reuse Goal, widget: object, fields: *section_fields }
+          - { name: challenges, label: Challenges, widget: object, fields: *section_fields }
+          - { name: adaptive_strategy, label: Adaptive Strategy, widget: object, fields: *section_fields }
+          - { name: solutions, label: Solutions, widget: object, fields: *section_fields }

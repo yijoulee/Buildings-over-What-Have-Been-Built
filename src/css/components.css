@@ -1,0 +1,874 @@
+/* Reusable components. Each depends only on tokens.css and base.css, and none assumes
+   where on a page it sits, because the index and map pages reuse them. */
+
+/* ── Panel ──────────────────────────────────────────────── */
+.panel {
+  background: var(--colour-surface);
+  border: var(--border-hairline) solid var(--colour-ink);
+}
+
+/* ── Red boxed section heading ──────────────────────────── */
+.section-heading {
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-block-size: var(--size-heading-box);
+  padding-inline: var(--space-lg);
+  padding-block: calc((var(--size-heading-box) - var(--line-height-h2) * 1em) / 2 - var(--border-hairline));
+  background: var(--colour-surface);
+  border: var(--border-hairline) solid var(--colour-ink);
+  color: var(--colour-tone);
+  font-family: var(--font-display);
+  font-size: var(--font-size-h2);
+  font-weight: 400;
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--tracking-h2);
+}
+
+/* ── Image frame with red corner marks ──────────────────── */
+/* An <img> can't have pseudo-elements, so the marks sit on a wrapper. One pseudo-element
+   draws all four corners: each corner is two gradient bars, one along each edge. */
+.image-frame {
+  --corner-length: calc(var(--size-corner-mark) + var(--border-corner));
+  position: relative;
+}
+
+.image-frame img {
+  inline-size: 100%;
+}
+
+.image-frame::after {
+  --bar: linear-gradient(var(--colour-tone), var(--colour-tone));
+  content: "";
+  position: absolute;
+  /* Figma centres the 5px stroke on the image edge. */
+  inset: calc(var(--border-corner) / -2);
+  pointer-events: none;
+  background:
+    var(--bar) top left / var(--corner-length) var(--border-corner),
+    var(--bar) top left / var(--border-corner) var(--corner-length),
+    var(--bar) top right / var(--corner-length) var(--border-corner),
+    var(--bar) top right / var(--border-corner) var(--corner-length),
+    var(--bar) bottom right / var(--corner-length) var(--border-corner),
+    var(--bar) bottom right / var(--border-corner) var(--corner-length),
+    var(--bar) bottom left / var(--corner-length) var(--border-corner),
+    var(--bar) bottom left / var(--border-corner) var(--corner-length);
+  background-repeat: no-repeat;
+}
+
+/* ── Outlined caption box ───────────────────────────────── */
+.caption-box {
+  display: inline-block;
+  min-block-size: var(--size-caption-box);
+  padding-inline: var(--space-2xs);
+  padding-block: calc((var(--size-caption-box) - var(--line-height-caption) * 1em) / 2 - var(--border-hairline));
+  border: var(--border-hairline) solid var(--colour-tone);
+  color: var(--colour-tone);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--tracking-caption);
+  text-align: center;
+}
+
+/* ── Before/after label ─────────────────────────────────── */
+/* Not in the Figma frame: a proposal built from the caption box. */
+.figure-label {
+  display: inline-block;
+  padding-inline: var(--space-2xs);
+  border: var(--border-hairline) solid var(--colour-tone);
+  color: var(--colour-tone);
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--tracking-h5);
+}
+
+.figure-label:empty {
+  display: none;
+}
+
+/* ── Figure group ───────────────────────────────────────── */
+/* A container query, because one panel can be 300px wide on a large screen and 700px on
+   a tablet: it's the room in the panel that decides whether two images can share a row. */
+.figure-group {
+  container-type: inline-size;
+}
+
+.figure-group__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-inline-size: 0;
+}
+
+.figure__caption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3xs);
+}
+
+@container (min-width: 30rem) {
+  .figure-group__items {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  /* Sharing width in proportion to aspect ratio makes every image the same height
+     without cropping, so archival photographs keep their full frame. */
+  .figure {
+    flex: var(--image-ratio, 1) 1 0;
+  }
+}
+
+/* ── Tag chip ───────────────────────────────────────────── */
+.tag-chip {
+  display: inline-block;
+  min-block-size: var(--size-chip);
+  padding-inline: var(--space-3xs);
+  padding-block: calc((var(--size-chip) - var(--line-height-h6) * 1em) / 2);
+  background: var(--colour-bg);
+  border-radius: var(--radius-chip);
+  box-shadow: var(--shadow-chip);
+  font-family: var(--font-text);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h6);
+}
+
+/* ── Action chip ────────────────────────────────────────── */
+/* A tag chip that goes somewhere: "Explore now" in the map frame. */
+.action-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  inline-size: fit-content;
+  min-block-size: var(--size-chip);
+  padding-inline: var(--space-chip-inline);
+  background: var(--colour-bg);
+  border-radius: var(--radius-chip);
+  /* The raised shadows and the hover ring share one list in the same order, so the transition
+     fades each on its own instead of morphing a white shadow into the red ring. */
+  box-shadow: var(--shadow-chip), 0 0 0 var(--border-chip-hover) transparent;
+  color: var(--colour-ink);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h6);
+  text-decoration: none;
+}
+
+.action-chip::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--size-chip) - var(--size-target-min)) / 2);
+}
+
+/* From the prototype's hover variant: flat, with a red stroke outside the edge. A shadow draws
+   that stroke without taking up room, so nothing moves around the button. */
+@media (hover: hover) {
+  .action-chip:hover {
+    box-shadow: var(--shadow-chip-flat), 0 0 0 var(--border-chip-hover) var(--colour-tone);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .action-chip {
+    transition: box-shadow var(--motion-chip-duration) var(--motion-card-easing);
+  }
+}
+
+/* ── Intro note ─────────────────────────────────────────── */
+.intro-note {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-xs);
+  max-inline-size: 36.25rem;
+  padding-inline-start: var(--space-sm);
+  border-inline-start: var(--border-hairline) solid var(--colour-ink);
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h6);
+}
+
+.intro-note .action-chip {
+  font-family: var(--font-text);
+}
+
+/* ── Red nav chip ───────────────────────────────────────── */
+.nav-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--size-chip);
+  padding-inline: var(--space-sm);
+  background: var(--colour-tone);
+  color: var(--colour-on-tone);
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--tracking-h5);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Keeps Figma's 31px look while giving touch a 44px target. */
+.nav-chip::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--size-chip) - var(--size-target-min)) / 2);
+}
+
+.nav-chip__underlined {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* ── Header matrix ──────────────────────────────────────── */
+.matrix {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.matrix__table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+.matrix__table th {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  font-weight: 400;
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--tracking-h5);
+  text-align: center;
+}
+
+.matrix__table th[scope="row"] {
+  text-align: start;
+}
+
+.matrix__table td {
+  padding-block: var(--space-2xs);
+  text-align: start;
+  vertical-align: middle;
+}
+
+/* Dashed lines only between cells, as in Figma: the outer edges stay open. */
+.matrix__table tbody tr + tr td {
+  border-block-start: var(--border-hairline) dashed var(--colour-ink);
+}
+
+.matrix__table td + td {
+  border-inline-start: var(--border-hairline) dashed var(--colour-ink);
+}
+
+/* The longest taxonomy values have to fit three columns at 320px. */
+.matrix .tag-chip {
+  font-size: var(--font-size-caption);
+}
+
+.matrix__table th[scope="row"],
+.matrix__table td {
+  padding-inline: var(--space-3xs);
+}
+
+@media (min-width: 600px) {
+  .matrix .tag-chip {
+    font-size: var(--font-size-h6);
+  }
+
+  .matrix__table th[scope="row"],
+  .matrix__table td {
+    padding-inline: var(--space-2xs);
+  }
+}
+
+/* After the padding above, so the table's outer edges stay flush at every width. */
+.matrix__table th[scope="row"] {
+  padding-inline-start: 0;
+}
+
+.matrix__table th + td {
+  padding-inline-start: 0;
+}
+
+.matrix__table td:last-child {
+  padding-inline-end: 0;
+}
+
+/* Stacked on phones, where a wrapped "/" would dangle at the end or start of a line. */
+.matrix__form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2xs);
+}
+
+.matrix__slash {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .matrix__form {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .matrix__slash {
+    display: inline;
+  }
+}
+
+/* Strategy */
+.matrix__strategy {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2xs);
+}
+
+.matrix__strategy dt {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--tracking-h5);
+}
+
+.strategy-box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  --outer-size: calc(var(--size-strategy-box) + 2 * var(--border-strategy) + 4 * var(--border-hairline));
+  min-inline-size: var(--outer-size);
+  max-inline-size: 7rem;
+  min-block-size: var(--outer-size);
+  padding: var(--space-3xs);
+  background: var(--colour-surface);
+  border: var(--border-strategy) solid var(--colour-ink);
+  font-size: var(--font-size-strategy);
+  line-height: var(--line-height-strategy);
+  letter-spacing: var(--tracking-h6);
+  text-align: center;
+}
+
+.strategy-box::after {
+  content: "";
+  position: absolute;
+  inset: calc(2 * var(--border-hairline));
+  border: var(--border-hairline) dashed var(--colour-ink);
+  pointer-events: none;
+}
+
+/* Side by side once there's room for the bracket that joins the rows to the box. */
+@media (min-width: 900px) {
+  .matrix {
+    flex-direction: row;
+    align-items: stretch;
+    gap: calc(2 * var(--space-lg));
+  }
+
+  .matrix__table {
+    inline-size: auto;
+    flex: none;
+  }
+
+  .matrix__strategy {
+    position: relative;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    align-items: center;
+    gap: 0;
+  }
+
+  .matrix__strategy:has(dd + dd) {
+    grid-template-rows: auto;
+    gap: var(--space-3xs);
+  }
+
+  /* Bracket: three sides of a box, plus a stub pointing at the Strategy box. Vertically
+     centred on the body rows, which start one label line down. */
+  .matrix__strategy::before,
+  .matrix__strategy::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: calc(100% + var(--space-md));
+    inset-block-start: calc(var(--line-height-h5) * var(--font-size-h5) + (100% - var(--line-height-h5) * var(--font-size-h5)) / 2);
+    translate: 0 -50%;
+  }
+
+  .matrix__strategy::before {
+    inline-size: var(--space-3xs);
+    block-size: 3.125rem;
+    margin-inline-end: var(--space-3xs);
+    border: var(--border-hairline) solid var(--colour-ink);
+    border-inline-start: 0;
+  }
+
+  .matrix__strategy::after {
+    inline-size: var(--space-3xs);
+    block-size: 0;
+    border-block-start: var(--border-hairline) solid var(--colour-ink);
+  }
+}
+
+/* ── Site header and footer ─────────────────────────────── */
+/* The header is full-bleed so a page can give it a backdrop, while its contents line up
+   with the content column. */
+.site-header {
+  padding-inline: var(--space-page);
+  padding-block: var(--space-md);
+}
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  max-inline-size: calc(var(--content-max) - 2 * var(--space-page));
+  margin-inline: auto;
+}
+
+.site-logo {
+  display: block;
+  inline-size: var(--size-logo);
+  color: var(--colour-tone);
+}
+
+.site-logo svg {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: center;
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--space-page);
+  padding-block: var(--space-section);
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Separators are drawn on the list items, so they vanish with the list's row wrap
+   below 900px rather than ending up dangling at the start of a line. */
+@media (min-width: 900px) {
+  .chip-list > li + li {
+    position: relative;
+  }
+
+  .chip-list > li + li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: calc(var(--space-sm) / -2);
+    inset-block: var(--space-2xs);
+    border-inline-start: var(--border-hairline) solid var(--colour-ink);
+  }
+
+  .chip-list--footer {
+    gap: var(--space-2xl);
+  }
+
+  .chip-list--footer > li + li::before {
+    inset-inline-start: calc(var(--space-2xl) / -2);
+  }
+}
+
+/* ── Card typography ────────────────────────────────────── */
+/* Separate from .case-card because the map page's detail panel reuses it. */
+.card-title {
+  inline-size: fit-content;
+  padding-inline: var(--space-3xs);
+  padding-block: calc(2 * var(--border-hairline));
+  background: var(--colour-surface);
+  color: var(--colour-ink);
+  font-family: var(--font-text);
+  font-size: var(--font-size-h6);
+  font-weight: 400;
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h6);
+}
+
+.card-meta {
+  display: grid;
+  gap: var(--space-card-line);
+  inline-size: fit-content;
+  color: var(--colour-on-scrim);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--tracking-caption);
+}
+
+.card-meta dt,
+.card-meta dd {
+  display: inline;
+}
+
+.card-meta dt::after {
+  content: ":";
+}
+
+/* ── Case card ──────────────────────────────────────────── */
+/* --active is the one switch between states, so hover and focus can't drift apart. Only
+   transform and opacity animate, because with nine or more cards on screen anything that
+   repaints would stutter. */
+.case-card {
+  --active: 0;
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  display: grid;
+  /* Puts the metadata at 110 of 251 in Figma's frame, once the padding is added. A card with
+     long text grows, because aspect-ratio only sets a preferred height. */
+  grid-template-rows: minmax(min-content, 100fr) minmax(min-content, 131fr);
+  aspect-ratio: var(--card-aspect);
+  padding: var(--space-card-inset);
+  background: var(--colour-ink);
+  text-decoration: none;
+}
+
+.case-card:focus-visible {
+  --active: 1;
+}
+
+/* Touch has no hover, and a tap could otherwise leave a card stuck mid-state. */
+@media (hover: hover) {
+  .case-card:hover {
+    --active: 1;
+  }
+}
+
+.case-card__image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.case-card::before,
+.case-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--colour-card-scrim);
+  pointer-events: none;
+}
+
+.case-card::before {
+  transform-origin: left;
+  transform: scaleX(calc(var(--card-scrim-rest) + (1 - var(--card-scrim-rest)) * var(--active)));
+  transition: transform var(--motion-card-duration) var(--motion-card-easing);
+}
+
+/* Only the reduced-motion cross-fade needs a second layer. */
+.case-card::after {
+  display: none;
+}
+
+/* Text is limited to the resting scrim's width, so it never sits on the bare photo. */
+.case-card > .card-title,
+.case-card > .card-meta {
+  /* Percentages in a transform refer to the element itself, so this centres it in the card
+     whatever its width, with no layout change. cqw measures the card's content box, and
+     the inset that excludes cancels out the inset the text already starts at. */
+  --to-centre: calc(50cqw - 50%);
+  /* Back to the card's full width, then in from each side of the scrim. */
+  max-inline-size: calc(
+    var(--card-scrim-rest) * (100cqw + 2 * var(--space-card-inset)) - 2 * var(--space-card-inset)
+  );
+  transform: translateX(calc(var(--to-centre) * var(--active)));
+  transition: transform var(--motion-card-duration) var(--motion-card-easing);
+}
+
+.case-card > .card-title {
+  align-self: end;
+  margin-block-end: var(--space-md);
+}
+
+.case-card > .card-meta {
+  align-self: start;
+}
+
+/* The state still changes, because losing the affordance is worse than losing the motion. */
+@media (prefers-reduced-motion: reduce) {
+  .case-card::before {
+    transform: scaleX(var(--card-scrim-rest));
+    opacity: calc(1 - var(--active));
+    transition: opacity var(--motion-card-duration) var(--motion-card-easing);
+  }
+
+  .case-card::after {
+    display: block;
+    opacity: var(--active);
+    transition: opacity var(--motion-card-duration) var(--motion-card-easing);
+  }
+
+  .case-card > .card-title,
+  .case-card > .card-meta {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Search, filter and sort controls ───────────────────── */
+.controls {
+  --icon-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M13.0152 7.76517C13.1616 7.91161 13.1616 8.14905 13.0152 8.2955L9.53033 11.7803C9.23744 12.0732 8.76256 12.0732 8.46967 11.7803L4.98484 8.2955C4.83839 8.14905 4.83839 7.91161 4.98483 7.76517L5.51516 7.23484C5.66161 7.08839 5.89905 7.08839 6.04549 7.23483L9 10.1893L11.9545 7.23484C12.101 7.08839 12.3384 7.08839 12.4848 7.23484L13.0152 7.76517Z'/%3E%3C/svg%3E");
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm) var(--space-2xs);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--tracking-caption);
+}
+
+/* Controls do nothing without scripting, so they hide. A media query rather than a class
+   added by script, so cards don't jump down when the controls appear. */
+@media (scripting: none) {
+  .controls {
+    display: none;
+  }
+}
+
+.control-chevron {
+  flex: none;
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+  background: var(--colour-placeholder);
+  mask: var(--icon-chevron) center / contain no-repeat;
+}
+
+/* Fields keep Figma's 30px look while the input inside fills a 44px target, overflowing
+   its outlined box evenly. An input can't carry a pseudo-element to do this. */
+.control-field,
+.control-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  block-size: var(--size-control);
+  border: var(--border-control) solid var(--colour-control-border);
+  border-radius: var(--radius-control);
+  background: var(--colour-bg);
+  box-shadow: var(--shadow-control);
+}
+
+.control-field:has(:focus-visible) {
+  outline: calc(2 * var(--border-hairline)) solid var(--colour-tone);
+  outline-offset: calc(2 * var(--border-hairline));
+}
+
+.control-field input,
+.control-field select {
+  block-size: var(--size-target-min);
+  margin-block: calc((var(--size-control) - var(--size-target-min)) / 2);
+  border: 0;
+  background: transparent;
+  color: var(--colour-ink);
+  font: inherit;
+  letter-spacing: inherit;
+  outline: none;
+}
+
+.control-field--search {
+  flex: 1 1 100%;
+  max-inline-size: 100%;
+  background: var(--colour-surface);
+  box-shadow: var(--shadow-input);
+}
+
+.control-field--search input {
+  flex: 1;
+  min-inline-size: 0;
+  padding-inline: var(--space-2xs);
+}
+
+.control-field--search input::placeholder {
+  color: var(--colour-placeholder);
+  opacity: 1;
+}
+
+.control-field--select {
+  padding-inline-start: var(--space-2xs);
+}
+
+.control-field--select select {
+  appearance: none;
+  /* The chevron sits over the select's end, so a click on it still opens the list. */
+  margin-inline-end: -1.5rem;
+  padding-inline-end: 1.5rem;
+}
+
+.control-field--select .control-chevron {
+  pointer-events: none;
+}
+
+.control-button {
+  padding-inline: var(--space-2xs) var(--space-3xs);
+  cursor: pointer;
+  list-style: none;
+}
+
+.control-button::-webkit-details-marker {
+  display: none;
+}
+
+.control-button::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block: calc((var(--size-control) - var(--size-target-min)) / 2);
+}
+
+.controls__status {
+  display: flex;
+  flex: 1 1 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.controls__count {
+  margin: 0;
+}
+
+.control-clear {
+  position: relative;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--colour-tone);
+  font: inherit;
+  letter-spacing: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.control-clear::after {
+  content: "";
+  position: absolute;
+  inset-inline: calc(-1 * var(--space-2xs));
+  inset-block: calc((1lh - var(--size-target-min)) / 2);
+}
+
+/* Filter menu: not in Figma, whose frame has no open state. */
+.dropdown__panel {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 3;
+  display: grid;
+  gap: var(--space-lg);
+  max-block-size: 70vh;
+  margin-block-start: var(--space-xs);
+  padding: var(--space-lg);
+  overflow-y: auto;
+  background: var(--colour-surface);
+  border: var(--border-hairline) solid var(--colour-ink);
+}
+
+.filter-group {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filter-group legend {
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--tracking-h5);
+}
+
+.filter-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.filter-list .filter-list {
+  padding-inline-start: var(--space-list-indent);
+}
+
+.filter-option {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-xs);
+  min-block-size: var(--size-target-min);
+  cursor: pointer;
+}
+
+.filter-option input {
+  flex: none;
+  margin: 0;
+  accent-color: var(--colour-tone);
+}
+
+.filter-category__row {
+  display: flex;
+  align-items: center;
+}
+
+.filter-expand {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--size-target-min);
+  block-size: var(--size-target-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.filter-expand[aria-expanded="true"] .control-chevron {
+  transform: rotate(180deg);
+}
+
+@media (min-width: 600px) {
+  .control-field--search {
+    flex: 0 1 var(--size-search);
+    margin-inline-end: var(--space-xs);
+  }
+
+  .dropdown__panel {
+    inset-inline: 0 auto;
+    inline-size: var(--size-filter-panel);
+  }
+
+  .controls__status {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+}
+
+/* Below this the Filter button can sit too far right for the panel to fit under it, so the
+   panel anchors to the start of the whole controls row instead. */
+@media (min-width: 900px) {
+  .dropdown {
+    position: relative;
+  }
+}

@@ -1,0 +1,86 @@
+@font-face {
+  font-family: "Abel";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/abel-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Do Hyeon";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/do-hyeon-latin-400.woff2") format("woff2");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--colour-bg);
+  color: var(--colour-ink);
+  font-family: var(--font-text);
+  font-size: var(--font-size-h6);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h6);
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+p,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+/* Filtering relies on this: a component's own display rule mustn't un-hide it. */
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: calc(2 * var(--border-hairline)) solid var(--colour-tone);
+  outline-offset: calc(2 * var(--border-hairline));
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-xs);
+  inset-inline-start: var(--space-xs);
+  z-index: 2;
+  padding: var(--space-xs) var(--space-md);
+  background: var(--colour-surface);
+  color: var(--colour-tone);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Map | Adaptive Reuse Atlas</title>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org">
+  <link rel="preload" href="/fonts/abel-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/do-hyeon-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/map.css">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin></script>
+  <script type="module" src="/js/map.js"></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+{{{header}}}
+
+  <main id="main" class="map-page">
+    <h1 class="visually-hidden">Map of case studies</h1>
+
+    <div class="map-shell" data-map-shell>
+{{{filter_form}}}
+
+      <div class="map-buttons">
+        <button class="map-button" type="button" aria-label="Enter fullscreen" aria-pressed="false" data-fullscreen>{{{icon_fullscreen}}}</button>
+        <button class="map-button" type="button" aria-label="Show my location" data-locate>{{{icon_locate}}}</button>
+      </div>
+
+      <div class="map-canvas" role="region" aria-label="Map of case studies" data-map data-tile-url="{{tile_url}}" data-tile-attribution="{{tile_attribution}}"></div>
+      <p class="map-message" role="status" data-map-message hidden></p>
+
+      <dialog class="map-dialog" aria-labelledby="map-card-title" data-map-dialog>
+        <span class="map-pin map-pin--active" aria-hidden="true">{{{icon_pin}}}</span>
+        <article class="map-card">
+          <img class="map-card__image" alt="" data-card-image>
+          <div class="map-card__body">
+            <h2 class="caption-box map-card__title" id="map-card-title" data-card-title></h2>
+            <dl class="card-meta" data-card-meta></dl>
+            <a class="action-chip" data-card-link>Head to<span class="visually-hidden" data-card-link-name></span></a>
+          </div>
+        </article>
+        <form method="dialog">
+          <button class="map-card__close" aria-label="Close">
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 15 15" fill="none"><path d="M.5.5l14 14M14.5.5l-14 14" stroke="currentColor"/></svg>
+          </button>
+        </form>
+      </dialog>
+    </div>
+
+    <ul class="map-list" data-case-list>
+{{{items}}}
+    </ul>
+
+    <div class="intro-note">
+      <p>An open dataset of heritage adaptive reuse case studies that honor the past and anticipate the future.</p>
+      <a class="action-chip" href="/case-studies/">Explore now</a>
+    </div>
+
+    <template data-pin-template><button class="map-pin" type="button">{{{icon_pin}}}</button></template>
+  </main>
+
+{{{footer}}}
+</body>
+</html>

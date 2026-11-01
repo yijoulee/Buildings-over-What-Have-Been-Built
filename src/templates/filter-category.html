@@ -1,0 +1,9 @@
+                <li data-filter-category>
+                  <div class="filter-category__row">
+                    <label class="filter-option"><input type="checkbox" data-category value="{{value}}"><span>{{value}}</span></label>
+                    <button class="filter-expand" type="button" data-expand aria-expanded="false" aria-controls="{{id}}" aria-label="Show functions in {{value}}"><span class="control-chevron" aria-hidden="true"></span></button>
+                  </div>
+                  <ul class="filter-list" id="{{id}}" hidden>
+{{{members}}}
+                  </ul>
+                </li>

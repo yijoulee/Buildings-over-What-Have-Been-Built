@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}} | Adaptive Reuse Atlas</title>
+  <link rel="preload" href="/fonts/abel-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/do-hyeon-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/case-study.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+{{{header}}}
+
+  <main id="main" class="case-study">
+    <article>
+      <header class="cs-head">
+        <div class="cs-head__intro">
+          <h1 class="cs-head__title">{{title}}</h1>
+          <dl class="cs-meta">
+{{{facts}}}
+          </dl>
+        </div>
+        <div class="matrix">
+          <table class="matrix__table">
+            <caption class="visually-hidden">Function and form, original and new</caption>
+            <thead>
+              <tr>
+                <td></td>
+                <th scope="col">Function</th>
+                <th scope="col">Form</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Original</th>
+                <td><span class="tag-chip">{{original_function}}</span></td>
+                <td>
+                  <div class="matrix__form">
+                    <span class="tag-chip">{{original_form_geometry}}</span>
+                    <span class="matrix__slash">/</span>
+                    <span class="tag-chip">{{original_form_organisation}}</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">New</th>
+                <td><span class="tag-chip">{{new_function}}</span></td>
+                <td>
+                  <div class="matrix__form">
+                    <span class="tag-chip">{{new_form_geometry}}</span>
+                    <span class="matrix__slash">/</span>
+                    <span class="tag-chip">{{new_form_organisation}}</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <dl class="matrix__strategy">
+            <dt>Strategy</dt>
+{{{strategies}}}
+          </dl>
+        </div>
+      </header>
+
+      <div class="cs-sections">
+{{{sections}}}
+      </div>
+    </article>
+  </main>
+
+{{{footer}}}
+</body>
+</html>

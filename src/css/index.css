@@ -1,0 +1,32 @@
+.index-page {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--space-page);
+}
+
+.index-head {
+  padding-block: var(--space-xl);
+  border-block-start: var(--border-hairline) solid var(--colour-ink);
+}
+
+/* Margins rather than padding on the head, so without scripting (no controls) the rule
+   doesn't sit above a large empty gap. */
+.index-head .controls {
+  margin-block: var(--space-2xs) calc(var(--space-2xl) - var(--space-xl));
+}
+
+/* Cards sit at 304px or wider, and the column count follows from the room available, so
+   no card gets too narrow to hold its text at any width. */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-card-min)), 1fr));
+  gap: var(--space-card-row) var(--space-xl);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.index-empty {
+  padding-block: var(--space-section);
+  text-align: center;
+}

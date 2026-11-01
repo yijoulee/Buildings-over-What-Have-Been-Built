@@ -1,0 +1,198 @@
+/* ── Page frame ─────────────────────────────────────────── */
+.case-study {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--space-page);
+}
+
+html {
+  /* Keeps "back to top" and heading anchors clear of the sticky nav. */
+  scroll-padding-block-start: calc(2 * var(--size-target-min));
+}
+
+@media (min-width: 900px) {
+  .site-header {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    background: var(--colour-nav-scrim);
+    backdrop-filter: blur(var(--blur-nav));
+  }
+}
+
+/* ── Article head ───────────────────────────────────────── */
+.case-study {
+  padding-block-start: var(--space-xl);
+}
+
+.cs-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  padding-block: var(--space-md) var(--space-xl);
+  border-block: var(--border-hairline) solid var(--colour-ink);
+}
+
+.cs-head__title {
+  padding-block-end: var(--space-xs);
+  border-block-end: var(--border-hairline) solid var(--colour-ink);
+  color: var(--colour-tone);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--tracking-h1);
+}
+
+.cs-meta {
+  display: grid;
+  gap: var(--space-2xs);
+  margin-block-start: var(--space-xl);
+}
+
+.cs-meta__item dt,
+.cs-meta__item dd {
+  display: inline;
+}
+
+.cs-meta__item dt {
+  font-family: var(--font-display);
+}
+
+.cs-meta__item dt::after {
+  content: ":";
+}
+
+@media (min-width: 600px) {
+  .cs-meta {
+    grid-template-columns: auto 1fr;
+    column-gap: 0;
+  }
+
+  .cs-meta__item:nth-child(odd) {
+    padding-inline-end: var(--space-xs);
+  }
+
+  .cs-meta__item:nth-child(even) {
+    padding-inline-start: var(--space-xs);
+    border-inline-start: var(--border-hairline) solid var(--colour-ink);
+  }
+}
+
+/* Measured on the content width, not the viewport: Figma's split needs about 1056px of
+   content, and at the 1200px breakpoint the title and metadata would be crushed. */
+.case-study article {
+  container-type: inline-size;
+}
+
+@container (min-width: 66rem) {
+  .cs-head {
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--space-xs);
+  }
+
+  .cs-head > .matrix {
+    flex: none;
+  }
+
+  .cs-head__intro {
+    flex: 1 1 0;
+    min-inline-size: 0;
+    padding-inline-end: var(--space-xl);
+    border-inline-end: var(--border-hairline) solid var(--colour-ink);
+  }
+}
+
+/* ── Sections ───────────────────────────────────────────── */
+.cs-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-section);
+  padding-block-start: var(--space-section);
+}
+
+.cs-section {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.cs-section__text .section-heading {
+  /* Sits on the panel's own border rather than doubling it. */
+  margin-block-start: calc(-1 * var(--border-hairline));
+  margin-inline-start: calc(-1 * var(--border-hairline));
+}
+
+.prose {
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+}
+
+.prose > * + * {
+  margin-block-start: var(--space-xs);
+}
+
+.prose ul,
+.prose ol {
+  margin-block-end: 0;
+  padding-inline-start: var(--space-list-indent);
+}
+
+.cs-section__media {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-xl) var(--media-inset, var(--space-lg));
+}
+
+/* Text and image take even columns first. Figma's widths need the room of 1200px. */
+@media (min-width: 900px) {
+  .cs-section {
+    grid-template-columns: var(--text-column, 1fr) var(--media-column, 1fr);
+  }
+
+  .cs-section[data-layout="image-left"] {
+    grid-template-columns: var(--media-column, 1fr) var(--text-column, 1fr);
+  }
+
+  .cs-section[data-layout="image-left"] .cs-section__media {
+    order: -1;
+  }
+
+  .cs-section__text:only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Figma's staggered widths, as column shares and insets of the 1140px content width. */
+@media (min-width: 1200px) {
+  #introduction {
+    --text-column: 461fr;
+    --media-column: 655fr;
+    --media-inset: 3.4%;
+  }
+
+  #reuse_goal {
+    --text-column: 388fr;
+    --media-column: 655fr;
+    --media-inset: 14.7%;
+    margin-inline-end: 6.6%;
+  }
+
+  #challenges {
+    --text-column: 364fr;
+    --media-column: 752fr;
+    --media-inset: 6.4%;
+  }
+
+  #adaptive_strategy {
+    --text-column: 558fr;
+    --media-column: 485fr;
+    --media-inset: 10.5%;
+    margin-inline-start: 6.4%;
+  }
+
+  #solutions {
+    --text-column: 364fr;
+    --media-column: 752fr;
+    --media-inset: 3%;
+  }
+}

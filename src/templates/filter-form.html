@@ -1,0 +1,18 @@
+      <form class="controls" role="search" aria-label="Case studies" data-filter-form data-fields="{{fields}}">
+        <label class="control-field control-field--search">
+          <span class="visually-hidden">Search by name, city, or function</span>
+          <input type="search" name="q" placeholder="Search by name, city, or function" autocomplete="off">
+        </label>
+
+        <details class="dropdown" data-filter-menu>
+          <summary class="control-button">Filter <span data-filter-count></span><span class="control-chevron" aria-hidden="true"></span></summary>
+          <div class="dropdown__panel">
+{{{filter_groups}}}
+          </div>
+        </details>
+{{{sort}}}
+        <div class="controls__status">
+          <p class="controls__count" role="status" data-count></p>
+          <button class="control-clear" type="button" data-clear>Clear all</button>
+        </div>
+      </form>

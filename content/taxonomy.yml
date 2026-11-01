@@ -1,0 +1,23 @@
+# ── FUNCTION ──────────────────────────────────────────
+# One shared list for original_function and new_function.
+# Categories enable the transition analysis: Industry → Culture, etc.
+
+function:
+  Transport:         [Train Station, Cruise Terminal]
+  Industry & Energy: [Power Station, Gasometer, Fuel Depot, Warehouse]
+  Religious:         [Church, Temple]
+  Defensive:         [Defensive Wall, Castle]
+  Cultural & Civic:  [Museum, Theatre, Congress Hall, Archaeological Site]
+  Residential:       [House, Collective Housing, Hostel]
+  Commercial:        [Office Building]
+
+# ── FORM ──────────────────────────────────────────────
+form_geometry:     [Rectangular, Circular, Triangular, Curved, Irregular]
+form_organisation: [Linear, Radial, Clustered, Grid, Centralized]
+
+# ── STRATEGY ──────────────────────────────────────────
+strategy: [Function Follows Form, Disconnect, Horizontal Proliferation,
+           Infill, Overlap, Explode and Reorganise]
+
+# ── OPERATION ─────────────────────────────────────────
+operation: [Additive, Subtractive]

@@ -1,0 +1,193 @@
+/* Clipped here rather than at the content width: on wide screens the Port House overhang
+   stays visible, and only the viewport edge can cut it. */
+.landing-page {
+  display: grid;
+  gap: var(--space-landing-gap);
+  padding-inline: var(--space-page);
+  padding-block-end: var(--space-2xs);
+  overflow-x: clip;
+}
+
+.landing-hero,
+.landing-foot {
+  inline-size: 100%;
+  max-inline-size: calc(var(--content-max) - 2 * var(--space-page));
+  margin-inline: auto;
+}
+
+.landing-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+/* The landing frame spaces the intro note more openly than the map's. */
+.landing-foot .intro-note {
+  position: relative;
+  inset-inline-start: var(--border-hairline);
+  gap: var(--space-md);
+  max-inline-size: none;
+  padding-inline-start: var(--space-xs);
+}
+
+.landing-foot .intro-note p {
+  max-inline-size: var(--size-landing-text);
+}
+
+.landing-toggle {
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-text);
+}
+
+.landing-hero {
+  --stage-offset: calc(var(--space-2xs) - var(--border-hairline));
+  position: relative;
+  container-type: inline-size;
+  margin-block-start: var(--space-3xs);
+  padding-block-start: var(--stage-offset);
+  border-block-start: var(--border-hairline) solid var(--colour-ink);
+}
+
+.landing-headline {
+  padding-block: var(--space-md) var(--space-xl);
+  color: var(--colour-tone);
+  font-family: var(--font-text);
+  font-size: var(--font-size-landing);
+  font-weight: 400;
+  line-height: var(--line-height-landing);
+  letter-spacing: var(--tracking-h1);
+  /* Figma's stroke sits outside the glyph. A text stroke is centred, so it's doubled and the
+     fill painted over its inner half. */
+  -webkit-text-stroke: var(--stroke-landing) var(--colour-tone);
+  paint-order: stroke fill;
+}
+
+/* Below 900px: the flat hero, cropped to the bottom three rows and bled to the screen edges
+   so the buildings get every available pixel. */
+.landing-stage {
+  --grid-rows: 3;
+  --stage-height: 286;
+  position: relative;
+  margin-inline: calc(-1 * var(--space-page));
+  aspect-ratio: var(--landing-stage-width) / var(--stage-height);
+}
+
+/* The substrate. Present in every state and never animated, so it belongs to the stage and
+   not to any layer. Figma's grid stops one module short of the stage's right edge. */
+.landing-stage::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  /* Content-box so the closing lines add to the module rather than squeezing it. */
+  box-sizing: content-box;
+  inline-size: calc(var(--landing-grid-width) / var(--landing-stage-width) * 100%);
+  block-size: calc((var(--stage-height) - 1) / var(--stage-height) * 100%);
+  background-image:
+    linear-gradient(to right, var(--colour-grid) var(--border-hairline), transparent 0),
+    linear-gradient(to bottom, var(--colour-grid) var(--border-hairline), transparent 0);
+  background-size: calc(100% / var(--landing-grid-columns)) calc(100% / var(--grid-rows));
+  border-inline-end: var(--border-hairline) solid var(--colour-grid);
+  border-block-end: var(--border-hairline) solid var(--colour-grid);
+}
+
+.landing-flat {
+  position: relative;
+  inline-size: 100%;
+}
+
+.landing-layer {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  /* Scaled in step with the stage, so the headline keeps its place over the composition. */
+  .landing-headline {
+    position: absolute;
+    inset-block-start: calc(var(--stage-offset) + 14 / var(--landing-grid-width) * 100cqi);
+    inset-inline-start: calc(7 / var(--landing-grid-width) * 100cqi);
+    padding: 0;
+  }
+
+  /* Wider than its container by the Port House overhang; the grid lines up with the content
+     edges and the stage carries on past them. It paints over the headline, as in Figma. */
+  .landing-stage {
+    --grid-rows: 7;
+    --stage-height: var(--landing-stage-height);
+    z-index: 1;
+    inline-size: calc(var(--landing-stage-width) / var(--landing-grid-width) * 100%);
+    margin-inline: var(--border-hairline) 0;
+  }
+
+  .landing-flat {
+    display: none;
+  }
+
+  .landing-layer {
+    position: absolute;
+    display: block;
+    inset-block-start: calc(var(--y) / var(--landing-stage-height) * 100%);
+    inset-inline-start: calc(var(--x) / var(--landing-stage-width) * 100%);
+    inline-size: calc(var(--w) / var(--landing-stage-width) * 100%);
+    block-size: calc(var(--h) / var(--landing-stage-height) * 100%);
+    max-inline-size: none;
+  }
+
+  /* The resting state is the default, so no-script, reduced motion and paused all get it
+     without any code running. */
+  .landing-layer--host,
+  .landing-traveller {
+    opacity: 0;
+  }
+
+  .landing-traveller__image {
+    position: absolute;
+    inset-block-start: calc(var(--image-y) / var(--h) * 100%);
+    inset-inline-start: calc(var(--image-x) / var(--w) * 100%);
+    inline-size: calc(var(--image-w) / var(--w) * 100%);
+    block-size: calc(var(--image-h) / var(--h) * 100%);
+    max-inline-size: none;
+  }
+
+  /* Outline rather than border: offset by half its width it straddles the edge, as Figma's
+     centred stroke does, and shared edges overlap instead of doubling. */
+  .landing-cell {
+    position: absolute;
+    inset-block-start: calc(var(--cell-y) / var(--h) * 100%);
+    inset-inline-start: calc(var(--cell-x) / var(--w) * 100%);
+    inline-size: calc(var(--landing-module) / var(--w) * 100%);
+    block-size: calc(var(--landing-module) / var(--h) * 100%);
+    outline: var(--border-cell) solid var(--colour-ink);
+    outline-offset: calc(var(--border-cell) / -2);
+  }
+}
+
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  /* Only the travellers hold a layer between frames: they move on every step, and promoting
+     the static hosts and photographs would cost memory for no smoother a fade. Flat because
+     nothing here is 3D; the rotation is in the plane. */
+  .landing-traveller {
+    transform-style: flat;
+    will-change: transform, opacity;
+  }
+
+  /* State 1, painted before any script has run. landing.js removes the class in the same
+     tick that GSAP takes over, so there's no frame without either. */
+  .intro-pending .landing-layer--host {
+    opacity: 1;
+  }
+
+  .intro-pending .landing-layer--combined {
+    opacity: 0;
+  }
+
+  .intro-pending .landing-traveller {
+    opacity: 1;
+    transform:
+      translate(calc(var(--start-x) * 1%), calc(var(--start-y) * 1%))
+      rotate(calc(var(--start-angle) * 1deg));
+  }
+}
