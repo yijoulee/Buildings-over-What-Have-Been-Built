@@ -463,9 +463,11 @@
 /* ── Site header and footer ─────────────────────────────── */
 /* The header is full-bleed so a page can give it a backdrop, while its contents line up
    with the content column. */
+/* The extra space at the foot is the gap to the rule each page opens with, from the landing
+   frame, so every page puts that rule at the same height. */
 .site-header {
   padding-inline: var(--space-page);
-  padding-block: var(--space-md);
+  padding-block: var(--space-md) calc(var(--space-md) + var(--space-3xs));
 }
 
 .site-nav {

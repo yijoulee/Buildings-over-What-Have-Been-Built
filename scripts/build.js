@@ -188,7 +188,7 @@ function renderCaseStudy(record, templates) {
     .join('');
 
   return renderTemplate(templates.page, {
-    header: renderTemplate(templates.siteHeader, { nav_start: templates.navBack }),
+    header: renderTemplate(templates.siteHeader, { nav_start: templates.navLogo }),
     footer: templates.siteFooter,
     title: record.title,
     facts: renderFacts(record, templates),
@@ -243,7 +243,6 @@ async function main() {
     strategy: readText(join(TEMPLATES_DIR, 'case-study-strategy.html')),
     siteHeader: readText(join(TEMPLATES_DIR, 'site-header.html')),
     siteFooter: readText(join(TEMPLATES_DIR, 'site-footer.html')),
-    navBack: readText(join(TEMPLATES_DIR, 'nav-back.html')),
     navLogo: readText(join(TEMPLATES_DIR, 'nav-logo.html')),
     index: readText(join(TEMPLATES_DIR, 'index.html')),
     about: readText(join(TEMPLATES_DIR, 'about.html')),

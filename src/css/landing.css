@@ -4,7 +4,6 @@
   display: grid;
   gap: var(--space-landing-gap);
   padding-inline: var(--space-page);
-  padding-block-end: var(--space-2xs);
   overflow-x: clip;
 }
 
@@ -46,7 +45,6 @@
   --stage-offset: calc(var(--space-2xs) - var(--border-hairline));
   position: relative;
   container-type: inline-size;
-  margin-block-start: var(--space-3xs);
   padding-block-start: var(--stage-offset);
   border-block-start: var(--border-hairline) solid var(--colour-ink);
 }

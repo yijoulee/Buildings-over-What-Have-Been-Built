@@ -1,9 +1,5 @@
-/* The page mustn't shift sideways when scrolling locks behind the dialog, or the card and
-   pin would no longer line up with the marker. */
-html {
-  scrollbar-gutter: stable;
-}
-
+/* base.css reserves the scrollbar's space, so locking scroll behind the dialog doesn't shift
+   the page sideways and break the card's line-up with the marker. */
 html:has(.map-dialog[open]) {
   overflow: hidden;
 }

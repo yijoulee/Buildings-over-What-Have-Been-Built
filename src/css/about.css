@@ -4,7 +4,6 @@
   max-inline-size: var(--content-max);
   margin-inline: auto;
   padding-inline: var(--space-page);
-  padding-block-start: var(--space-xl);
 }
 
 .about-head {
@@ -12,12 +11,41 @@
   border-block-start: var(--border-hairline) solid var(--colour-ink);
 }
 
-/* The content width at 1440 would give about 150 characters a line, so the reading column
-   stops well short of it. */
+/* The rule runs only under the word. A border would also run under the tracking after the
+   last letter, so it's drawn short by that much instead. */
+.about-head .page-title {
+  inline-size: fit-content;
+  border-block-end: 0;
+  background: linear-gradient(var(--colour-ink), var(--colour-ink)) no-repeat
+    0 100% / calc(100% - var(--tracking-h1)) var(--border-hairline);
+}
+
+/* The panel's outline is enough around the longest heading, which nearly fills it. Without
+   its own box it moves back inside the panel's border, which it would otherwise cover. */
+.about-sections > .panel:first-child .section-heading {
+  margin: 0;
+  border: 0;
+}
+
+/* Stacked, the content width at 1440 would give about 150 characters a line, so the reading
+   column stops well short of it. */
 .about-sections {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-section);
+  display: grid;
+  gap: var(--space-section) var(--space-xl);
   max-inline-size: var(--size-measure);
   padding-block-start: var(--space-xl);
+}
+
+/* Side by side at 2:1 from the width where case study sections split, which also keeps the
+   wider panel near 75 characters a line. Each panel is as tall as its own text. */
+@media (min-width: 900px) {
+  .about-sections {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+    max-inline-size: none;
+  }
+
+  .about-sections > .intro-note {
+    grid-column: 1 / -1;
+  }
 }

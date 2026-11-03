@@ -5,26 +5,7 @@
   padding-inline: var(--space-page);
 }
 
-html {
-  /* Keeps "back to top" and heading anchors clear of the sticky nav. */
-  scroll-padding-block-start: calc(2 * var(--size-target-min));
-}
-
-@media (min-width: 900px) {
-  .site-header {
-    position: sticky;
-    inset-block-start: 0;
-    z-index: 1;
-    background: var(--colour-nav-scrim);
-    backdrop-filter: blur(var(--blur-nav));
-  }
-}
-
 /* ── Article head ───────────────────────────────────────── */
-.case-study {
-  padding-block-start: var(--space-xl);
-}
-
 .cs-head {
   display: flex;
   flex-direction: column;

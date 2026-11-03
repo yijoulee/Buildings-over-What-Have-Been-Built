@@ -20,9 +20,12 @@
   box-sizing: border-box;
 }
 
+/* Every page reserves the scrollbar's width, whether or not it scrolls, so the nav and footer
+   sit in the same place from page to page. */
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scrollbar-gutter: stable;
 }
 
 body {
