@@ -27,6 +27,7 @@ site without failing the build. It ends with a summary: `N read, N built, N skip
 | `dist/case-studies/index.html` | The case studies index, from `src/templates/index.html`. Filter options come from `content/taxonomy.yml`. |
 | `dist/map/index.html` | The map, from `src/templates/map.html`. Uses Leaflet and OpenStreetMap tiles, set in `scripts/map-page.js`. |
 | `dist/case-studies/<slug>/index.html` | The case study page, from `src/templates/case-study*.html`. |
+| `dist/about/index.html` | The About page. Its text is in `content/about.md`: a `title`, a list of `sections` each with a `heading` and Markdown `body`, and an optional Markdown `note`. |
 | `dist/css/`, `dist/js/`, `dist/fonts/` | Copied from `src/css/`, `src/js/` and `public/`. Fonts are self-hosted, with their licences alongside them. |
 | `dist/images/<slug>/` | WebP images at widths 480, 960 and 1440. A narrower source is never enlarged; its own width becomes the largest size. Index cards get their own lighter files, at quality 50 rather than 80. |
 | `data/cases.json` | Every built case study, for the index and map pages to read at build time. |

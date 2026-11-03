@@ -6,6 +6,7 @@ import yaml from 'js-yaml';
 import { checkCmsConfig } from './cms-config-check.js';
 import { toCsv, toSitemap } from './datasets.js';
 import { CARD_QUALITY, createImageProcessor } from './images.js';
+import { renderAboutPage } from './about-page.js';
 import { renderIndexPage } from './index-page.js';
 import { renderLandingPage } from './landing-page.js';
 import { renderMapPage } from './map-page.js';
@@ -245,6 +246,9 @@ async function main() {
     navBack: readText(join(TEMPLATES_DIR, 'nav-back.html')),
     navLogo: readText(join(TEMPLATES_DIR, 'nav-logo.html')),
     index: readText(join(TEMPLATES_DIR, 'index.html')),
+    about: readText(join(TEMPLATES_DIR, 'about.html')),
+    aboutSection: readText(join(TEMPLATES_DIR, 'about-section.html')),
+    aboutNote: readText(join(TEMPLATES_DIR, 'about-note.html')),
     landing: readText(join(TEMPLATES_DIR, 'landing.html')),
     landingLayer: readText(join(TEMPLATES_DIR, 'landing-layer.html')),
     landingTraveller: readText(join(TEMPLATES_DIR, 'landing-traveller.html')),
@@ -316,6 +320,12 @@ async function main() {
   }));
   writeOutput(join(DIST_DIR, 'case-studies', 'index.html'), renderIndexPage(records, taxonomy, templates, chrome));
   writeOutput(join(DIST_DIR, 'map', 'index.html'), renderMapPage(records, taxonomy, templates, chrome));
+  try {
+    const aboutSource = readText(join(ROOT, 'content', 'about.md'));
+    writeOutput(join(DIST_DIR, 'about', 'index.html'), renderAboutPage(aboutSource, templates, chrome));
+  } catch (error) {
+    errors.push(error.code === 'ENOENT' ? 'about.md: content/about.md is missing' : error.message);
+  }
 
   const json =`${JSON.stringify(records, null, 2)}\n`;
   writeOutput(join(DATA_DIR, 'cases.json'), json);

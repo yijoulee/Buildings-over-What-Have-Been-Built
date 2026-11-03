@@ -137,6 +137,7 @@
   --map-card-image-aspect: 342 / 236;
 
   --size-landing-text: 33.125rem; /* 530 */
+  --size-measure: 46rem; /* not in Figma: about 75 characters of body text, for the About page */
 
   /* Figma's landing stage and grid. Unitless: they're ratios, so the composition scales whole. */
   --landing-stage-width: 1235;

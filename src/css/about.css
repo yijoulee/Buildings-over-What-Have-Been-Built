@@ -1,0 +1,23 @@
+/* No Figma frame: built from the case study page's title, panels and red boxed headings,
+   and the landing page's intro note. */
+.about-page {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--space-page);
+  padding-block-start: var(--space-xl);
+}
+
+.about-head {
+  padding-block: var(--space-md) var(--space-xl);
+  border-block-start: var(--border-hairline) solid var(--colour-ink);
+}
+
+/* The content width at 1440 would give about 150 characters a line, so the reading column
+   stops well short of it. */
+.about-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-section);
+  max-inline-size: var(--size-measure);
+  padding-block-start: var(--space-xl);
+}

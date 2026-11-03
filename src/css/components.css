@@ -24,6 +24,48 @@
   letter-spacing: var(--tracking-h2);
 }
 
+/* Sits on the panel's own border rather than doubling it, on the far side too when a long
+   heading fills the width. */
+.panel > .section-heading:first-child {
+  max-inline-size: calc(100% + 2 * var(--border-hairline));
+  margin-block-start: calc(-1 * var(--border-hairline));
+  margin-inline: calc(-1 * var(--border-hairline));
+}
+
+/* ── Page title ─────────────────────────────────────────── */
+.page-title {
+  padding-block-end: var(--space-xs);
+  border-block-end: var(--border-hairline) solid var(--colour-ink);
+  color: var(--colour-tone);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  line-height: var(--line-height-h1);
+  letter-spacing: var(--tracking-h1);
+}
+
+/* ── Body text in a panel ───────────────────────────────── */
+.prose {
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+}
+
+.prose > * + * {
+  margin-block-start: var(--space-xs);
+}
+
+.prose ul,
+.prose ol {
+  margin-block-end: 0;
+  padding-inline-start: var(--space-list-indent);
+}
+
+/* In the site's red rather than the browser's blue, and still underlined, so a link is never
+   told apart by colour alone. */
+.prose a,
+.intro-note a:not(.action-chip) {
+  color: var(--colour-tone);
+  text-underline-offset: 0.15em;
+}
+
 /* ── Image frame with red corner marks ──────────────────── */
 /* An <img> can't have pseudo-elements, so the marks sit on a wrapper. One pseudo-element
    draws all four corners: each corner is two gradient bars, one along each edge. */
