@@ -6,13 +6,7 @@
   <title>Adaptive Reuse Atlas</title>
   <!-- Has to run before first paint, or the page would flash the resting state and then jump
        to state 1. Without scripts the class never appears and the resting state is the page. -->
-  <script>
-    try {
-      if (sessionStorage.getItem('intro-paused') !== '1') document.documentElement.classList.add('intro-pending');
-    } catch {
-      document.documentElement.classList.add('intro-pending');
-    }
-  </script>
+  <script>document.documentElement.classList.add('intro-pending');</script>
   <link rel="preload" href="/fonts/abel-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/do-hyeon-latin-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/css/tokens.css">
@@ -44,7 +38,6 @@
         <p>An open dataset of heritage adaptive reuse case studies that honor the past and anticipate the future.</p>
         <a class="action-chip" href="/case-studies/">Explore now</a>
       </div>
-      <button class="action-chip landing-toggle" type="button" data-intro-toggle hidden>Pause animation</button>
     </div>
   </main>
 

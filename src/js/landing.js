@@ -11,29 +11,11 @@ const STATE_COUNT = 9;
 const GSAP_URL = 'https://unpkg.com/gsap@3.12.5/dist/gsap.min.js';
 const GSAP_INTEGRITY = 'sha256-KAM+RJox68w5blvosTtjFSvwMJQoj7WGcDQyGSe84Ic=';
 
-const PAUSED_KEY = 'intro-paused';
 const PENDING_CLASS = 'intro-pending';
 const IS_DEV = ['localhost', '127.0.0.1'].includes(location.hostname);
 
 const seconds = (ms) => ms / 1000;
 const stateLabel = (state) => `state${state}`;
-
-function readPaused() {
-  try {
-    return sessionStorage.getItem(PAUSED_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
-
-function writePaused(paused) {
-  try {
-    if (paused) sessionStorage.setItem(PAUSED_KEY, '1');
-    else sessionStorage.removeItem(PAUSED_KEY);
-  } catch {
-    // Without storage the choice still holds for this page, just not across navigation.
-  }
-}
 
 // Injected rather than in the page's HTML, so screens that never animate never download it.
 function loadGsap() {
@@ -111,7 +93,6 @@ function init() {
   const root = document.documentElement;
   const hero = document.querySelector('[data-landing-hero]');
   const stage = document.querySelector('[data-landing-stage]');
-  const toggle = document.querySelector('[data-intro-toggle]');
   const wide = matchMedia('(min-width: 900px)');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -119,18 +100,15 @@ function init() {
   let running = false;
   let starting = false;
   let failed = false;
-  let userPaused = readPaused();
   let heroOnScreen = true;
-
-  const motionAvailable = () => wide.matches && !reducedMotion.matches && !failed;
 
   async function start() {
     if (starting) return;
     starting = true;
     try {
       const [gsap] = await Promise.all([loadGsap(), document.fonts.ready, decodeImages(stage)]);
-      // Compared while the class is still on: it says whether state 1 is on screen, or the
-      // visitor paused or pressed play from the resting state.
+      // Compared while the class is still on: it says whether state 1 is on screen, or reduced
+      // motion was switched off after the page had settled on the resting state.
       const fromStateOne = root.classList.contains(PENDING_CLASS);
       root.classList.remove(PENDING_CLASS);
       timeline = buildTimeline(gsap, stage);
@@ -144,10 +122,7 @@ function init() {
 
   // The single place that decides what the animation should be doing, called on every change.
   function sync() {
-    toggle.hidden = !motionAvailable();
-    toggle.textContent = userPaused ? 'Play animation' : 'Pause animation';
-
-    if (userPaused || reducedMotion.matches || failed) {
+    if (reducedMotion.matches || failed) {
       root.classList.remove(PENDING_CLASS);
       running = false;
       timeline?.pause('hold');
@@ -171,11 +146,6 @@ function init() {
     }
   }
 
-  toggle.addEventListener('click', () => {
-    userPaused = !userPaused;
-    writePaused(userPaused);
-    sync();
-  });
   wide.addEventListener('change', sync);
   reducedMotion.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);

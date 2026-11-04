@@ -14,14 +14,6 @@
   margin-inline: auto;
 }
 
-.landing-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-md);
-}
-
 /* The landing frame spaces the intro note more openly than the map's. */
 .landing-foot .intro-note {
   position: relative;
@@ -33,12 +25,6 @@
 
 .landing-foot .intro-note p {
   max-inline-size: var(--size-landing-text);
-}
-
-.landing-toggle {
-  border: 0;
-  cursor: pointer;
-  font-family: var(--font-text);
 }
 
 .landing-hero {
