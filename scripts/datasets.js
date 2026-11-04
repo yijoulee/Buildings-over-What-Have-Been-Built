@@ -45,7 +45,7 @@ export function toCsv(records) {
 }
 
 export function toSitemap(records, siteUrl) {
-  const urls = ['/', '/case-studies/', '/map/', '/about/', ...records.map((record) => record.url)]
+  const urls = ['/', '/case-studies/', '/map/', '/approach/', '/about/', ...records.map((record) => record.url)]
     .map((path) => `  <url><loc>${escapeHtml(`${siteUrl}${path}`)}</loc></url>`)
     .join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>

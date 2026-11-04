@@ -246,6 +246,7 @@ async function main() {
     navLogo: readText(join(TEMPLATES_DIR, 'nav-logo.html')),
     index: readText(join(TEMPLATES_DIR, 'index.html')),
     about: readText(join(TEMPLATES_DIR, 'about.html')),
+    approach: readText(join(TEMPLATES_DIR, 'approach.html')),
     aboutSection: readText(join(TEMPLATES_DIR, 'about-section.html')),
     aboutNote: readText(join(TEMPLATES_DIR, 'about-note.html')),
     landing: readText(join(TEMPLATES_DIR, 'landing.html')),
@@ -312,16 +313,22 @@ async function main() {
     header: renderTemplate(templates.siteHeader, { nav_start: templates.navLogo }),
     footer: templates.siteFooter,
   };
+  // The nav chip for the page being viewed is marked, for screen readers and the underline.
+  const chromeFor = (path) => ({
+    ...chrome,
+    header: chrome.header.replace(`class="nav-chip" href="${path}"`, `class="nav-chip" href="${path}" aria-current="page"`),
+  });
   writeOutput(join(DIST_DIR, 'index.html'), await renderLandingPage(templates, chrome, {
     sourceRoot: join(ROOT, 'public'),
     cacheDir: join(ROOT, '.cache', 'landing'),
     outputDir: join(DIST_DIR, 'landing'),
   }));
-  writeOutput(join(DIST_DIR, 'case-studies', 'index.html'), renderIndexPage(records, taxonomy, templates, chrome));
-  writeOutput(join(DIST_DIR, 'map', 'index.html'), renderMapPage(records, taxonomy, templates, chrome));
+  writeOutput(join(DIST_DIR, 'case-studies', 'index.html'), renderIndexPage(records, taxonomy, templates, chromeFor('/case-studies/')));
+  writeOutput(join(DIST_DIR, 'map', 'index.html'), renderMapPage(records, taxonomy, templates, chromeFor('/map/')));
+  writeOutput(join(DIST_DIR, 'approach', 'index.html'), renderTemplate(templates.approach, chromeFor('/approach/')));
   try {
     const aboutSource = readText(join(ROOT, 'content', 'about.md'));
-    writeOutput(join(DIST_DIR, 'about', 'index.html'), renderAboutPage(aboutSource, templates, chrome));
+    writeOutput(join(DIST_DIR, 'about', 'index.html'), renderAboutPage(aboutSource, templates, chromeFor('/about/')));
   } catch (error) {
     errors.push(error.code === 'ENOENT' ? 'about.md: content/about.md is missing' : error.message);
   }

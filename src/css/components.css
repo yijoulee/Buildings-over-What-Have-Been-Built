@@ -66,6 +66,58 @@
   text-underline-offset: 0.15em;
 }
 
+/* ── Red text block ─────────────────────────────────────── */
+/* From the earlier Approach page: white text on the site's red, offset against a white
+   figure panel. White on this red is 6.4:1, so small text passes AA. */
+.tone-block {
+  display: grid;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+  background: var(--colour-tone);
+  color: var(--colour-on-tone);
+}
+
+.tone-block__heading {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h2);
+  font-weight: 400;
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--tracking-h2);
+}
+
+/* ── Numbered list with circle markers ──────────────────── */
+.circle-list {
+  display: grid;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: circle-list;
+}
+
+.circle-list > li {
+  position: relative;
+  padding-inline-start: calc(var(--size-list-marker) + var(--space-xs));
+  counter-increment: circle-list;
+}
+
+.circle-list > li::before {
+  content: counter(circle-list);
+  position: absolute;
+  inset-block-start: calc((var(--line-height-h6) * 1em - var(--size-list-marker)) / 2);
+  inset-inline-start: 0;
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-list-marker);
+  block-size: var(--size-list-marker);
+  border-radius: 50%;
+  background: var(--colour-tone);
+  color: var(--colour-on-tone);
+  font-family: var(--font-display);
+  font-size: var(--font-size-caption);
+  line-height: 1;
+}
+
 /* ── Image frame with red corner marks ──────────────────── */
 /* An <img> can't have pseudo-elements, so the marks sit on a wrapper. One pseudo-element
    draws all four corners: each corner is two gradient bars, one along each edge. */
@@ -267,7 +319,8 @@
   inset-block: calc((var(--size-chip) - var(--size-target-min)) / 2);
 }
 
-.nav-chip__underlined {
+.nav-chip__underlined,
+.nav-chip[aria-current="page"] {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }

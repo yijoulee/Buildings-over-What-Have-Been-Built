@@ -3,3 +3,6 @@ data/
 .cache/
 node_modules/
 .env
+
+# Figure sources, tens of MB; scripts/optimise-figures.mjs writes the published copies.
+assets/figures/

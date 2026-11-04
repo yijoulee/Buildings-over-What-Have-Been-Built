@@ -27,6 +27,7 @@ site without failing the build. It ends with a summary: `N read, N built, N skip
 | `dist/case-studies/index.html` | The case studies index, from `src/templates/index.html`. Filter options come from `content/taxonomy.yml`. |
 | `dist/map/index.html` | The map, from `src/templates/map.html`. Uses Leaflet and OpenStreetMap tiles, set in `scripts/map-page.js`. |
 | `dist/case-studies/<slug>/index.html` | The case study page, from `src/templates/case-study*.html`. |
+| `dist/approach/index.html` | The Approach page, from `src/templates/approach.html`, with its copy in the template. Its figures are in `public/figures/approach/`, made by `node scripts/optimise-figures.mjs` from the large sources in `assets/figures/approach/`. Those sources are gitignored, so keep your own copy. Run the script again after replacing a figure. |
 | `dist/about/index.html` | The About page. Its text is in `content/about.md`: a `title`, a list of `sections` each with a `heading` and Markdown `body`, and an optional Markdown `note`. |
 | `dist/css/`, `dist/js/`, `dist/fonts/` | Copied from `src/css/`, `src/js/` and `public/`. Fonts are self-hosted, with their licences alongside them. |
 | `dist/images/<slug>/` | WebP images at widths 480, 960 and 1440. A narrower source is never enlarged; its own width becomes the largest size. Index cards get their own lighter files, at quality 50 rather than 80. |

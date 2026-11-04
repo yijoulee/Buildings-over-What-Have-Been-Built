@@ -1,0 +1,248 @@
+/* No Figma frame: the earlier Approach page's red blocks, white panels and circle markers,
+   built from the site's tokens and components. */
+.approach-page {
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--space-page);
+}
+
+.approach-intro {
+  display: grid;
+  gap: var(--space-xl);
+  padding-block-start: var(--space-md);
+  border-block-start: var(--border-hairline) solid var(--colour-ink);
+}
+
+.approach-lead {
+  max-inline-size: var(--size-measure);
+  font-size: var(--font-size-lead);
+  line-height: var(--line-height-h2);
+  letter-spacing: var(--tracking-h6);
+}
+
+.approach-section {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-section);
+}
+
+.approach-text {
+  display: grid;
+  gap: var(--space-xs);
+  max-inline-size: var(--size-measure);
+}
+
+.approach-text a,
+.approach-example a {
+  color: var(--colour-tone);
+  text-underline-offset: 0.15em;
+}
+
+/* ── Figures ────────────────────────────────────────────── */
+.approach-figure {
+  display: grid;
+  gap: var(--space-md);
+  min-inline-size: 0;
+}
+
+.approach-figure img {
+  inline-size: 100%;
+}
+
+.approach-figure__panel {
+  padding: var(--space-lg);
+}
+
+.approach-caption {
+  justify-self: center;
+  text-align: center;
+}
+
+/* The corner marks are 5px bars centred on the panel's edge, so the hero needs a little room
+   for them inside the content edge. */
+.approach-figure--hero .approach-figure__panel {
+  margin-inline: calc(var(--border-corner) / 2);
+}
+
+/* ── 1. A red block against Figure 2's panel ────────────── */
+.approach-weigh {
+  gap: var(--space-xl);
+}
+
+/* Side by side from 900px, the panel overlapping the block and starting lower, as on the
+   earlier page. */
+@media (min-width: 900px) {
+  .approach-weigh {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+  }
+
+  /* The panel covers this block's last column, so the text stops short of it. */
+  .approach-weigh__text {
+    grid-column: 1 / 7;
+    grid-row: 1;
+    align-self: start;
+    padding-inline-end: calc(100% / 6 + var(--space-xl));
+  }
+
+  .approach-weigh__figure {
+    position: relative;
+    grid-column: 6 / 13;
+    grid-row: 1;
+    margin-block-start: var(--space-2xl);
+  }
+}
+
+/* ── 2. The worked example ──────────────────────────────── */
+.approach-example {
+  display: grid;
+  gap: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--colour-surface);
+  border: var(--border-hairline) solid var(--colour-tone);
+}
+
+.approach-example__title em {
+  font-style: normal;
+}
+
+/* ── 3. The nine categories ─────────────────────────────── */
+.criteria {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.criteria__item {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2xs);
+  padding: var(--space-lg);
+  background: var(--colour-surface);
+  border: var(--border-hairline) solid var(--colour-ink);
+}
+
+.criteria dt {
+  color: var(--colour-tone);
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h5);
+}
+
+.criteria dd {
+  margin: 0;
+}
+
+@media (min-width: 600px) {
+  .criteria {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .criteria {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── 4. Figure 5 ────────────────────────────────────────── */
+/* Its labels are 14px at full size, so it never draws narrower than 900px, where they are
+   about 10px: on a narrower box it scrolls inside it instead. The content is under 900px
+   wide until a 1200px screen, so that is where the hint goes. Focusable so the keyboard
+   can scroll it too. */
+.approach-scroll {
+  overflow-x: auto;
+  padding: var(--space-lg);
+  background: var(--colour-surface);
+  border: var(--border-hairline) solid var(--colour-ink);
+}
+
+.approach-scroll img {
+  min-inline-size: var(--size-figure-scroll-min);
+}
+
+.approach-scroll__hint {
+  justify-self: end;
+  font-size: var(--font-size-caption);
+}
+
+@media (min-width: 1200px) {
+  .approach-scroll__hint {
+    display: none;
+  }
+}
+
+/* ── 5. The five parts ──────────────────────────────────── */
+.steps {
+  display: grid;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: steps;
+}
+
+.steps__item {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--space-2xs);
+  padding: var(--space-lg);
+  background: var(--colour-surface);
+  border: var(--border-hairline) solid var(--colour-ink);
+  counter-increment: steps;
+}
+
+.steps__name {
+  color: var(--colour-tone);
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  font-style: normal;
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h5);
+}
+
+.steps__name::before {
+  content: counter(steps) ". ";
+}
+
+/* A row only from 1200px: the longest name, Adaptive Strategy, needs about 170px. */
+@media (min-width: 1200px) {
+  .steps {
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-xl);
+  }
+
+  /* The arrow sits in the gap to the next step. Its alt text is empty, so screen readers
+     hear only the numbered list. */
+  .steps__item + .steps__item::before {
+    content: "→" / "";
+    position: absolute;
+    inset-block-start: var(--space-lg);
+    inset-inline-start: calc(-1 * var(--space-xl));
+    inline-size: var(--space-xl);
+    color: var(--colour-tone);
+    font-family: var(--font-display);
+    font-size: var(--font-size-h5);
+    line-height: var(--line-height-h6);
+    text-align: center;
+  }
+}
+
+/* ── Closing note ───────────────────────────────────────── */
+.approach-coda {
+  gap: var(--space-xs);
+  max-inline-size: var(--size-measure);
+  padding-block-start: var(--space-md);
+  border-block-start: var(--border-hairline) solid var(--colour-ink);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+.approach-coda__heading {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h5);
+  font-weight: 400;
+  line-height: var(--line-height-h6);
+  letter-spacing: var(--tracking-h5);
+}
