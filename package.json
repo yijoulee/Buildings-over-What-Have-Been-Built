@@ -5,6 +5,9 @@
   "description": "Portfolio of case studies from a master's thesis on adaptive reuse of heritage buildings.",
   "homepage": "",
   "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "build": "node scripts/build.js",
     "dev": "node scripts/build.js && npx serve dist"
