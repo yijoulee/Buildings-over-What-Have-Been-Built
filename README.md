@@ -11,7 +11,7 @@ The blog grew out of a master's thesis on the adaptive reuse of heritage buildin
 - **Function**: the building's original use and its new one
 - **Form**: geometry and spatial organisation, before and after
 - **Strategy**: the adaptive approaches applied to the building
-- **Analysis**: five sections covering the introduction, reuse goal, challenges, adaptive strategy and solutions, illustrated with drawings and before-and-after comparisons
+- **Analysis**: five sections covering the introduction, reuse goal, Challenge, adaptive strategy and Outcome, illustrated with drawings and before-and-after comparisons
 
 ## Explore
 
