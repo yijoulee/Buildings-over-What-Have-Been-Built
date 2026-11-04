@@ -38,9 +38,9 @@ export const sectionNames = [
 export const sectionHeadings = {
   introduction: 'Introduction',
   reuse_goal: 'Reuse Goal',
-  challenges: 'Challenges',
+  challenges: 'Challenge',
   adaptive_strategy: 'Adaptive Strategy',
-  solutions: 'Solutions',
+  solutions: 'Outcome',
 };
 
 export const sectionFields = [

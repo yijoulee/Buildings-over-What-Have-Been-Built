@@ -183,7 +183,6 @@
 }
 
 .steps__item {
-  position: relative;
   display: grid;
   align-content: start;
   gap: var(--space-2xs);
@@ -211,21 +210,6 @@
   .steps {
     grid-template-columns: repeat(5, 1fr);
     gap: var(--space-xl);
-  }
-
-  /* The arrow sits in the gap to the next step. Its alt text is empty, so screen readers
-     hear only the numbered list. */
-  .steps__item + .steps__item::before {
-    content: "→" / "";
-    position: absolute;
-    inset-block-start: var(--space-lg);
-    inset-inline-start: calc(-1 * var(--space-xl));
-    inline-size: var(--space-xl);
-    color: var(--colour-tone);
-    font-family: var(--font-display);
-    font-size: var(--font-size-h5);
-    line-height: var(--line-height-h6);
-    text-align: center;
   }
 }
 

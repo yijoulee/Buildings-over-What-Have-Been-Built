@@ -5,6 +5,9 @@
 //
 // Embedded images stay embedded. A browser showing an SVG through <img> loads nothing from
 // outside the file, so an image moved to its own file would simply disappear.
+//
+// Labels are set in Microsoft YaHei UI and hand-kerned words are joined back up; the source
+// files themselves are never changed.
 import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,6 +28,42 @@ const TARGET_BYTES = 500 * 1024;
 const STOP_BYTES = 1024 * 1024;
 
 const attr = (tag, name) => tag.match(new RegExp(`\\s${name}="([^"]*)"`))?.[1];
+
+// Every label in one family, so the figures read as a set wherever YaHei is installed.
+const FIGURE_FONT = `'Microsoft YaHei UI', sans-serif`;
+
+// In a <style> block the quotes are written &apos;, whose own semicolon mustn't end the value.
+function unifyFonts(svg) {
+  return svg
+    .replace(/font-family="([^"]*)"/g, (whole, value) => (/YaHei/.test(value) ? whole : `font-family="${FIGURE_FONT}"`))
+    .replace(/font-family:((?:&[a-z]+;|[^;}"])*)/g, (whole, value) => (/YaHei/.test(value) ? whole : `font-family:${FIGURE_FONT.replaceAll("'", '&apos;')}`));
+}
+
+// Illustrator hand-kerns some words by splitting them into pieces, each pinned to its own x
+// with negative letter-spacing. Those offsets only fit the exact font they were set in; any
+// other font, even a different weight, pushes letters into each other. Pieces on the same line
+// are joined back into one run, so the word keeps its even letter-spacing in any font.
+function joinKernedRuns(svg) {
+  return svg.replace(/(<text\b[^>]*>)([\s\S]*?)(<\/text>)/g, (whole, open, body, close) => {
+    const pieces = [...body.matchAll(/<tspan\b([^>]*)>([^<]*)<\/tspan>/g)];
+    if (pieces.length < 2 || pieces.map((p) => p[0]).join('') !== body.trim()) return whole;
+    // Only runs kerned inline, as in fig4. fig3 sets its spacing through classes, and joining
+    // those pieces would drop the class that sizes them.
+    if (!pieces.some(([, attrs]) => /font-kerning:\s*none|letter-spacing="/.test(attrs))) return whole;
+    const lines = new Map();
+    for (const [, attrs, text] of pieces) {
+      const y = attr(` ${attrs}`, 'y') ?? '0';
+      if (!lines.has(y)) lines.set(y, { attrs, text: '' });
+      lines.get(y).text += text;
+    }
+    if (lines.size === pieces.length) return whole;
+    const tspans = [...lines.values()].map(({ attrs, text }) => {
+      const kept = attrs.replace(/\s(letter-spacing|style)="[^"]*"/g, '');
+      return `<tspan${kept}>${text}</tspan>`;
+    });
+    return `${open}${tspans.join('')}${close}`;
+  });
+}
 
 // The scale a transform applies, from the length of its first column. Only matrix() and
 // scale() appear in these exports; translate() and rotate() leave the size alone.
@@ -98,7 +137,7 @@ let stop = false;
 for (const name of readdirSync(SOURCE_DIR).filter((file) => file.endsWith('.svg')).sort()) {
   const sourcePath = join(SOURCE_DIR, name);
   const before = statSync(sourcePath).size;
-  const source = readFileSync(sourcePath, 'utf8');
+  const source = joinKernedRuns(unifyFonts(readFileSync(sourcePath, 'utf8')));
   let result;
   for (const density of PIXEL_DENSITIES) {
     const { svg, report } = await shrinkImages(source, density);

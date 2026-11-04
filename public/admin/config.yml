@@ -141,6 +141,6 @@ collections:
         fields:
           - { name: introduction, label: Introduction, widget: object, fields: *section_fields }
           - { name: reuse_goal, label: Reuse Goal, widget: object, fields: *section_fields }
-          - { name: challenges, label: Challenges, widget: object, fields: *section_fields }
+          - { name: challenges, label: Challenge, widget: object, fields: *section_fields }
           - { name: adaptive_strategy, label: Adaptive Strategy, widget: object, fields: *section_fields }
-          - { name: solutions, label: Solutions, widget: object, fields: *section_fields }
+          - { name: solutions, label: Outcome, widget: object, fields: *section_fields }
