@@ -45,8 +45,20 @@
   min-inline-size: 0;
 }
 
+/* Grid items otherwise grow to their content, so Figure 5's frame would stretch to the 900px
+   figure and scroll the page instead of the box inside it. */
+.approach-figure > * {
+  min-inline-size: 0;
+}
+
 .approach-figure img {
   inline-size: 100%;
+}
+
+/* Figures 1 and 2 need less room than the plans and sections. */
+.approach-figure .approach-figure__compact {
+  inline-size: 80%;
+  margin-inline: auto;
 }
 
 .approach-figure__panel {
@@ -64,32 +76,56 @@
   margin-inline: calc(var(--border-corner) / 2);
 }
 
-/* ── 1. A red block against Figure 2's panel ────────────── */
-.approach-weigh {
+/* ── A red text block against a white block ─────────────── */
+/* Every numbered section: the text in a red block, its figure or example in a white one that
+   overlaps it and starts lower, as on the earlier page. Sections alternate sides. Stacked
+   below 900px, text first. */
+.approach-pair {
+  display: grid;
   gap: var(--space-xl);
 }
 
-/* Side by side from 900px, the panel overlapping the block and starting lower, as on the
-   earlier page. */
+/* White on the red: links stay underlined so they don't rely on colour, and the circle
+   markers invert so they still stand out. */
+.tone-block a {
+  color: var(--colour-on-tone);
+  text-underline-offset: 0.15em;
+}
+
+.tone-block .circle-list > li::before {
+  background: var(--colour-on-tone);
+  color: var(--colour-tone);
+}
+
 @media (min-width: 900px) {
-  .approach-weigh {
+  .approach-pair {
     grid-template-columns: repeat(12, 1fr);
     gap: 0;
   }
 
-  /* The panel covers this block's last column, so the text stops short of it. */
-  .approach-weigh__text {
+  /* The white block covers the red one's last column, so the text stops short of it. */
+  .approach-pair__text {
     grid-column: 1 / 7;
     grid-row: 1;
     align-self: start;
     padding-inline-end: calc(100% / 6 + var(--space-xl));
   }
 
-  .approach-weigh__figure {
+  .approach-pair__media {
     position: relative;
     grid-column: 6 / 13;
     grid-row: 1;
+    align-self: start;
     margin-block-start: var(--space-2xl);
+  }
+
+  .approach-pair--flip .approach-pair__text {
+    grid-column: 7 / 13;
+    padding-inline: calc(100% / 6 + var(--space-xl)) var(--space-xl);
+  }
+
+  .approach-pair--flip .approach-pair__media {
+    grid-column: 1 / 8;
   }
 }
 
@@ -99,57 +135,17 @@
   gap: var(--space-xl);
   padding: var(--space-lg);
   background: var(--colour-surface);
-  border: var(--border-hairline) solid var(--colour-tone);
+  border: var(--border-hairline) solid var(--colour-ink);
 }
 
 .approach-example__title em {
   font-style: normal;
 }
 
-/* ── 3. The nine categories ─────────────────────────────── */
-.criteria {
-  display: grid;
-  gap: var(--space-md);
-}
-
-.criteria__item {
-  display: grid;
-  align-content: start;
-  gap: var(--space-2xs);
-  padding: var(--space-lg);
-  background: var(--colour-surface);
-  border: var(--border-hairline) solid var(--colour-ink);
-}
-
-.criteria dt {
-  color: var(--colour-tone);
-  font-family: var(--font-display);
-  font-size: var(--font-size-h5);
-  line-height: var(--line-height-h6);
-  letter-spacing: var(--tracking-h5);
-}
-
-.criteria dd {
-  margin: 0;
-}
-
-@media (min-width: 600px) {
-  .criteria {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 900px) {
-  .criteria {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 /* ── 4. Figure 5 ────────────────────────────────────────── */
-/* Its labels are 14px at full size, so it never draws narrower than 900px, where they are
-   about 10px: on a narrower box it scrolls inside it instead. The content is under 900px
-   wide until a 1200px screen, so that is where the hint goes. Focusable so the keyboard
-   can scroll it too. */
+/* On a phone it keeps a 900px width and scrolls inside its box, rather than shrinking its
+   labels out of reach. From 900px it fits its half of the page like the other figures.
+   Focusable so the keyboard can scroll it too. */
 .approach-scroll {
   overflow-x: auto;
   padding: var(--space-lg);
@@ -166,50 +162,13 @@
   font-size: var(--font-size-caption);
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 900px) {
+  .approach-scroll img {
+    min-inline-size: 0;
+  }
+
   .approach-scroll__hint {
     display: none;
-  }
-}
-
-/* ── 5. The five parts ──────────────────────────────────── */
-.steps {
-  display: grid;
-  gap: var(--space-md);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: steps;
-}
-
-.steps__item {
-  display: grid;
-  align-content: start;
-  gap: var(--space-2xs);
-  padding: var(--space-lg);
-  background: var(--colour-surface);
-  border: var(--border-hairline) solid var(--colour-ink);
-  counter-increment: steps;
-}
-
-.steps__name {
-  color: var(--colour-tone);
-  font-family: var(--font-display);
-  font-size: var(--font-size-h5);
-  font-style: normal;
-  line-height: var(--line-height-h6);
-  letter-spacing: var(--tracking-h5);
-}
-
-.steps__name::before {
-  content: counter(steps) ". ";
-}
-
-/* A row only from 1200px: the longest name, Adaptive Strategy, needs about 170px. */
-@media (min-width: 1200px) {
-  .steps {
-    grid-template-columns: repeat(5, 1fr);
-    gap: var(--space-xl);
   }
 }
 

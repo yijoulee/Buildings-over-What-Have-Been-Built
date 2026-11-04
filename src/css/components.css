@@ -120,7 +120,16 @@
 
 /* ── Image frame with red corner marks ──────────────────── */
 /* An <img> can't have pseudo-elements, so the marks sit on a wrapper. One pseudo-element
-   draws all four corners: each corner is two gradient bars, one along each edge. */
+   draws all four corners: each corner is two gradient bars, one along each edge. Each corner
+   has its own colour, so a page can turn one black where it lies over red. */
+/* Registered as a length so scripts read it in pixels; unregistered it would read back as the
+   unresolved calc(). */
+@property --corner-length {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 .image-frame {
   --corner-length: calc(var(--size-corner-mark) + var(--border-corner));
   position: relative;
@@ -131,21 +140,24 @@
 }
 
 .image-frame::after {
-  --bar: linear-gradient(var(--colour-tone), var(--colour-tone));
+  --tl: linear-gradient(var(--corner-top-left, var(--colour-tone)), var(--corner-top-left, var(--colour-tone)));
+  --tr: linear-gradient(var(--corner-top-right, var(--colour-tone)), var(--corner-top-right, var(--colour-tone)));
+  --br: linear-gradient(var(--corner-bottom-right, var(--colour-tone)), var(--corner-bottom-right, var(--colour-tone)));
+  --bl: linear-gradient(var(--corner-bottom-left, var(--colour-tone)), var(--corner-bottom-left, var(--colour-tone)));
   content: "";
   position: absolute;
   /* Figma centres the 5px stroke on the image edge. */
   inset: calc(var(--border-corner) / -2);
   pointer-events: none;
   background:
-    var(--bar) top left / var(--corner-length) var(--border-corner),
-    var(--bar) top left / var(--border-corner) var(--corner-length),
-    var(--bar) top right / var(--corner-length) var(--border-corner),
-    var(--bar) top right / var(--border-corner) var(--corner-length),
-    var(--bar) bottom right / var(--corner-length) var(--border-corner),
-    var(--bar) bottom right / var(--border-corner) var(--corner-length),
-    var(--bar) bottom left / var(--corner-length) var(--border-corner),
-    var(--bar) bottom left / var(--border-corner) var(--corner-length);
+    var(--tl) top left / var(--corner-length) var(--border-corner),
+    var(--tl) top left / var(--border-corner) var(--corner-length),
+    var(--tr) top right / var(--corner-length) var(--border-corner),
+    var(--tr) top right / var(--border-corner) var(--corner-length),
+    var(--br) bottom right / var(--corner-length) var(--border-corner),
+    var(--br) bottom right / var(--border-corner) var(--corner-length),
+    var(--bl) bottom left / var(--corner-length) var(--border-corner),
+    var(--bl) bottom left / var(--border-corner) var(--corner-length);
   background-repeat: no-repeat;
 }
 
