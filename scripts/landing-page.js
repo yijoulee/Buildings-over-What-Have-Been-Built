@@ -70,8 +70,8 @@ const PIXEL_DENSITIES = [1, 2];
 const MEDIA_NARROW = '(max-width: 899px)';
 const MEDIA_STATIC = `${MEDIA_NARROW}, (prefers-reduced-motion: reduce), (scripting: none)`;
 
-// The narrow hero keeps only the bottom three rows of the grid, where the buildings stand.
-const FLAT = { top: 380, width: 1236, height: 286, widths: [640, 1280, 1800], quality: 80 };
+// The narrow hero is the whole stage, the same composition the wide one rests on.
+const FLAT = { top: 0, width: 1236, height: 666, widths: [640, 1280, 1800], quality: 80 };
 
 const round = (value) => Math.round(value * 10000) / 10000;
 const srcset = (variants) => variants.map(({ file, width }) => `/landing/${file} ${width}w`).join(', ');

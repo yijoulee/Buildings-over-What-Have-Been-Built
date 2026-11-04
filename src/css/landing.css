@@ -49,13 +49,16 @@
   paint-order: stroke fill;
 }
 
-/* Below 900px: the flat hero, cropped to the bottom three rows and bled to the screen edges
-   so the buildings get every available pixel. */
+/* The whole composition at every width: all seven grid rows, starting at the page margin like
+   the nav. Wider than its container by the Port House overhang; the grid lines up with the
+   content edges and the stage carries on past them, to be clipped at the screen edge. Below
+   900px it shows the flat hero, with the headline above it rather than over it. */
 .landing-stage {
-  --grid-rows: 3;
-  --stage-height: 286;
+  --grid-rows: 7;
+  --stage-height: var(--landing-stage-height);
   position: relative;
-  margin-inline: calc(-1 * var(--space-page));
+  inline-size: calc(var(--landing-stage-width) / var(--landing-grid-width) * 100%);
+  margin-inline: var(--border-hairline) 0;
   aspect-ratio: var(--landing-stage-width) / var(--stage-height);
 }
 
@@ -96,14 +99,9 @@
     padding: 0;
   }
 
-  /* Wider than its container by the Port House overhang; the grid lines up with the content
-     edges and the stage carries on past them. It paints over the headline, as in Figma. */
+  /* It paints over the headline, as in Figma. */
   .landing-stage {
-    --grid-rows: 7;
-    --stage-height: var(--landing-stage-height);
     z-index: 1;
-    inline-size: calc(var(--landing-stage-width) / var(--landing-grid-width) * 100%);
-    margin-inline: var(--border-hairline) 0;
   }
 
   .landing-flat {

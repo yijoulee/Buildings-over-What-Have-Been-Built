@@ -43,6 +43,15 @@
   letter-spacing: var(--tracking-h1);
 }
 
+/* The rule runs only under the word. A border would also run under the tracking after the
+   last letter, so it's drawn short by that much instead. */
+.page-title--fitted {
+  inline-size: fit-content;
+  border-block-end: 0;
+  background: linear-gradient(var(--colour-ink), var(--colour-ink)) no-repeat
+    0 100% / calc(100% - var(--tracking-h1)) var(--border-hairline);
+}
+
 /* ── Body text in a panel ───────────────────────────────── */
 .prose {
   padding: var(--space-xl) var(--space-lg) var(--space-lg);
