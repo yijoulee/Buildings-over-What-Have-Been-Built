@@ -21,6 +21,10 @@ strategy:
 sections:
   introduction:
     body: Originally built at the end of the 19th century to serve as the parliament building of the German Empire, the Reichstag suffered a devastating fire in 1933 and remained abandoned throughout the Cold War, when East and West Germany held their parliamentary sessions elsewhere. Only after reunification in 1990 was the building restored, with the architectural competition ultimately awarded to Norman Foster.
+    images:
+      - src: reichstag1896.webp
+        caption: The original Reichstag Building (designed by Paul Wallot, 1884–1894)
+        thumbnail: false
   reuse_goal:
     body: The project aimed to restore the Reichstag as the seat of the German parliament while acknowledging its complex architectural and political history.  A central issue in the restoration concerned the fate of the Reichstag’s historic dome, which had been destroyed by war. The winning design originally did not include reconstructing the dome. However, after the competition, some members of parliament demanded the reconstruction of the original dome.
   challenges:
@@ -37,6 +41,9 @@ sections:
     images:
       - src: screenshot-2026-11-13-193619.webp
         caption: Circulation Diagram of the Plenary Chamber, Reichstag Building
+        thumbnail: false
+      - src: 6a3325eb-ca5d-4ea1-9eec-cf677b3dc8f7.webp
+        caption: Spiral ramp inside the glass dome
         thumbnail: false
   solutions:
     body: |-
