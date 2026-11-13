@@ -4,7 +4,7 @@ title: Caixaforum Madrid
 architect: Herzog & de Meuron
 area_m2: 11000
 year_completed: '2003'
-year_sort: 0
+year_sort: 2003
 city: Madrid
 country: Spain
 coordinates:
