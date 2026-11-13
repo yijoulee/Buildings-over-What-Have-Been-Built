@@ -12,7 +12,7 @@ coordinates:
   - -3.6936059427206995
 original_function: Power Station
 original_form_geometry: Rectangular
-original_form_organisation: Centralized
+original_form_organisation: Singular
 new_function: Museum
 new_form_geometry: Rectangular
 new_form_organisation: Centralized
