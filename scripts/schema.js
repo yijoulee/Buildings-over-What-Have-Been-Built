@@ -55,6 +55,8 @@ export const imageFields = [
   { name: 'caption', type: 'string', required: true },
   // Required only under `figure: comparison`; validate.js enforces that.
   { name: 'label', type: 'string', required: false },
+  // The index and map cards use the image marked here; at most one per case study.
+  { name: 'thumbnail', type: 'boolean', required: false },
 ];
 
 export const MAX_IMAGES_PER_SECTION = 2;

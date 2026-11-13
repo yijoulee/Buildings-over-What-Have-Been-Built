@@ -91,10 +91,14 @@ async function buildSections(data, images, publishedFolders, warn) {
   return sections;
 }
 
-// The last image in the last section that has one: for a reuse project, usually the finished
-// building, and the one the Figma frame uses for Orsay.
+// The image marked as the thumbnail. Without one, the last image in the last section that has
+// one: for a reuse project, usually the finished building, and the one the Figma frame uses
+// for Orsay.
 function cardImageSource(data) {
-  return sectionNames.map((key) => data.sections[key].images ?? []).findLast((list) => list.length > 0)?.at(-1) ?? null;
+  const lists = sectionNames.map((key) => data.sections[key].images ?? []);
+  return lists.flat().find((image) => image.thumbnail === true)
+    ?? lists.findLast((list) => list.length > 0)?.at(-1)
+    ?? null;
 }
 
 async function buildRecord(data, categories, images, publishedFolders, warn) {

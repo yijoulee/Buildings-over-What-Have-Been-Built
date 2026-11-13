@@ -25,6 +25,9 @@ function findProblems(data, slug) {
     if (images.length !== 2) problems.push(`${name}: a comparison needs exactly two images.`);
     if (images.some((image) => isBlank(image.label))) problems.push(`${name}: each image in a comparison needs a label.`);
   }
+
+  const thumbnails = SECTION_NAMES.flatMap((name) => data.sections?.[name]?.images ?? []).filter((image) => image?.thumbnail === true);
+  if (thumbnails.length > 1) problems.push(`Only one image can be the thumbnail; ${thumbnails.length} are marked "Use as thumbnail".`);
   return problems;
 }
 

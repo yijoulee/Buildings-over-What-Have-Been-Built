@@ -41,6 +41,10 @@ function checkValue(field, value, path, { taxonomy, report }) {
       if (typeof value !== 'string') report(`${path} must be Markdown text`);
       break;
 
+    case 'boolean':
+      if (typeof value !== 'boolean') report(`${path} must be true or false`);
+      break;
+
     case 'number':
       if (typeof value !== 'number' || !Number.isFinite(value)) report(`${path} must be a number`);
       else if (field.integer && !Number.isInteger(value)) report(`${path} must be an integer`);
@@ -169,6 +173,17 @@ function checkSections(sections, ctx) {
     }
     checkFields(sectionFields, section, `sections.${name}.`, ctx);
     checkImages(section, name, ctx);
+  }
+
+  // A card shows one image, so a second mark would leave the choice to chance.
+  const thumbnails = sectionNames.flatMap((name) => {
+    const images = sections[name]?.images;
+    return Array.isArray(images)
+      ? images.flatMap((image, index) => (image?.thumbnail === true ? [`sections.${name}.images[${index}]`] : []))
+      : [];
+  });
+  if (thumbnails.length > 1) {
+    ctx.report(`only one image can be the thumbnail; ${thumbnails.length} are marked (${thumbnails.join(', ')})`);
   }
 }
 

@@ -92,6 +92,7 @@ x-options:
         - { name: src, label: Image, widget: image }
         - { name: caption, label: Caption, widget: string }
         - { name: label, label: Label, widget: string, required: false, hint: 'Such as Before or After. Required for a comparison.' }
+        - { name: thumbnail, label: Use as thumbnail, widget: boolean, required: false, default: false, hint: 'Shows this image on the case study index and the map. Mark one image at most; with none marked, the last image is used.' }
 
 collections:
   - name: case-studies
