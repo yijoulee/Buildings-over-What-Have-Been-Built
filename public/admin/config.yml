@@ -53,7 +53,7 @@ x-options:
     - { label: 'Residential: Hostel', value: Hostel }
     - { label: 'Commercial: Office Building', value: Office Building }
   form_geometry: &form_geometry_options [Rectangular, Circular, Triangular, Curved, Irregular]
-  form_organisation: &form_organisation_options [Linear, Radial, Clustered, Grid, Centralized]
+  form_organisation: &form_organisation_options [Linear, Radial, Clustered, Grid, Centralized, Singular]
   strategy: &strategy_options
     - Function Follows Form
     - Disconnect

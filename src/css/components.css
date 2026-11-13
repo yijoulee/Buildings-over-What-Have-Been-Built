@@ -386,6 +386,30 @@
   border-inline-start: var(--border-hairline) dashed var(--colour-ink);
 }
 
+/* The vertical line runs only as far as the tags: no padding above the first row or below
+   the last, so it starts at the top of the upper tags and stops at the bottom of the lower
+   ones. The header and the table's bottom margin keep the space the padding gave. */
+/* The row labels get the same padding as the tags, so each stays centred on its row's tags. */
+.matrix__table tbody th {
+  padding-block: var(--space-2xs);
+}
+
+.matrix__table tbody tr:first-child > * {
+  padding-block-start: 0;
+}
+
+.matrix__table tbody tr:last-child > * {
+  padding-block-end: 0;
+}
+
+.matrix__table thead th {
+  padding-block-end: var(--space-2xs);
+}
+
+.matrix__table {
+  margin-block-end: var(--space-2xs);
+}
+
 /* The longest taxonomy values have to fit three columns at 320px. */
 .matrix .tag-chip {
   font-size: var(--font-size-caption);
@@ -490,9 +514,13 @@
     gap: calc(2 * var(--space-lg));
   }
 
+  /* Centred rather than stretched to the Strategy box's height, which grows with long strategy
+     names: stretched rows would leave the tags floating mid-cell, with the dashed lines
+     running past them. */
   .matrix__table {
     inline-size: auto;
     flex: none;
+    align-self: center;
   }
 
   .matrix__strategy {

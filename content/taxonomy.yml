@@ -13,7 +13,7 @@ function:
 
 # ── FORM ──────────────────────────────────────────────
 form_geometry:     [Rectangular, Circular, Triangular, Curved, Irregular]
-form_organisation: [Linear, Radial, Clustered, Grid, Centralized]
+form_organisation: [Linear, Radial, Clustered, Grid, Centralized, Singular]
 
 # ── STRATEGY ──────────────────────────────────────────
 strategy: [Function Follows Form, Disconnect, Horizontal Proliferation,
