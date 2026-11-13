@@ -498,6 +498,25 @@
   text-align: center;
 }
 
+/* An icon is its own frame and carries its own name, so the box drops its border, dashed
+   inner line and white ground, and sizes to the icon. */
+.strategy-box:has(.strategy-box__icon) {
+  min-inline-size: 0;
+  max-inline-size: none;
+  min-block-size: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+
+.strategy-box:has(.strategy-box__icon)::after {
+  content: none;
+}
+
+.strategy-box__icon {
+  inline-size: var(--size-strategy-icon);
+}
+
 .strategy-box::after {
   content: "";
   position: absolute;

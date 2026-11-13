@@ -12,7 +12,7 @@ import { renderLandingPage } from './landing-page.js';
 import { renderMapPage } from './map-page.js';
 import { renderMarkdown } from './markdown.js';
 import { sectionHeadings, sectionNames } from './schema.js';
-import { renderTemplate } from './template.js';
+import { escapeHtml, renderTemplate } from './template.js';
 import { validate } from './validate.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -167,6 +167,17 @@ function renderFigure(image, sizes, isFirstOnPage, templates) {
   });
 }
 
+// The strategy's icon from scripts/strategy-icons.mjs, named the same way; the name in text
+// for a strategy that has no icon yet. The icon draws the name itself, so it's also its alt.
+const STRATEGY_ICONS = join(ROOT, 'public', 'icons', 'strategy');
+const strategySlug = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+function strategyContent(value) {
+  const file = `${strategySlug(value)}.svg`;
+  if (!existsSync(join(STRATEGY_ICONS, file))) return escapeHtml(value);
+  return `<img class="strategy-box__icon" src="/icons/strategy/${file}" width="100" height="130" alt="${escapeHtml(value)}">`;
+}
+
 function renderCaseStudy(record, templates) {
   let figureCount = 0;
   const renderFigures = (section) => {
@@ -203,7 +214,7 @@ function renderCaseStudy(record, templates) {
     new_form_geometry: record.new_form_geometry,
     new_form_organisation: record.new_form_organisation,
     strategies: record.strategy
-      .map((value) => renderTemplate(templates.strategy, { value }))
+      .map((value) => renderTemplate(templates.strategy, { value, content: strategyContent(value) }))
       .join(''),
     sections,
   });

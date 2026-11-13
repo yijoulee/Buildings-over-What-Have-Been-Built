@@ -120,6 +120,7 @@
   --size-heading-box: 4.3125rem;/* 69 */
   --size-caption-box: 1.625rem; /* 26 */
   --size-strategy-box: 2.9375rem; /* 47 */
+  --size-strategy-icon: 5rem;     /* 80, not in Figma: the strategy icons, 100 x 130 drawings */
   --size-target-min: 2.75rem;   /* 44, from CLAUDE.md; the 31px chips must reach it */
   --size-control: 1.875rem;     /* 30, visible height of search, Filter and Sort */
   --size-search: 23.6875rem;    /* 379 */
