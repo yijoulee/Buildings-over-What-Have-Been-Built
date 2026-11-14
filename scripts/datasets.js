@@ -24,7 +24,20 @@ const CSV_COLUMNS = [
   ['new_form_organisation', (r) => r.new_form_organisation],
   ['strategy', (r) => r.strategy.join('; ')],
   ['url', (r) => r.url],
+  // Provenance, keyed by figure number so each entry matches "Figure N" on the page. A figure
+  // with nothing recorded is left out rather than given an empty entry.
+  ['image_credits', (r) => byFigure(r, 'credit')],
+  ['image_rights', (r) => byFigure(r, 'rights')],
+  ['image_source_urls', (r) => byFigure(r, 'source_url')],
 ];
+
+function byFigure(record, key) {
+  const entries = record.sections
+    .flatMap((section) => section.images)
+    .filter((image) => image[key])
+    .map((image) => `${image.figure}: ${image[key]}`);
+  return entries.length > 0 ? entries.join(' | ') : null;
+}
 
 function csvCell(value) {
   if (value === undefined || value === null) return '';

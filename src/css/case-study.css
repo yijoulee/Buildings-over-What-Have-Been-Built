@@ -147,3 +147,65 @@
     --media-inset: 3%;
   }
 }
+
+/* ── Image sources ──────────────────────────────────────── */
+/* Apparatus, not content: grey, smaller than the body text, set off by a rule. */
+.cs-sources {
+  display: grid;
+  gap: var(--space-xl);
+  margin-block-start: var(--space-section);
+  padding-block-start: var(--space-xl);
+  border-block-start: var(--border-rule) solid var(--colour-ink);
+}
+
+/* Deliberately not the red boxed heading: a plain tracked label, so the sources read as a
+   footnote to the article rather than another section of it. */
+.cs-sources__heading {
+  color: var(--colour-ink);
+  font-family: var(--font-text);
+  font-size: var(--font-size-apparatus);
+  font-weight: 400;
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--tracking-apparatus);
+  text-transform: uppercase;
+}
+
+/* The <ol> numbers the entries itself, so entry N is figure N with nothing typed. */
+.source-list {
+  display: grid;
+  gap: var(--space-xs);
+  max-inline-size: 70ch;
+  padding-inline-start: var(--space-list-indent);
+  color: var(--colour-apparatus);
+  font-size: var(--font-size-apparatus);
+  line-height: var(--line-height-caption);
+  letter-spacing: var(--tracking-caption);
+  list-style: decimal;
+}
+
+.source-list__item {
+  scroll-margin-block: var(--space-xl);
+}
+
+.source-list__item:target {
+  outline: var(--border-hairline) dashed var(--colour-apparatus);
+  outline-offset: var(--space-3xs);
+}
+
+/* A credit can run over several lines in the CMS's text box; keep its breaks. */
+.source-list__credit {
+  white-space: pre-line;
+}
+
+.source-list__credit--missing {
+  font-style: italic;
+}
+
+.source-list__item > :not(.source-list__credit) {
+  margin-inline-start: var(--space-2xs);
+}
+
+.source-list a {
+  color: inherit;
+  text-underline-offset: 0.15em;
+}

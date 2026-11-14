@@ -60,6 +60,12 @@ export const imageFields = [
   { name: 'label', type: 'string', required: false },
   // The index and map cards use the image marked here; at most one per case study.
   { name: 'thumbnail', type: 'boolean', required: false },
+  // Provenance, written by the author and never generated. A missing credit is only a warning,
+  // because credits are being backfilled; the page says so rather than leaving a gap.
+  { name: 'credit', type: 'string', required: false },
+  // Free text, not an enum: "Public domain", "Author's own", a CC licence or a © line.
+  { name: 'rights', type: 'string', required: false },
+  { name: 'source_url', type: 'url', required: false },
 ];
 
 export const MAX_IMAGES_PER_SECTION = 2;

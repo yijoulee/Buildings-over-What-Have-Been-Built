@@ -250,6 +250,46 @@
   }
 }
 
+/* ── Figure reference ───────────────────────────────────── */
+/* The figure's number on its caption, linking to its source. Small and subordinate: the
+   caption is the content, this is apparatus. line-height 0 keeps the caption box's height. */
+.figure-ref {
+  margin-inline-start: var(--space-3xs);
+  font-size: var(--font-size-figure-ref);
+  line-height: 0;
+  letter-spacing: 0;
+}
+
+.figure-ref a {
+  color: var(--colour-tone);
+  text-underline-offset: 0.15em;
+}
+
+/* A jump from the sources list lands here; scroll-margin keeps the image clear of the top. */
+.figure[id] {
+  scroll-margin-block: var(--space-xl);
+}
+
+.figure[id]:target {
+  outline: var(--border-hairline) dashed var(--colour-tone);
+  outline-offset: var(--space-3xs);
+}
+
+/* ── Rights badge ───────────────────────────────────────── */
+/* Outlined and grey, so it can't be taken for a tag chip, which is filled. */
+.rights-badge {
+  display: inline-block;
+  max-inline-size: 100%;
+  padding-inline: var(--space-2xs);
+  border: var(--border-hairline) solid var(--colour-apparatus);
+  border-radius: var(--radius-none);
+  color: var(--colour-apparatus);
+  font-size: var(--font-size-badge);
+  line-height: var(--line-height-h5);
+  letter-spacing: var(--tracking-apparatus);
+  text-transform: uppercase;
+}
+
 /* ── Tag chip ───────────────────────────────────────────── */
 .tag-chip {
   display: inline-block;

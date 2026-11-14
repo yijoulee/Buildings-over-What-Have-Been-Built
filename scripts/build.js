@@ -46,6 +46,9 @@ async function buildImage(image, slug, images, publishedFolders, quality) {
   return {
     caption: image.caption ?? null,
     label: image.label ?? null,
+    credit: image.credit ?? null,
+    rights: image.rights ?? null,
+    source_url: image.source_url ?? null,
     width: largest.width,
     height: largest.height,
     variants: variants.map(({ file, width, height }) => ({
@@ -69,12 +72,17 @@ function checkComparisonRatios([first, second], path, warn) {
 
 async function buildSections(data, images, publishedFolders, warn) {
   const sections = [];
+  // Figure numbers are counted here, in document order, and never written in the Markdown:
+  // a hand-typed number drifts out of step with the sources list as soon as an image moves.
+  // Each image of a comparison is a figure of its own.
+  let figureNumber = 0;
   for (const [index, key] of sectionNames.entries()) {
     const section = data.sections[key];
     const figure = section.figure ?? 'separate';
     const builtImages = [];
     for (const image of section.images ?? []) {
-      builtImages.push(await buildImage(image, data.slug, images, publishedFolders));
+      const built = await buildImage(image, data.slug, images, publishedFolders);
+      builtImages.push({ figure: ++figureNumber, ...built });
     }
     if (figure === 'comparison') {
       checkComparisonRatios(builtImages, `sections.${key}`, warn);
@@ -100,6 +108,12 @@ function cardImageSource(data) {
   return lists.flat().find((image) => image.thumbnail === true)
     ?? lists.findLast((list) => list.length > 0)?.at(-1)
     ?? null;
+}
+
+function countUncredited(data) {
+  const images = sectionNames.flatMap((key) => data.sections[key].images ?? []);
+  const missing = images.filter((image) => typeof image.credit !== 'string' || image.credit.trim() === '').length;
+  return { missing, total: images.length };
 }
 
 async function buildRecord(data, categories, images, publishedFolders, warn) {
@@ -152,9 +166,40 @@ function renderFacts(record, templates) {
     .join('');
 }
 
-function renderFigure(image, sizes, isFirstOnPage, templates) {
+// The superscript links to a figure's entry in the sources list. "Figure 3 source" is what a
+// screen reader announces; on screen only the numeral shows.
+function renderFigureRefs(images) {
+  const links = images.map(({ figure }) =>
+    `<a href="#source-${figure}"><span class="visually-hidden">Figure </span>${figure}<span class="visually-hidden"> source</span></a>`);
+  return `<sup class="figure-ref">${links.join(', ')}</sup>`;
+}
+
+// The jump target for a sources entry's back-link. tabindex="-1" is what makes following the
+// link move focus here, not only scroll, with no script.
+const figureAnchor = (image) => ` id="figure-${image.figure}" tabindex="-1"`;
+
+function renderSources(record, templates) {
+  const images = record.sections.flatMap((section) => section.images);
+  const items = images.map((image) => {
+    const link = image.source_url
+      ? renderTemplate(templates.sourceLink, { url: image.source_url, number: image.figure })
+      : '';
+    return renderTemplate(templates.sourceItem, {
+      number: image.figure,
+      credit: image.credit ?? 'Source not yet recorded.',
+      missing: image.credit ? '' : ' source-list__credit--missing',
+      rights: image.rights ? renderTemplate(templates.rightsBadge, { rights: image.rights }) : '',
+      link,
+    });
+  });
+  return renderTemplate(templates.sources, { items: items.join('') });
+}
+
+function renderFigure(image, sizes, isFirstOnPage, templates, withSources) {
   const largest = image.variants.at(-1);
   return renderTemplate(templates.figure, {
+    anchor: withSources ? figureAnchor(image) : '',
+    refs: withSources ? renderFigureRefs([image]) : '',
     src: largest.url,
     srcset: image.variants.map(({ url, width }) => `${url} ${width}w`).join(', '),
     sizes,
@@ -170,9 +215,10 @@ function renderFigure(image, sizes, isFirstOnPage, templates) {
 
 // One image of a comparison. The caption is shared, so each image's alt text is its own caption
 // if it has one, otherwise its label with the shared caption.
-function renderComparisonItem(image, sharedCaption, sizes, isFirstOnPage, templates) {
+function renderComparisonItem(image, sharedCaption, sizes, isFirstOnPage, templates, withSources) {
   const largest = image.variants.at(-1);
   return renderTemplate(templates.comparisonItem, {
+    anchor: withSources ? figureAnchor(image) : '',
     src: largest.url,
     srcset: image.variants.map(({ url, width }) => `${url} ${width}w`).join(', '),
     sizes,
@@ -197,6 +243,9 @@ function strategyContent(value) {
 }
 
 function renderCaseStudy(record, templates) {
+  // No sources list until at least one image is credited: a heading over a list of "not yet
+  // recorded" says nothing, and without the list the superscripts would point nowhere.
+  const withSources = record.sections.some((section) => section.images.some((image) => image.credit));
   let figureCount = 0;
   const renderFigures = (section) => {
     if (section.images.length === 0) return '';
@@ -204,15 +253,16 @@ function renderCaseStudy(record, templates) {
     if (section.figure === 'comparison' && section.caption) {
       return renderTemplate(templates.comparison, {
         caption: section.caption,
+        refs: withSources ? renderFigureRefs(section.images) : '',
         items: section.images
-          .map((image) => renderComparisonItem(image, section.caption, sizes, figureCount++ === 0, templates))
+          .map((image) => renderComparisonItem(image, section.caption, sizes, figureCount++ === 0, templates, withSources))
           .join(''),
       });
     }
     return renderTemplate(templates.figures, {
       figure: section.figure,
       items: section.images
-        .map((image) => renderFigure(image, sizes, figureCount++ === 0, templates))
+        .map((image) => renderFigure(image, sizes, figureCount++ === 0, templates, withSources))
         .join(''),
     });
   };
@@ -243,6 +293,7 @@ function renderCaseStudy(record, templates) {
       .map((value) => renderTemplate(templates.strategy, { value, content: strategyContent(value) }))
       .join(''),
     sections,
+    sources: withSources ? renderSources(record, templates) : '',
   });
 }
 
@@ -282,6 +333,10 @@ async function main() {
     figure: readText(join(TEMPLATES_DIR, 'case-study-figure.html')),
     comparison: readText(join(TEMPLATES_DIR, 'case-study-comparison.html')),
     comparisonItem: readText(join(TEMPLATES_DIR, 'case-study-comparison-item.html')),
+    sources: readText(join(TEMPLATES_DIR, 'case-study-sources.html')),
+    sourceItem: readText(join(TEMPLATES_DIR, 'case-study-source-item.html')),
+    sourceLink: readText(join(TEMPLATES_DIR, 'case-study-source-link.html')),
+    rightsBadge: readText(join(TEMPLATES_DIR, 'rights-badge.html')),
     fact: readText(join(TEMPLATES_DIR, 'case-study-fact.html')),
     strategy: readText(join(TEMPLATES_DIR, 'case-study-strategy.html')),
     siteHeader: readText(join(TEMPLATES_DIR, 'site-header.html')),
@@ -326,6 +381,7 @@ async function main() {
   const imagesDir = relative(process.cwd(), IMAGES_DIR);
   const records = [];
   const errors = [];
+  const uncredited = [];
   const warnings = checkCmsConfig(readText(join(ROOT, 'public', 'admin', 'config.yml')), taxonomy);
 
   for (const filename of files) {
@@ -336,6 +392,8 @@ async function main() {
         errors.push(...result.errors);
         continue;
       }
+      warnings.push(...result.warnings);
+      uncredited.push([data.slug, countUncredited(data)]);
       const publishedFolders = [];
       const fileWarnings = [];
       const record = await buildRecord(data, categories, images, publishedFolders, (message) =>
@@ -388,6 +446,11 @@ async function main() {
   warnings.forEach((message) => console.warn(`Warning: ${message}`));
   errors.forEach((message) => console.error(message));
   console.log(`${files.length} read, ${records.length} built, ${files.length - records.length} skipped`);
+  const backlog = uncredited.filter(([, { missing }]) => missing > 0);
+  if (backlog.length > 0) {
+    const list = backlog.map(([slug, { missing, total }]) => `${slug} ${missing} of ${total}`).join(', ');
+    console.log(`Images without a credit: ${list}`);
+  }
 }
 
 // Per-file problems are handled above; reaching this means the taxonomy or a template

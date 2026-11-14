@@ -98,6 +98,15 @@ x-options:
         - { name: caption, label: Caption, widget: string, required: false, hint: 'Required, except in a comparison, which uses the shared caption.' }
         - { name: label, label: Label, widget: string, required: false, hint: 'Such as Before or After. Required for a comparison.' }
         - { name: thumbnail, label: Use as thumbnail, widget: boolean, required: false, default: false, hint: 'Shows this image on the case study index and the map. Mark one image at most; with none marked, the last image is used.' }
+        # Sveltia's select takes no custom value, so rights is free text with the usual values in the hint.
+        - { name: credit, label: Credit, widget: text, required: false, hint: 'The citation: creator, title, date, holding institution, reference number. Left empty, the page shows "Source not yet recorded."' }
+        - { name: rights, label: Rights, widget: string, required: false, hint: 'Shown as a small badge. Such as Public domain, Author''s own, CC BY-SA 4.0, or © A.C.T. Architecture.' }
+        - name: source_url
+          label: Source URL
+          widget: string
+          required: false
+          hint: 'The item in its holding collection.'
+          pattern: ['^https?://[^\s]+$', 'Must be a full web address starting with http:// or https://']
 
 collections:
   - name: case-studies

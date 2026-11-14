@@ -37,6 +37,20 @@ function checkValue(field, value, path, { taxonomy, report }) {
       }
       break;
 
+    case 'url': {
+      // Only web addresses: a javascript: or file: link must never reach the page.
+      let url = null;
+      try {
+        url = typeof value === 'string' ? new URL(value) : null;
+      } catch {
+        url = null;
+      }
+      if (!url || !['http:', 'https:'].includes(url.protocol) || /\s/.test(value)) {
+        report(`${path} '${value}' must be a full web address starting with http:// or https://`);
+      }
+      break;
+    }
+
     case 'markdown':
       if (typeof value !== 'string') report(`${path} must be Markdown text`);
       break;
@@ -191,18 +205,31 @@ function checkSections(sections, ctx) {
   if (thumbnails.length > 1) {
     ctx.report(`only one image can be the thumbnail; ${thumbnails.length} are marked (${thumbnails.join(', ')})`);
   }
+
+  // A warning, never an error: credits are being backfilled, and the page shows the gap.
+  const all = sectionNames.flatMap((name) => {
+    const images = sections[name]?.images;
+    return Array.isArray(images) ? images.map((image, index) => ({ image, path: `${name}.images[${index}]` })) : [];
+  });
+  const uncredited = all.filter(({ image }) => isMapping(image) && isBlank(image.credit));
+  if (uncredited.length > 0) {
+    ctx.warn(`${uncredited.length} of ${all.length} images have no credit (${uncredited.map(({ path }) => path).join(', ')})`);
+  }
 }
 
 /**
  * @param {object} frontmatter parsed case study frontmatter
  * @param {{filename: string, taxonomy: object, imagesDir: string}} options
  *   imagesDir is the root images folder; each case study's files sit in <imagesDir>/<slug>/
- * @returns {{valid: boolean, errors: string[]}}
+ * @returns {{valid: boolean, errors: string[], warnings: string[]}}
+ *   warnings never make a file invalid
  */
 export function validate(frontmatter, options) {
   const { filename = '(unknown file)', taxonomy, imagesDir } = options ?? {};
   const errors = [];
+  const warnings = [];
   const report = (message) => errors.push(`${filename}: ${message}`);
+  const warn = (message) => warnings.push(`${filename}: ${message}`);
 
   // The build reports every file's problems in one pass, so a bug here must
   // surface as an error against this file rather than abort the others.
@@ -211,7 +238,7 @@ export function validate(frontmatter, options) {
       report('frontmatter is missing or not a mapping');
     } else {
       const slug = frontmatter.slug;
-      const ctx = { taxonomy, imagesDir, slug, report, listings: {} };
+      const ctx = { taxonomy, imagesDir, slug, report, warn, listings: {} };
       checkFields(fields, frontmatter, '', ctx);
       if (typeof slug === 'string' && !isBlank(slug) && slug !== basename(filename, '.md')) {
         report(`slug '${slug}' does not match the filename`);
@@ -222,5 +249,5 @@ export function validate(frontmatter, options) {
     report(`validator failed: ${error.message}`);
   }
 
-  return { valid: errors.length === 0, errors };
+  return { valid: errors.length === 0, errors, warnings };
 }
