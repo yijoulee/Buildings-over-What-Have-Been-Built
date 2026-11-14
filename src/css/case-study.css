@@ -201,11 +201,17 @@
   font-style: italic;
 }
 
-.source-list__item > :not(.source-list__credit) {
+.source-list__item > * + * {
   margin-inline-start: var(--space-2xs);
 }
 
 .source-list a {
   color: inherit;
   text-underline-offset: 0.15em;
+}
+
+/* A URL is printed as itself and has no spaces to break at, so it may break anywhere rather
+   than push the page sideways at 320px. */
+.source-list__link {
+  overflow-wrap: anywhere;
 }

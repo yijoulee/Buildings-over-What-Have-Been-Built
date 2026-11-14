@@ -65,7 +65,8 @@ export const imageFields = [
   { name: 'credit', type: 'string', required: false },
   // Free text, not an enum: "Public domain", "Author's own", a CC licence or a © line.
   { name: 'rights', type: 'string', required: false },
-  { name: 'source_url', type: 'url', required: false },
+  // A list, since one image can be found in more than one collection.
+  { name: 'source_urls', type: 'url-list', required: false },
 ];
 
 export const MAX_IMAGES_PER_SECTION = 2;

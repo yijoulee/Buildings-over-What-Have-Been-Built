@@ -28,14 +28,16 @@ const CSV_COLUMNS = [
   // with nothing recorded is left out rather than given an empty entry.
   ['image_credits', (r) => byFigure(r, 'credit')],
   ['image_rights', (r) => byFigure(r, 'rights')],
-  ['image_source_urls', (r) => byFigure(r, 'source_url')],
+  ['image_source_urls', (r) => byFigure(r, 'source_urls')],
 ];
 
+// A figure's several URLs are separated by spaces, which a URL can never contain.
 function byFigure(record, key) {
   const entries = record.sections
     .flatMap((section) => section.images)
-    .filter((image) => image[key])
-    .map((image) => `${image.figure}: ${image[key]}`);
+    .map((image) => [image.figure, [image[key]].flat().filter(Boolean).join(' ')])
+    .filter(([, value]) => value !== '')
+    .map(([figure, value]) => `${figure}: ${value}`);
   return entries.length > 0 ? entries.join(' | ') : null;
 }
 

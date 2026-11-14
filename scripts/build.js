@@ -13,7 +13,7 @@ import { renderMapPage } from './map-page.js';
 import { renderMarkdown } from './markdown.js';
 import { sectionHeadings, sectionNames } from './schema.js';
 import { escapeHtml, renderTemplate } from './template.js';
-import { validate } from './validate.js';
+import { hasSourceDetail, validate } from './validate.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CASE_STUDIES_DIR = join(ROOT, 'content', 'case-studies');
@@ -48,7 +48,7 @@ async function buildImage(image, slug, images, publishedFolders, quality) {
     label: image.label ?? null,
     credit: image.credit ?? null,
     rights: image.rights ?? null,
-    source_url: image.source_url ?? null,
+    source_urls: image.source_urls ?? [],
     width: largest.width,
     height: largest.height,
     variants: variants.map(({ file, width, height }) => ({
@@ -110,9 +110,9 @@ function cardImageSource(data) {
     ?? null;
 }
 
-function countUncredited(data) {
+function countUnsourced(data) {
   const images = sectionNames.flatMap((key) => data.sections[key].images ?? []);
-  const missing = images.filter((image) => typeof image.credit !== 'string' || image.credit.trim() === '').length;
+  const missing = images.filter((image) => !hasSourceDetail(image)).length;
   return { missing, total: images.length };
 }
 
@@ -178,20 +178,21 @@ function renderFigureRefs(images) {
 // link move focus here, not only scroll, with no script.
 const figureAnchor = (image) => ` id="figure-${image.figure}" tabindex="-1"`;
 
+// An entry prints only what has been recorded, in citation order: credit, rights, then each
+// URL as itself. With nothing recorded it says so, so the backlog stays visible.
+function renderSourceEntry(image, templates) {
+  if (!hasSourceDetail(image)) return renderTemplate(templates.sourceMissing, {});
+  return [
+    image.credit ? renderTemplate(templates.sourceCredit, { credit: image.credit }) : '',
+    image.rights ? renderTemplate(templates.rightsBadge, { rights: image.rights }) : '',
+    ...image.source_urls.map((url) => renderTemplate(templates.sourceLink, { url })),
+  ].join('');
+}
+
 function renderSources(record, templates) {
   const images = record.sections.flatMap((section) => section.images);
-  const items = images.map((image) => {
-    const link = image.source_url
-      ? renderTemplate(templates.sourceLink, { url: image.source_url, number: image.figure })
-      : '';
-    return renderTemplate(templates.sourceItem, {
-      number: image.figure,
-      credit: image.credit ?? 'Source not yet recorded.',
-      missing: image.credit ? '' : ' source-list__credit--missing',
-      rights: image.rights ? renderTemplate(templates.rightsBadge, { rights: image.rights }) : '',
-      link,
-    });
-  });
+  const items = images.map((image) =>
+    renderTemplate(templates.sourceItem, { number: image.figure, entry: renderSourceEntry(image, templates) }));
   return renderTemplate(templates.sources, { items: items.join('') });
 }
 
@@ -243,9 +244,9 @@ function strategyContent(value) {
 }
 
 function renderCaseStudy(record, templates) {
-  // No sources list until at least one image is credited: a heading over a list of "not yet
-  // recorded" says nothing, and without the list the superscripts would point nowhere.
-  const withSources = record.sections.some((section) => section.images.some((image) => image.credit));
+  // No sources list until at least one image has something recorded: a heading over a list of
+  // "not yet recorded" says nothing, and without the list the superscripts would point nowhere.
+  const withSources = record.sections.some((section) => section.images.some(hasSourceDetail));
   let figureCount = 0;
   const renderFigures = (section) => {
     if (section.images.length === 0) return '';
@@ -336,6 +337,8 @@ async function main() {
     sources: readText(join(TEMPLATES_DIR, 'case-study-sources.html')),
     sourceItem: readText(join(TEMPLATES_DIR, 'case-study-source-item.html')),
     sourceLink: readText(join(TEMPLATES_DIR, 'case-study-source-link.html')),
+    sourceCredit: readText(join(TEMPLATES_DIR, 'case-study-source-credit.html')),
+    sourceMissing: readText(join(TEMPLATES_DIR, 'case-study-source-missing.html')),
     rightsBadge: readText(join(TEMPLATES_DIR, 'rights-badge.html')),
     fact: readText(join(TEMPLATES_DIR, 'case-study-fact.html')),
     strategy: readText(join(TEMPLATES_DIR, 'case-study-strategy.html')),
@@ -393,7 +396,7 @@ async function main() {
         continue;
       }
       warnings.push(...result.warnings);
-      uncredited.push([data.slug, countUncredited(data)]);
+      uncredited.push([data.slug, countUnsourced(data)]);
       const publishedFolders = [];
       const fileWarnings = [];
       const record = await buildRecord(data, categories, images, publishedFolders, (message) =>
@@ -449,7 +452,7 @@ async function main() {
   const backlog = uncredited.filter(([, { missing }]) => missing > 0);
   if (backlog.length > 0) {
     const list = backlog.map(([slug, { missing, total }]) => `${slug} ${missing} of ${total}`).join(', ');
-    console.log(`Images without a credit: ${list}`);
+    console.log(`Images with no source recorded: ${list}`);
   }
 }
 

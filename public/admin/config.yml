@@ -101,12 +101,13 @@ x-options:
         # Sveltia's select takes no custom value, so rights is free text with the usual values in the hint.
         - { name: credit, label: Credit, widget: text, required: false, hint: 'The citation: creator, title, date, holding institution, reference number. Left empty, the page shows "Source not yet recorded."' }
         - { name: rights, label: Rights, widget: string, required: false, hint: 'Shown as a small badge. Such as Public domain, Author''s own, CC BY-SA 4.0, or © A.C.T. Architecture.' }
-        - name: source_url
-          label: Source URL
-          widget: string
+        - name: source_urls
+          label: Source URLs
+          label_singular: Source URL
+          widget: list
           required: false
-          hint: 'The item in its holding collection.'
-          pattern: ['^https?://[^\s]+$', 'Must be a full web address starting with http:// or https://']
+          hint: 'Where the image is held or published. Add as many as you need; each is shown as a link.'
+          field: { name: url, label: URL, widget: string, pattern: ['^https?://[^\s]+$', 'Must be a full web address starting with http:// or https://'] }
 
 collections:
   - name: case-studies

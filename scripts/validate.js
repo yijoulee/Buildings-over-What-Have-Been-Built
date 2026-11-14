@@ -27,6 +27,16 @@ function allowedValues(taxonomy, listName) {
   return null;
 }
 
+// Only web addresses: a javascript: or file: link must never reach the page.
+function isWebAddress(value) {
+  if (typeof value !== 'string' || /\s/.test(value)) return false;
+  try {
+    return ['http:', 'https:'].includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+}
+
 function checkValue(field, value, path, { taxonomy, report }) {
   switch (field.type) {
     case 'string':
@@ -37,19 +47,15 @@ function checkValue(field, value, path, { taxonomy, report }) {
       }
       break;
 
-    case 'url': {
-      // Only web addresses: a javascript: or file: link must never reach the page.
-      let url = null;
-      try {
-        url = typeof value === 'string' ? new URL(value) : null;
-      } catch {
-        url = null;
+    case 'url-list':
+      if (!Array.isArray(value)) {
+        report(`${path} must be a list of web addresses`);
+        break;
       }
-      if (!url || !['http:', 'https:'].includes(url.protocol) || /\s/.test(value)) {
-        report(`${path} '${value}' must be a full web address starting with http:// or https://`);
-      }
+      value.forEach((item, index) => {
+        if (!isWebAddress(item)) report(`${path}[${index}] '${item}' must be a full web address starting with http:// or https://`);
+      });
       break;
-    }
 
     case 'markdown':
       if (typeof value !== 'string') report(`${path} must be Markdown text`);
@@ -162,6 +168,9 @@ function checkImages(section, name, ctx) {
       return;
     }
     checkFields(imageFields, image, `${path}.`, ctx);
+    if (!isBlank(image.source_url)) {
+      ctx.warn(`${path}.source_url is ignored: it is now source_urls, a list`);
+    }
     if (!sharedCaption && isBlank(image.caption)) {
       ctx.report(isComparison ? `${path}.caption is required, or a shared caption for the comparison` : `${path}.caption is required`);
     }
@@ -206,16 +215,21 @@ function checkSections(sections, ctx) {
     ctx.report(`only one image can be the thumbnail; ${thumbnails.length} are marked (${thumbnails.join(', ')})`);
   }
 
-  // A warning, never an error: credits are being backfilled, and the page shows the gap.
+  // A warning, never an error: sources are being backfilled, and the page shows the gap. Any one
+  // of credit, rights or a source URL counts as recorded.
   const all = sectionNames.flatMap((name) => {
     const images = sections[name]?.images;
     return Array.isArray(images) ? images.map((image, index) => ({ image, path: `${name}.images[${index}]` })) : [];
   });
-  const uncredited = all.filter(({ image }) => isMapping(image) && isBlank(image.credit));
-  if (uncredited.length > 0) {
-    ctx.warn(`${uncredited.length} of ${all.length} images have no credit (${uncredited.map(({ path }) => path).join(', ')})`);
+  const unsourced = all.filter(({ image }) => isMapping(image) && !hasSourceDetail(image));
+  if (unsourced.length > 0) {
+    ctx.warn(`${unsourced.length} of ${all.length} images have no source recorded (${unsourced.map(({ path }) => path).join(', ')})`);
   }
 }
+
+// Shared with build.js, so the warning and the page agree on what counts as recorded.
+export const hasSourceDetail = (image) =>
+  !isBlank(image.credit) || !isBlank(image.rights) || (Array.isArray(image.source_urls) && image.source_urls.length > 0);
 
 /**
  * @param {object} frontmatter parsed case study frontmatter
