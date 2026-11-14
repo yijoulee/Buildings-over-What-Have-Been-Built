@@ -37,6 +37,8 @@ sections:
         thumbnail: false
         source_urls:
           - https://www.inexhibit.com/mymuseum/caixaforum-madridherzog-de-meuron/
+          - https://www.schnetzerpuskas.com/en/projekte/1181_caixa-forum_madrid.html
+          - https://www.flickr.com/photos/meteomarco/14948615746/
   adaptive_strategy:
     body: |-
       The original brick façade was carefully dismantled during construction. After the new internal floor slabs were assembled, the entire façade was lifted back into position and temporarily supported by auxiliary structures. Concrete was then poured to integrate the historic façade with the new construction. Consequently, the reassembled façade became largely non-structural, serving primarily as an architectural envelope. The original arched windows were also sealed.
