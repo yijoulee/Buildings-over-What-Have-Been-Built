@@ -27,6 +27,7 @@ sections:
     images:
       - src: unnamed 1.png
         caption: Perspective Section of Musée d'Orsay
+        thumbnail: false
   reuse_goal:
     body: |-
       By the 1970s, the railway station had been abandoned. During the redevelopment competition, the architects aimed to preserve the historic structure while redefining the building’s relationship to the Seine’s urban fabric.
@@ -35,6 +36,7 @@ sections:
     images:
       - src: 1280px-Gare-d'Orsay-BaS 1.png
         caption: Gare d'Orsay
+        thumbnail: false
   challenges:
     body: |-
       In the original station layout, seven arches of various sizes faced the Seine and served as entrances/exits designed for efficient passenger flow. These doorways cut laterally across the platforms, enabling rapid circulation—suitable for a train station but unsuitable for a museum.
@@ -46,6 +48,7 @@ sections:
     images:
       - src: Orsay train station_ground floor plan 1.png
         caption: Gare d'Orsay, Ground Floor Plan
+        thumbnail: false
   adaptive_strategy:
     body: |-
       A.C.T. Architecture repositioned the entrance to the western plaza, orienting the main access along the longitudinal axis to meet museum functional requirements through a single controlled entry point.
@@ -60,18 +63,20 @@ sections:
     images:
       - src: Screenshot 2026-11-01 122051.png
         caption: Sectional Diagrams
+        thumbnail: false
   solutions:
     body: |-
       The reuse project focused on preserving the open, flowing spatial atmosphere created by the long-span cast-iron trusses and extensive glass roof.
 
       By making minimal yet strategic modifications, especially the reorientation of the main entrance, the architects successfully adapted the station’s spatial logic into a museum typology without compromising the identity of the original building.
     figure: comparison
+    caption: Under and After Repurposing Construction
     layout: image-left
     images:
       - src: 10002 1.png
-        caption: Under Repurposing Construction
         label: Before
+        thumbnail: false
       - src: musée-dorsay 1.png
-        caption: After Repurposing Construction
         label: After
+        thumbnail: false
 ---
