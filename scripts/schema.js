@@ -48,11 +48,14 @@ export const sectionFields = [
   { name: 'figure', type: 'enum', required: false, values: ['separate', 'comparison'] },
   // Overrides the layout the build alternates by section index.
   { name: 'layout', type: 'enum', required: false, values: ['text-left', 'image-left'] },
+  // One caption under both images of a comparison; validate.js decides when it is needed.
+  { name: 'caption', type: 'string', required: false },
 ];
 
 export const imageFields = [
   { name: 'src', type: 'string', required: true },
-  { name: 'caption', type: 'string', required: true },
+  // Required unless the section is a comparison with a shared caption; validate.js enforces that.
+  { name: 'caption', type: 'string', required: false },
   // Required only under `figure: comparison`; validate.js enforces that.
   { name: 'label', type: 'string', required: false },
   // The index and map cards use the image marked here; at most one per case study.

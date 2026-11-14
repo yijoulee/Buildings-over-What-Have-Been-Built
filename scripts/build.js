@@ -44,7 +44,7 @@ async function buildImage(image, slug, images, publishedFolders, quality) {
   publishedFolders.push({ folder, slug, files: variants.map(({ file }) => file) });
   const largest = variants.at(-1);
   return {
-    caption: image.caption,
+    caption: image.caption ?? null,
     label: image.label ?? null,
     width: largest.width,
     height: largest.height,
@@ -85,6 +85,7 @@ async function buildSections(data, images, publishedFolders, warn) {
       body_html: renderMarkdown(section.body),
       layout: section.layout ?? (index % 2 === 0 ? 'text-left' : 'image-left'),
       figure,
+      caption: section.caption ?? null,
       images: builtImages,
     });
   }
@@ -167,6 +168,23 @@ function renderFigure(image, sizes, isFirstOnPage, templates) {
   });
 }
 
+// One image of a comparison. The caption is shared, so each image's alt text is its own caption
+// if it has one, otherwise its label with the shared caption.
+function renderComparisonItem(image, sharedCaption, sizes, isFirstOnPage, templates) {
+  const largest = image.variants.at(-1);
+  return renderTemplate(templates.comparisonItem, {
+    src: largest.url,
+    srcset: image.variants.map(({ url, width }) => `${url} ${width}w`).join(', '),
+    sizes,
+    width: image.width,
+    height: image.height,
+    ratio: (image.width / image.height).toFixed(4),
+    alt: image.caption || (image.label ? `${image.label}: ${sharedCaption}` : sharedCaption),
+    label: image.label ?? '',
+    loading: isFirstOnPage ? 'eager' : 'lazy',
+  });
+}
+
 // The strategy's icon from scripts/strategy-icons.mjs, named the same way; the name in text
 // for a strategy that has no icon yet. The icon draws the name itself, so it's also its alt.
 const STRATEGY_ICONS = join(ROOT, 'public', 'icons', 'strategy');
@@ -183,6 +201,14 @@ function renderCaseStudy(record, templates) {
   const renderFigures = (section) => {
     if (section.images.length === 0) return '';
     const sizes = section.images.length > 1 ? IMAGE_SIZES.pair : IMAGE_SIZES.single;
+    if (section.figure === 'comparison' && section.caption) {
+      return renderTemplate(templates.comparison, {
+        caption: section.caption,
+        items: section.images
+          .map((image) => renderComparisonItem(image, section.caption, sizes, figureCount++ === 0, templates))
+          .join(''),
+      });
+    }
     return renderTemplate(templates.figures, {
       figure: section.figure,
       items: section.images
@@ -254,6 +280,8 @@ async function main() {
     section: readText(join(TEMPLATES_DIR, 'case-study-section.html')),
     figures: readText(join(TEMPLATES_DIR, 'case-study-figures.html')),
     figure: readText(join(TEMPLATES_DIR, 'case-study-figure.html')),
+    comparison: readText(join(TEMPLATES_DIR, 'case-study-comparison.html')),
+    comparisonItem: readText(join(TEMPLATES_DIR, 'case-study-comparison-item.html')),
     fact: readText(join(TEMPLATES_DIR, 'case-study-fact.html')),
     strategy: readText(join(TEMPLATES_DIR, 'case-study-strategy.html')),
     siteHeader: readText(join(TEMPLATES_DIR, 'site-header.html')),

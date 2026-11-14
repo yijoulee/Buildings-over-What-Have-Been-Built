@@ -74,7 +74,12 @@ x-options:
       widget: select
       required: false
       options: [separate, comparison]
-      hint: 'Comparison needs exactly two images, each with a label. Checked when you save.'
+      hint: 'Comparison needs exactly two images, each with a label, and a shared caption below. Checked when you save.'
+    - name: caption
+      label: Shared caption
+      widget: string
+      required: false
+      hint: 'For a comparison only: one caption shown under both images. Leave empty otherwise.'
     - name: layout
       label: Layout
       widget: select
@@ -90,7 +95,7 @@ x-options:
       summary: '{{fields.caption}}'
       fields:
         - { name: src, label: Image, widget: image }
-        - { name: caption, label: Caption, widget: string }
+        - { name: caption, label: Caption, widget: string, required: false, hint: 'Required, except in a comparison, which uses the shared caption.' }
         - { name: label, label: Label, widget: string, required: false, hint: 'Such as Before or After. Required for a comparison.' }
         - { name: thumbnail, label: Use as thumbnail, widget: boolean, required: false, default: false, hint: 'Shows this image on the case study index and the map. Mark one image at most; with none marked, the last image is used.' }
 

@@ -20,10 +20,15 @@ function findProblems(data, slug) {
 
   for (const name of SECTION_NAMES) {
     const section = data.sections?.[name];
-    if (section?.figure !== 'comparison') continue;
-    const images = section.images ?? [];
+    const images = section?.images ?? [];
+    if (section?.figure !== 'comparison') {
+      if (images.some((image) => isBlank(image.caption))) problems.push(`${name}: each image needs a caption.`);
+      if (!isBlank(section?.caption)) problems.push(`${name}: a shared caption is only for a comparison. Clear it, or set Figure to comparison.`);
+      continue;
+    }
     if (images.length !== 2) problems.push(`${name}: a comparison needs exactly two images.`);
     if (images.some((image) => isBlank(image.label))) problems.push(`${name}: each image in a comparison needs a label.`);
+    if (isBlank(section.caption)) problems.push(`${name}: a comparison needs a shared caption.`);
   }
 
   const thumbnails = SECTION_NAMES.flatMap((name) => data.sections?.[name]?.images ?? []).filter((image) => image?.thumbnail === true);

@@ -132,6 +132,9 @@ function checkImages(section, name, ctx) {
   }
 
   const isComparison = section.figure === 'comparison';
+  // A comparison takes one shared caption. Comparisons written before it existed still carry
+  // a caption on each image, and those keep working until a shared one is added.
+  const sharedCaption = isComparison && !isBlank(section.caption);
   if (isComparison && images.length !== COMPARISON_IMAGE_COUNT) {
     ctx.report(
       `${prefix} has ${images.length} images (figure: comparison needs exactly ${COMPARISON_IMAGE_COUNT})`,
@@ -145,6 +148,9 @@ function checkImages(section, name, ctx) {
       return;
     }
     checkFields(imageFields, image, `${path}.`, ctx);
+    if (!sharedCaption && isBlank(image.caption)) {
+      ctx.report(isComparison ? `${path}.caption is required, or a shared caption for the comparison` : `${path}.caption is required`);
+    }
     checkImageFile(image.src, `${path}.src`, ctx);
     if (isComparison && isBlank(image.label)) {
       ctx.report(`${path}.label is required when figure is comparison`);

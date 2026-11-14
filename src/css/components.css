@@ -221,6 +221,15 @@
   min-inline-size: 0;
 }
 
+/* In a comparison the label sits under its own image and the caption under both. */
+.figure > .figure-label {
+  align-self: center;
+}
+
+.figure-group__caption {
+  margin-block-start: var(--space-md);
+}
+
 .figure__caption {
   display: flex;
   flex-direction: column;
