@@ -53,13 +53,12 @@ sections:
       - Public visitors stand above elected officials, reversing the hierarchies of the former empire
       - Transforms the dome into the building’s most public and accessible circulation space
     figure: comparison
+    caption: Before and After Renovation
     images:
       - src: reichstag_berlin_before.webp
-        caption: Before reuse
-        label: before
+        label: Before
         thumbnail: false
       - src: reichstag_berlin_after.webp
-        caption: After reuse
-        label: after
+        label: After
         thumbnail: true
 ---
