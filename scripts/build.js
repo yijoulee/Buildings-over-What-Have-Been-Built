@@ -13,6 +13,7 @@ import { renderMapPage } from './map-page.js';
 import { renderMarkdown } from './markdown.js';
 import { sectionHeadings, sectionNames } from './schema.js';
 import { escapeHtml, renderTemplate } from './template.js';
+import { measureTitle } from './title-fit.js';
 import { hasSourceDetail, validate } from './validate.js';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -243,6 +244,12 @@ function strategyContent(value) {
   return `<img class="strategy-box__icon" src="/icons/strategy/${file}" width="100" height="130" alt="${escapeHtml(value)}">`;
 }
 
+// The title's longer line once split in two, for .page-title--two-lines to size it by.
+function titleFit(title) {
+  const { advance, chars } = measureTitle(ROOT, title);
+  return `--title-advance: ${advance}; --title-chars: ${chars}`;
+}
+
 function renderCaseStudy(record, templates) {
   // No sources list until at least one image has something recorded: a heading over a list of
   // "not yet recorded" says nothing, and without the list the superscripts would point nowhere.
@@ -283,6 +290,7 @@ function renderCaseStudy(record, templates) {
     header: renderTemplate(templates.siteHeader, { nav_start: templates.navLogo }),
     footer: templates.siteFooter,
     title: record.title,
+    title_fit: titleFit(record.title),
     facts: renderFacts(record, templates),
     original_function: record.original_function,
     original_form_geometry: record.original_form_geometry,

@@ -47,6 +47,9 @@
   --font-size-landing: clamp(2.25rem, 64 / 1140 * 100cqi, 4rem);
 
   /* ── Line heights (Figma line height / size) ────────── */
+  /* A two-line title is sized to fill 98% of its column, so rounding and a glyph's overhang
+     can't tip it onto a third line. */
+  --title-fit: 0.98;
   --line-height-h1: 1.28;       /* rendered box is 82/64; the variable says 100/64 */
   --line-height-h2: 1.2;        /* 48/40 */
   --line-height-h5: 1.5;        /* 30/20 */
@@ -58,7 +61,11 @@
   /* ── Letter spacing ─────────────────────────────────── */
   /* Fluid because heavy tracking breaks words apart on narrow screens. The max is the
      Figma percentage; the vw term reaches that max at 1440px. */
-  --tracking-h1: clamp(0.08em, 0.889vw, 0.2em);   /* 20% */
+  /* h1 also in parts, since a two-line title is sized from them. title-fit.js repeats the max. */
+  --tracking-h1-min: 0.08;
+  --tracking-h1-fluid: 0.889vw;
+  --tracking-h1-max: 0.2;
+  --tracking-h1: clamp(var(--tracking-h1-min) * 1em, var(--tracking-h1-fluid), var(--tracking-h1-max) * 1em); /* 20% */
   --tracking-h2: clamp(0.04em, 0.278vw, 0.1em);   /* 10% */
   --tracking-h5: clamp(0.05em, 0.139vw, 0.1em);   /* 10% */
   --tracking-h6: 0.05em;                          /* 5% */

@@ -14,6 +14,12 @@
   border-block: var(--border-hairline) solid var(--colour-ink);
 }
 
+/* The title is sized against this column, not the page: on wide screens it shares the row
+   with the matrix. */
+.cs-head__intro {
+  container-type: inline-size;
+}
+
 .cs-meta {
   display: grid;
   gap: var(--space-2xs);

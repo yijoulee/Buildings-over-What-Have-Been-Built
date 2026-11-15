@@ -43,6 +43,23 @@
   letter-spacing: var(--tracking-h1);
 }
 
+/* A case study title is never more than two lines. The build measures its longer line once
+   split in two: --title-advance em of glyphs and --title-chars letters, each tracked. This is
+   the size f at which that line fills the column. Tracking is clamp(min em, fluid vw, max em),
+   so the line is max(f(A + min n), min(fA + n fluid, f(A + max n))) wide, inverted here.
+   The outer min() leaves every title that already fits at the normal size. */
+.page-title--two-lines {
+  --title-line: calc(100cqi * var(--title-fit));
+  font-size: min(
+    var(--font-size-h1),
+    var(--title-line) / (var(--title-advance) + var(--tracking-h1-min) * var(--title-chars)),
+    max(
+      (var(--title-line) - var(--title-chars) * var(--tracking-h1-fluid)) / var(--title-advance),
+      var(--title-line) / (var(--title-advance) + var(--tracking-h1-max) * var(--title-chars))
+    )
+  );
+}
+
 /* The rule runs only under the word. A border would also run under the tracking after the
    last letter, so it's drawn short by that much instead. */
 .page-title--fitted {
