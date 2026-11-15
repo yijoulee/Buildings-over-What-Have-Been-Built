@@ -3,14 +3,14 @@ slug: hedmark-museum
 title: Hedmark Museum
 architect: Sverre Fehn
 area_m2: 570
-year_completed: '1971'
-year_sort: 1971
+year_completed: '1979'
+year_sort: 1979
 city: Hamar
 country: Norway
 coordinates:
   - 60.792623679960684
   - 11.039183164528028
-original_function: Church
+original_function: Archaeological Site
 original_form_geometry: Irregular
 original_form_organisation: Clustered
 new_function: Museum
@@ -20,7 +20,7 @@ strategy:
   - Disconnect
 sections:
   introduction:
-    body: The Hedmark Museum (1967–1979), designed by Sverre Fehn, is located on a lakeside promontory west of Hamar, Norway. The museum is built within the remains of a medieval bishop’s palace and a later barn that incorporated parts of the medieval ruins into its walls. Today the complex holds archaeological finds alongside Hedmark’s regional folk collections, shown in display fittings Fehn designed together with the building.
+    body: The Hedmark Museum, designed by Sverre Fehn, is located on a lakeside promontory west of Hamar, Norway. The museum is built within the remains of a medieval bishop’s palace and a later barn that incorporated parts of the medieval ruins into its walls. Today the complex holds archaeological finds alongside Hedmark’s regional folk collections, shown in display fittings Fehn designed together with the building.
   reuse_goal:
     body: The project aims to transform the historic ruins into a museum while preserving their physical integrity and historical character. Old and new are kept visibly distinct, and neither is disguised as the other. Radford describes the relationship as “a conversation, a responsive cohesion” (Radford et al., 2014). The goal is not to complete the ruin but to make it usable as it is. The new structures carry the museum’s programme, so the old walls never have to be rebuilt to serve it.
   challenges:
