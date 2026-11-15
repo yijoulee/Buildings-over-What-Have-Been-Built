@@ -207,7 +207,7 @@
   font-style: italic;
 }
 
-.source-list__item > * + * {
+.source-list__back {
   margin-inline-start: var(--space-2xs);
 }
 

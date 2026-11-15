@@ -292,21 +292,6 @@
   outline-offset: var(--space-3xs);
 }
 
-/* ── Rights badge ───────────────────────────────────────── */
-/* Outlined and grey, so it can't be taken for a tag chip, which is filled. */
-.rights-badge {
-  display: inline-block;
-  max-inline-size: 100%;
-  padding-inline: var(--space-2xs);
-  border: var(--border-hairline) solid var(--colour-apparatus);
-  border-radius: var(--radius-none);
-  color: var(--colour-apparatus);
-  font-size: var(--font-size-badge);
-  line-height: var(--line-height-h5);
-  letter-spacing: var(--tracking-apparatus);
-  text-transform: uppercase;
-}
-
 /* ── Tag chip ───────────────────────────────────────────── */
 .tag-chip {
   display: inline-block;

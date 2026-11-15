@@ -180,14 +180,15 @@ function renderFigureRefs(images) {
 const figureAnchor = (image) => ` id="figure-${image.figure}" tabindex="-1"`;
 
 // An entry prints only what has been recorded, in citation order: credit, rights, then each
-// URL as itself. With nothing recorded it says so, so the backlog stays visible.
+// URL as itself, set apart by a bar. With nothing recorded it says so, so the backlog stays
+// visible. The bar is hidden from screen readers, which pause at the spaces either side.
 function renderSourceEntry(image, templates) {
   if (!hasSourceDetail(image)) return renderTemplate(templates.sourceMissing, {});
   return [
     image.credit ? renderTemplate(templates.sourceCredit, { credit: image.credit }) : '',
-    image.rights ? renderTemplate(templates.rightsBadge, { rights: image.rights }) : '',
+    image.rights ? renderTemplate(templates.sourceRights, { rights: image.rights }) : '',
     ...image.source_urls.map((url) => renderTemplate(templates.sourceLink, { url })),
-  ].join('');
+  ].filter(Boolean).join(' <span aria-hidden="true">|</span> ');
 }
 
 function renderSources(record, templates) {
@@ -347,7 +348,7 @@ async function main() {
     sourceLink: readText(join(TEMPLATES_DIR, 'case-study-source-link.html')),
     sourceCredit: readText(join(TEMPLATES_DIR, 'case-study-source-credit.html')),
     sourceMissing: readText(join(TEMPLATES_DIR, 'case-study-source-missing.html')),
-    rightsBadge: readText(join(TEMPLATES_DIR, 'rights-badge.html')),
+    sourceRights: readText(join(TEMPLATES_DIR, 'case-study-source-rights.html')),
     fact: readText(join(TEMPLATES_DIR, 'case-study-fact.html')),
     strategy: readText(join(TEMPLATES_DIR, 'case-study-strategy.html')),
     siteHeader: readText(join(TEMPLATES_DIR, 'site-header.html')),
