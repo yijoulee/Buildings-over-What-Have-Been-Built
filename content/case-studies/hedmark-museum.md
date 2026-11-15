@@ -53,7 +53,7 @@ sections:
       - src: pasted-image-1794774620638.webp
         caption: Suspended concrete room and walkway
         thumbnail: false
-        rights: Hélène Binet
+        rights: © Hélène Binet
         source_urls:
           - https://archeyes.com/hedmark-museum-by-sverre-fehn-reimagining-time-and-space/
   solutions:
@@ -68,7 +68,7 @@ sections:
       - src: pasted-image-1794774380091.webp
         caption: The museum courtyard with medieval ruins
         thumbnail: false
-        rights: Anno Domkirkeoddens fotoarkiv
+        rights: © Anno Domkirkeoddens fotoarkiv
         source_urls:
           - https://domkirkeodden.no/en/medieval-ruins
 ---
