@@ -55,6 +55,8 @@ sections:
       More broadly, certain characteristics of former office buildings make them particularly suitable for residential conversion. Relatively small floorplates, large operable windows, high ceilings, and unobstructed views provide favourable conditions for creating residential layouts.
 
       The conversion of former office buildings into apartments and lofts has gradually emerged as a form of urban housing that integrates living and working spaces. Such developments can also attract residents back from suburban areas, reducing commuting time and energy consumption.
+
+      **Reference** Gause, Jo Allen. (1996). New uses for obsolete buildings. Washington, D.C.: Urban Land Institute.
     figure: comparison
     caption: Before and after redevelopment
     images:
