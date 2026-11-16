@@ -28,6 +28,8 @@ sections:
       - src: 617dc011-cfc5-472c-91ce-c1d0bbe7d2a7.webp
         caption: Arches as the defining architectural motif of the museum
         thumbnail: false
+        source_urls:
+          - https://rafaelmoneo.com/en/projects/national-museum-of-roman-art/
   reuse_goal:
     body: The project aims to create a museum that both preserves and exhibits the archaeological remains of ancient Mérida. The museum was conceived as a link between different historical periods, representing not only the city's Roman heritage but also its continuing urban history. Its architecture draws upon Roman construction traditions while employing contemporary design principles to accommodate modern museum functions.
   challenges:
