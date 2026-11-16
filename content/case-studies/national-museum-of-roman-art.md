@@ -59,7 +59,7 @@ sections:
           - https://drawingmatter.org/stan-allen-on-drawing-with-rafael-moneo-madrid-1984/
       - src: df93ad80-caa9-4f02-be88-304fac95ae9a.webp
         caption: Structural columns of the museum positioned to avoid the existing archaeological remains.
-        thumbnail: false
+        thumbnail: true
         source_urls:
           - https://rafaelmoneo.com/en/projects/national-museum-of-roman-art/
   solutions:
