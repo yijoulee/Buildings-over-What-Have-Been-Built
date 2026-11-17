@@ -61,4 +61,6 @@ sections:
       - src: pasted-image-1794937702517.webp
         caption: Exterior of Chiesa di San Lorenzo in Miranda
         thumbnail: true
+        source_urls:
+          - https://www.turismoroma.it/en/places/church-san-lorenzo-de-speziali-miranda-formerly-temple-antoninus-and-faustina
 ---
