@@ -49,7 +49,7 @@ sections:
         thumbnail: false
         credit: 'Photo: Yijou Lee, 2023'
         rights: Glass corridor at the junction of the old building and the Wolk
-      - src: image-3.webp
+      - src: image-6.webp
         caption: North-facing window of the Wolk, overlooking the old city
         thumbnail: false
         credit: 'Photo: Yijou Lee, 2023'
