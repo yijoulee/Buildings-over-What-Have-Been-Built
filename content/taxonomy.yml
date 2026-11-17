@@ -4,13 +4,13 @@
 
 function:
   Transport:         [Train Station, Cruise Terminal]
-  Industry & Energy: [Power Station, Gasometer, Fuel Depot, Warehouse]
+  Industry & Energy: [Power Station, Gasometer, Fuel Depot, Warehouse, Factory]
   Religious:         [Church, Temple]
   Defensive:         [Defensive Wall, Castle, Arsenal]
   Cultural & Civic:  [Museum, Theatre, Congress Hall, Archaeological Site, Education Facility,
-                      Library]
+                      Library, Courthouse, Government Building, Prison]
   Residential:       [House, Collective Housing, Hostel]
-  Commercial:        [Office Building]
+  Commercial:        [Office Building, Retail, Book Store, Marketplace]
 
 # ── FORM ──────────────────────────────────────────────
 form_geometry:     [Rectangular, Circular, Triangular, Curved, Irregular, Polygonal, Collided]
