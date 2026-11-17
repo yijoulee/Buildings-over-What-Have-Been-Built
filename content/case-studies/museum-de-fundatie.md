@@ -24,7 +24,7 @@ sections:
     images:
       - src: pasted-image-1794929909646.webp
         caption: Blijmarkt façade of the former Palace of Justice, with the Wolk above
-        thumbnail: false
+        thumbnail: true
         source_urls:
           - https://www.ceramicarchitectures.com/obras/museum-de-fundatie/
   reuse_goal:
