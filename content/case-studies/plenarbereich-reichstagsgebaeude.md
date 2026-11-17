@@ -12,10 +12,10 @@ coordinates:
   - 13.376082863673677
 original_function: Congress Hall
 original_form_geometry: Rectangular
-original_form_organisation: Singular
+original_form_organisation: Centralized
 new_function: Congress Hall
 new_form_geometry: Rectangular
-new_form_organisation: Singular
+new_form_organisation: Centralized
 strategy:
   - Overlap
 sections:
