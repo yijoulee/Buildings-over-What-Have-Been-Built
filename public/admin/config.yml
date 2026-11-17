@@ -44,15 +44,18 @@ x-options:
     - { label: 'Religious: Temple', value: Temple }
     - { label: 'Defensive: Defensive Wall', value: Defensive Wall }
     - { label: 'Defensive: Castle', value: Castle }
+    - { label: 'Defensive: Arsenal', value: Arsenal }
     - { label: 'Cultural & Civic: Museum', value: Museum }
     - { label: 'Cultural & Civic: Theatre', value: Theatre }
     - { label: 'Cultural & Civic: Congress Hall', value: Congress Hall }
     - { label: 'Cultural & Civic: Archaeological Site', value: Archaeological Site }
+    - { label: 'Cultural & Civic: Education Facility', value: Education Facility }
+    - { label: 'Cultural & Civic: Library', value: Library }
     - { label: 'Residential: House', value: House }
     - { label: 'Residential: Collective Housing', value: Collective Housing }
     - { label: 'Residential: Hostel', value: Hostel }
     - { label: 'Commercial: Office Building', value: Office Building }
-  form_geometry: &form_geometry_options [Rectangular, Circular, Triangular, Curved, Irregular]
+  form_geometry: &form_geometry_options [Rectangular, Circular, Triangular, Curved, Irregular, Polygonal, Collided]
   form_organisation: &form_organisation_options [Linear, Radial, Clustered, Grid, Centralized, Singular]
   strategy: &strategy_options
     - Function Follows Form

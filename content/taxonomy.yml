@@ -6,13 +6,14 @@ function:
   Transport:         [Train Station, Cruise Terminal]
   Industry & Energy: [Power Station, Gasometer, Fuel Depot, Warehouse]
   Religious:         [Church, Temple]
-  Defensive:         [Defensive Wall, Castle]
-  Cultural & Civic:  [Museum, Theatre, Congress Hall, Archaeological Site]
+  Defensive:         [Defensive Wall, Castle, Arsenal]
+  Cultural & Civic:  [Museum, Theatre, Congress Hall, Archaeological Site, Education Facility,
+                      Library]
   Residential:       [House, Collective Housing, Hostel]
   Commercial:        [Office Building]
 
 # ── FORM ──────────────────────────────────────────────
-form_geometry:     [Rectangular, Circular, Triangular, Curved, Irregular]
+form_geometry:     [Rectangular, Circular, Triangular, Curved, Irregular, Polygonal, Collided]
 form_organisation: [Linear, Radial, Clustered, Grid, Centralized, Singular]
 
 # ── STRATEGY ──────────────────────────────────────────
