@@ -2,7 +2,7 @@
 slug: museum-de-fundatie
 title: Museum de Fundatie
 architect: Bierman Henket architecten
-area_m2: 1000
+area_m2: 4150
 year_completed: '2013'
 year_sort: 2013
 city: Zwolle
