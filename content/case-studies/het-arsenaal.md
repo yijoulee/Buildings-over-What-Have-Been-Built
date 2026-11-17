@@ -38,7 +38,7 @@ sections:
       - **Openness versus privacy**: staff preferred enclosed offices over a fully open plan.
     images:
       - src: arsenaal_gl_plan_rotate.webp
-        caption: Ground floor plan of het arsenaal(2020)
+        caption: Ground floor plan of het arsenaal (2020)
         thumbnail: false
         credit: 'Photo: Stijn Poelstra'
         source_urls:
@@ -55,7 +55,7 @@ sections:
     images:
       - src: image.webp
         caption: Study hall in the west courtyard, under the timber-and-glass roof
-        thumbnail: false
+        thumbnail: true
         credit: 'Photo: Yijou Lee, 2023'
       - src: image-1.webp
         caption: Original timber beams left exposed across an opened floor
