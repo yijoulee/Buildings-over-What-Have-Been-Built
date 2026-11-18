@@ -23,7 +23,7 @@ sections:
     body: 'Pakhuis Santos was built in 1901–1902 on the Katendrecht peninsula, facing the Rijnhaven, to a design by J.P. Stok and J.J. Kanters. It served as a store for coffee shipped in from Brazil: six storeys of deep, dim floors on a slender metal column frame, wrapped in ornamented Beaux-Arts façades to the north and south. After decades of storing other goods it stood empty, but its interior survived almost untouched, and it was listed as a national monument in 2000. A first conversion began in 2016, when RHWZ and WDJArchitecten designed a two-storey rooftop extension and a retail fit-out for the Hamburg design-store operator Stilwerk.'
     images:
       - src: pasted-image-1795026759665.webp
-        caption: Original Santos warehouse
+        caption: The original Santos warehouse (designed by J.P. Stok and J.J. Kanters)
         thumbnail: false
         credit: ©Graafland, 1917
         source_urls:
