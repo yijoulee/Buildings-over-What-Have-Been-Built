@@ -65,7 +65,7 @@ sections:
     images:
       - src: civic_architects_-_lochal_tilburg_-_credits_stijn_bollaert_-_02.webp
         caption: Stair landscape beneath the riveted steel frame
-        thumbnail: false
+        thumbnail: true
         credit: 'Photo: Stijn Bollaert'
         source_urls:
           - https://www.archdaily.com/909540/lochal-library-mecanoo-plus-civic-architects-plus-braaksma-and-roos-architectenbureau
