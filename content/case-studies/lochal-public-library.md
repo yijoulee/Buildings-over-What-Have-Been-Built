@@ -55,7 +55,7 @@ sections:
         caption: Textile screen as a movable room divider within the open hall
         thumbnail: false
         credit: 'Photo: Yijou Lee, 2026'
-      - src: lochal_-_longitidonal_section_-_01_-_civic_architects.webp
+      - src: lochal_-_longitidonal_section_-_01_-_civic_architects-1.webp
         caption: Longitudinal section C–C′ through the transformed hall
         thumbnail: false
         source_urls:
