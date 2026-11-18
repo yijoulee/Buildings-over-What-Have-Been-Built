@@ -30,6 +30,13 @@ sections:
           - https://nvbs.com/wisselexpositie/in-en-om-de-werkplaatsen-ns/
   reuse_goal:
     body: The Municipality of Tilburg used the hall as the anchor for regenerating the railway area, a closed-off zone that had split the city in two for decades, into a mixed-use City Campus linking the historic centre with the north of Tilburg. The brief placed the Midden-Brabant public library, the arts organisations Kunstloc Brabant and Brabant C, Seats2Meet co-working, catering and event space under one roof, and asked for a library that produces knowledge as well as lending it, through labs, lectures and public events.
+    images:
+      - src: civic_architects_-_lochal_tilburg_-_credits_stijn_bollaert_-_14.webp
+        caption: The 15 m-high hall as a public living room for the city
+        thumbnail: false
+        credit: 'Photo: Stijn Bollaert'
+        source_urls:
+          - https://www.archdaily.com/909540/lochal-library-mecanoo-plus-civic-architects-plus-braaksma-and-roos-architectenbureau
   challenges:
     body: |-
       - **A 15 m-high open hall is hard to heat and to make quiet**, yet subdividing it into closed rooms would erase the industrial space worth keeping. 
@@ -62,4 +69,8 @@ sections:
         credit: 'Photo: Stijn Bollaert'
         source_urls:
           - https://www.archdaily.com/909540/lochal-library-mecanoo-plus-civic-architects-plus-braaksma-and-roos-architectenbureau
+      - src: image-2.webp
+        caption: Study tables fitted around the old columns behind the stair landscape
+        thumbnail: false
+        credit: 'Photo: Yijou Lee, 2026'
 ---
