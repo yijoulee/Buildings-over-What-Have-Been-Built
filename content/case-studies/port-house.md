@@ -1,6 +1,6 @@
 ---
 slug: port-house
-title: Port House
+title: Port House Headquarters
 architect: Zaha Hadid Architects
 area_m2: 12800
 year_completed: '2016'
@@ -35,6 +35,19 @@ sections:
       - **Preservation was non-negotiable**: the listed building could not be demolished, and its historic facades were to stay unobscured. 
       - **The old building could not hold the programme on its own**: about 500 workplaces needed roughly twice the floor area the fire station offered. 
       - **There was no back side**: all four elevations carried equal weight, so an addition next to the building would have hidden at least one of them.
+    figure: comparison
+    caption: Long and short sections of Port House, with the elevated volume leaving the historic facades unobscured
+    images:
+      - src: long_section-hoofdzetel-havenbedrijf-antwerpen.webp
+        label: Long
+        thumbnail: false
+        source_urls:
+          - https://www.dezeen.com/2016/09/22/zaha-hadid-architects-faceted-port-house-antwerp-belgium/
+      - src: short_section-hoofdzetel-havenbedrijf-antwerpen.webp
+        label: Short
+        thumbnail: false
+        source_urls:
+          - https://www.dezeen.com/2016/09/22/zaha-hadid-architects-faceted-port-house-antwerp-belgium/
   adaptive_strategy:
     body: |-
       ZHA worked by superposition. Instead of building alongside the fire station, the new office floats above its roof and reads as a belated completion of the tower that was never finished.
