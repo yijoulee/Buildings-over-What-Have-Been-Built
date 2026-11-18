@@ -70,8 +70,12 @@
 }
 
 /* ── Body text in a panel ───────────────────────────────── */
+/* A reference can end in a DOI or URL with nowhere to break. break-word, set on the body,
+   wraps it but still counts it whole when the column is sized, so it would widen the panel
+   past a 320px screen; anywhere lets the column ignore it. */
 .prose {
   padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  overflow-wrap: anywhere;
 }
 
 .prose > * + * {
@@ -457,6 +461,12 @@
   padding-block-end: var(--space-2xs);
 }
 
+/* The empty corner cell would otherwise make the header row taller than its labels, and
+   the Strategy column relies on knowing that height. */
+.matrix__table thead td {
+  padding-block: 0;
+}
+
 .matrix__table {
   margin-block-end: var(--space-2xs);
 }
@@ -578,42 +588,56 @@
 
 /* Side by side once there's room for the bracket that joins the rows to the box. */
 @media (min-width: 900px) {
+  /* Both columns hang from the top, so "Strategy" sits on the line of "Function" and "Form".
+     The column is laid out to the table's measure: a header track as tall as the table's
+     header row, then the Strategy box against the two rows of tags, centred on them when
+     it's shorter and starting level with them when it's taller. */
   .matrix {
+    --matrix-head: calc(var(--line-height-h5) * var(--font-size-h5) + var(--space-2xs));
+    --matrix-rows: calc(2 * var(--size-chip) + 2 * var(--space-2xs) + var(--border-hairline));
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
     gap: calc(2 * var(--space-lg));
   }
 
-  /* Centred rather than stretched to the Strategy box's height, which grows with long strategy
-     names: stretched rows would leave the tags floating mid-cell, with the dashed lines
-     running past them. */
+  /* Never stretched to the Strategy box's height, which grows with long strategy names:
+     stretched rows would leave the tags floating mid-cell, with the dashed lines running
+     past them. */
   .matrix__table {
     inline-size: auto;
     flex: none;
-    align-self: center;
   }
 
   .matrix__strategy {
     position: relative;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: var(--matrix-head);
+    grid-auto-rows: minmax(var(--matrix-rows), auto);
     justify-items: center;
     align-items: center;
     gap: 0;
   }
 
+  .matrix__strategy dt {
+    align-self: start;
+  }
+
+  /* Several boxes stack from the top of the rows instead. */
   .matrix__strategy:has(dd + dd) {
-    grid-template-rows: auto;
-    gap: var(--space-3xs);
+    grid-auto-rows: auto;
+  }
+
+  .matrix__strategy dd + dd {
+    margin-block-start: var(--space-3xs);
   }
 
   /* Bracket: three sides of a box, plus a stub pointing at the Strategy box. Vertically
-     centred on the body rows, which start one label line down. */
+     centred on the two rows of tags. */
   .matrix__strategy::before,
   .matrix__strategy::after {
     content: "";
     position: absolute;
     inset-inline-end: calc(100% + var(--space-md));
-    inset-block-start: calc(var(--line-height-h5) * var(--font-size-h5) + (100% - var(--line-height-h5) * var(--font-size-h5)) / 2);
+    inset-block-start: calc(var(--matrix-head) + var(--matrix-rows) / 2);
     translate: 0 -50%;
   }
 

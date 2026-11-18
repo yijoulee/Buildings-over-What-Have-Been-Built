@@ -68,8 +68,10 @@
     gap: var(--space-xs);
   }
 
+  /* Centred in the header as a group, so the two columns keep their shared top line. */
   .cs-head > .matrix {
     flex: none;
+    align-self: center;
   }
 
   .cs-head__intro {
