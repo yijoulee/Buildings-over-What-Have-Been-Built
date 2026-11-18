@@ -68,7 +68,7 @@ sections:
     images:
       - src: 5c1735fe-6e71-41c3-8a27-a8cb745e5712.webp
         caption: Pakhuis Santos beneath the new perforated crown
-        thumbnail: false
+        thumbnail: true
         source_urls:
           - https://www.rhwzarchitekten.de/en/projekt/santos-nederlands-fotomuseum/
       - src: image-3.webp
