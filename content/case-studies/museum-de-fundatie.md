@@ -10,7 +10,7 @@ country: Netherlands
 coordinates:
   - 52.510210088645245
   - 6.0913604472352265
-original_function: Congress Hall
+original_function: Courthouse
 original_form_geometry: Rectangular
 original_form_organisation: Centralized
 new_function: Museum
