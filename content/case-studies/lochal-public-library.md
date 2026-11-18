@@ -55,8 +55,8 @@ sections:
         caption: Textile screen as a movable room divider within the open hall
         thumbnail: false
         credit: 'Photo: Yijou Lee, 2026'
-      - src: lochal_-_longitidonal_section_-_01_-_civic_architects-1.webp
-        caption: Longitudinal section C–C′ through the transformed hall
+      - src: lochal_-_longitidonal_section_-_01_-_civic_architects-2.webp
+        caption: Longitudinal section through the transformed hall
         thumbnail: false
         source_urls:
           - https://www.archdaily.com/909540/lochal-library-mecanoo-plus-civic-architects-plus-braaksma-and-roos-architectenbureau
