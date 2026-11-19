@@ -1,7 +1,7 @@
 ---
 slug: vienna-gasometers
-title: Vienna Gasometers
-architect: ean Nouvel (A), Coop Himmelb(l)au (B), Manfred Wehdorn (C and masterplan), Wilhelm Holzbauer (D)
+title: Gasometers
+architect: Jean Nouvel (A), Coop Himmelb(l)au (B), Manfred Wehdorn (C and masterplan), Wilhelm Holzbauer (D)
 area_m2: 160000
 year_completed: '2001'
 year_sort: 2001
