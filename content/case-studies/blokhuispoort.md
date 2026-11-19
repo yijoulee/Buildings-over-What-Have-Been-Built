@@ -71,7 +71,7 @@ sections:
     images:
       - src: pasted-image-1795095217416.webp
         caption: Glazed extension between the Strafgevangenis and the prison wall, visually opening up the corner
-        thumbnail: false
+        thumbnail: true
         source_urls:
           - https://twa-architecten.nl/projecten/blokhuispoort-bibliotheek
 ---
