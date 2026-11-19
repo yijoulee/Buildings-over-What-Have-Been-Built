@@ -35,6 +35,8 @@ sections:
         caption: Master plan and section and through Gasometers A–D
         thumbnail: false
         credit: ©Wehdorn Architects
+        source_urls:
+          - https://www.wehdorn.at/projects/gasometer/
   challenges:
     body: |-
       - **A listed shell that could not be demolished**: every new use had to fit inside fixed cylinders about 63 m across, and each new opening meant cutting into protected brickwork. 
