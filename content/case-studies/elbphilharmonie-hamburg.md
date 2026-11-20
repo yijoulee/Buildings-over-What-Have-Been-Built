@@ -75,11 +75,13 @@ sections:
       - src: av_72025.webp
         label: Service and Public
         thumbnail: false
+        credit: 'Source: Arquitectura Viva, after Herzog & de Meuron'
         source_urls:
           - https://arquitecturaviva.com/works/elbphilharmonie-hamburg-6
       - src: av_72021.webp
         label: Philharmonic and Residential
         thumbnail: false
+        credit: 'Source: Arquitectura Viva, after Herzog & de Meuron'
         source_urls:
           - https://arquitecturaviva.com/works/elbphilharmonie-hamburg-6
 ---
