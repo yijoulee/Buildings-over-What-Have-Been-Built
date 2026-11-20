@@ -39,7 +39,8 @@ function findProblems(data, slug) {
 window.CMS.registerEventListener({
   name: 'preSave',
   handler: ({ entry }) => {
-    if (entry.get('collection') !== 'case-studies') return undefined;
+    // Both lists hold case studies; Hidden is the same folder filtered (config.yml).
+    if (!['case-studies', 'hidden-case-studies'].includes(entry.get('collection'))) return undefined;
     const data = entry.get('data');
     const slug = entry.get('slug');
     const problems = findProblems(data.toJS(), slug);

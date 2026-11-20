@@ -25,6 +25,10 @@ export const fields = [
   { name: 'new_form_geometry', type: 'enum', required: true, taxonomy: 'form_geometry' },
   { name: 'new_form_organisation', type: 'enum', required: true, taxonomy: 'form_organisation' },
   { name: 'strategy', type: 'enum-list', required: true, taxonomy: 'strategy' },
+
+  // Set by the CMS's Hide button. A hidden case study keeps its page, for links already
+  // shared, but is left out of the index, the map, the sitemap and the data files.
+  { name: 'hidden', type: 'boolean', required: false },
 ];
 
 export const sectionNames = [

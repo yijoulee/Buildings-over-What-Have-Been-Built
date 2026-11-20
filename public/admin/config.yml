@@ -121,6 +121,8 @@ x-options:
           hint: 'Where the image is held or published. Add as many as you need; each is shown as a link.'
           field: { name: url, label: URL, widget: string, pattern: ['^https?://[^\s]+$', 'Must be a full web address starting with http:// or https://'] }
 
+# Two collections over one folder: the Hide button in rules.js sets `hidden: true`, which moves
+# an entry from Case Studies to Hidden. An entry with no `hidden` line is visible.
 collections:
   - name: case-studies
     label: Case Studies
@@ -128,6 +130,7 @@ collections:
     folder: content/case-studies
     extension: md
     format: yaml-frontmatter
+    filter: { field: hidden, value: [false, null] }
     create: true
     delete: true
     slug: '{{title}}'
@@ -137,9 +140,11 @@ collections:
     # One folder per case study, with src holding the filename alone, as validate.js expects.
     media_folder: /content/images/{{slug}}
     public_folder: ''
-    fields:
+    fields: &case_study_fields
       # Written by rules.js from the entry's filename, since no field can read it.
       - { name: slug, label: Slug, widget: hidden }
+      # Set by the Hide and Unhide buttons, never in the editor. Listed so a save keeps it.
+      - { name: hidden, label: Hidden, widget: hidden, required: false }
       - { name: title, label: Title, widget: string }
       - { name: architect, label: Architect, widget: string, hint: 'Unknown is a permitted value.' }
       - { name: area_m2, label: Area (m²), widget: number, value_type: float, required: false }
@@ -172,3 +177,21 @@ collections:
           - { name: challenges, label: Challenge, widget: object, fields: *section_fields }
           - { name: adaptive_strategy, label: Adaptive Strategy, widget: object, fields: *section_fields }
           - { name: solutions, label: Outcome, widget: object, fields: *section_fields }
+
+  - name: hidden-case-studies
+    label: Hidden
+    label_singular: Hidden Case Study
+    folder: content/case-studies
+    extension: md
+    format: yaml-frontmatter
+    filter: { field: hidden, value: true }
+    # New case studies start visible, from Case Studies.
+    create: false
+    delete: true
+    slug: '{{title}}'
+    identifier_field: title
+    summary: '{{title}} ({{city}}, {{country}})'
+    sortable_fields: [title, city, year_sort]
+    media_folder: /content/images/{{slug}}
+    public_folder: ''
+    fields: *case_study_fields

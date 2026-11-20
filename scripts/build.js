@@ -251,7 +251,7 @@ function titleFit(title) {
   return `--title-advance: ${advance}; --title-chars: ${chars}`;
 }
 
-function renderCaseStudy(record, templates) {
+function renderCaseStudy(record, templates, { hidden = false } = {}) {
   // No sources list until at least one image has something recorded: a heading over a list of
   // "not yet recorded" says nothing, and without the list the superscripts would point nowhere.
   const withSources = record.sections.some((section) => section.images.some(hasSourceDetail));
@@ -290,6 +290,8 @@ function renderCaseStudy(record, templates) {
   return renderTemplate(templates.page, {
     header: renderTemplate(templates.siteHeader, { nav_start: templates.navLogo }),
     footer: templates.siteFooter,
+    // Hidden pages stay reachable by link, so search engines are asked to leave them out.
+    robots: hidden ? '  <meta name="robots" content="noindex">\n' : '',
     title: record.title,
     title_fit: titleFit(record.title),
     facts: renderFacts(record, templates),
@@ -391,7 +393,9 @@ async function main() {
     .filter((name) => name.endsWith('.md'))
     .sort();
   const imagesDir = relative(process.cwd(), IMAGES_DIR);
+  // Listed case studies only; hidden ones are built but counted apart.
   const records = [];
+  let hiddenCount = 0;
   const errors = [];
   const uncredited = [];
   const warnings = checkCmsConfig(readText(join(ROOT, 'public', 'admin', 'config.yml')), taxonomy);
@@ -411,10 +415,12 @@ async function main() {
       const record = await buildRecord(data, categories, images, publishedFolders, (message) =>
         fileWarnings.push(`${filename}: ${message}`),
       );
-      const html = renderCaseStudy(record, templates);
+      const hidden = data.hidden === true;
+      const html = renderCaseStudy(record, templates, { hidden });
       publishImages(publishedFolders);
       writeOutput(join(DIST_DIR, 'case-studies', record.slug, 'index.html'), html);
-      records.push(record);
+      if (hidden) hiddenCount += 1;
+      else records.push(record);
       warnings.push(...fileWarnings);
     } catch (error) {
       errors.push(`${filename}: could not build: ${error.message}`);
@@ -457,7 +463,8 @@ async function main() {
 
   warnings.forEach((message) => console.warn(`Warning: ${message}`));
   errors.forEach((message) => console.error(message));
-  console.log(`${files.length} read, ${records.length} built, ${files.length - records.length} skipped`);
+  const built = records.length + hiddenCount;
+  console.log(`${files.length} read, ${built} built (${hiddenCount} hidden), ${files.length - built} skipped`);
   const backlog = uncredited.filter(([, { missing }]) => missing > 0);
   if (backlog.length > 0) {
     const list = backlog.map(([slug, { missing, total }]) => `${slug} ${missing} of ${total}`).join(', ');
