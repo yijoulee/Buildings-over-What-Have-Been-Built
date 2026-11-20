@@ -55,6 +55,7 @@ x-options:
     - { label: 'Cultural & Civic: Courthouse', value: Courthouse }
     - { label: 'Cultural & Civic: Government Building', value: Government Building }
     - { label: 'Cultural & Civic: Prison', value: Prison }
+    - { label: 'Cultural & Civic: Concert Hall', value: Concert Hall }
     - { label: 'Residential: House', value: House }
     - { label: 'Residential: Collective Housing', value: Collective Housing }
     - { label: 'Residential: Hostel', value: Hostel }
@@ -62,6 +63,7 @@ x-options:
     - { label: 'Commercial: Retail', value: Retail }
     - { label: 'Commercial: Book Store', value: Book Store }
     - { label: 'Commercial: Marketplace', value: Marketplace }
+    - { label: 'Others: Mixed Use', value: Mixed Use }
   form_geometry: &form_geometry_options [Rectangular, Circular, Triangular, Curved, Irregular, Polygonal, Collided]
   form_organisation: &form_organisation_options [Linear, Radial, Clustered, Grid, Centralized, Singular]
   strategy: &strategy_options

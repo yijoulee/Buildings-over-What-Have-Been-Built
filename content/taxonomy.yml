@@ -8,9 +8,10 @@ function:
   Religious:         [Church, Temple]
   Defensive:         [Defensive Wall, Castle, Arsenal]
   Cultural & Civic:  [Museum, Theatre, Congress Hall, Archaeological Site, Education Facility,
-                      Library, Courthouse, Government Building, Prison]
+                      Library, Courthouse, Government Building, Prison, Concert Hall]
   Residential:       [House, Collective Housing, Hostel]
   Commercial:        [Office Building, Retail, Book Store, Marketplace]
+  Others:            [Mixed Use]
 
 # ── FORM ──────────────────────────────────────────────
 form_geometry:     [Rectangular, Circular, Triangular, Curved, Irregular, Polygonal, Collided]
