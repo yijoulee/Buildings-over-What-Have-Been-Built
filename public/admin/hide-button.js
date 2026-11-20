@@ -146,7 +146,8 @@ function createButton(deleteButton) {
 
 function update() {
   const list = currentList();
-  const deleteButton = document.querySelector('button[aria-label="Delete Selected Entries"]');
+  // "Delete Selected Entry" with one ticked, "Delete Selected Entries" otherwise.
+  const deleteButton = document.querySelector('button[aria-label^="Delete Selected Entr"]');
   let button = document.querySelector(`.${BUTTON_CLASS}`);
   if (!list || !deleteButton) {
     button?.remove();
