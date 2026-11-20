@@ -39,7 +39,7 @@ sections:
           - https://www.wehdorn.at/projects/gasometer/
   challenges:
     body: |-
-      - **Protection of the original facade and limited construction space**: every new use had to fit inside fixed cylinders about 63 m across, and each new opening meant cutting carefully into protected brickwork. 
+      - **Facade protection and limited construction space**: every new use had to fit inside fixed cylinders about 63 m across, and each new opening meant cutting carefully into protected brickwork. 
       - **Excavation through hard masonry**: the masonry of the basin rings was as hard as reinforced concrete and needed mining equipment, in ground with a high water table. 
       - **Acoustic and vibration isolation**: an event hall for up to about 4,200 people had to sit at the base of Gasometer B, directly below a student hostel and flats, without passing on noise or vibration. 
       - **Coherence across four separate designs**: a shared framework was needed so that four very different infill schemes would still work as one connected district.
