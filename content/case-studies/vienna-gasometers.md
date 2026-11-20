@@ -39,10 +39,10 @@ sections:
           - https://www.wehdorn.at/projects/gasometer/
   challenges:
     body: |-
-      - **A listed shell that could not be demolished**: every new use had to fit inside fixed cylinders about 63 m across, and each new opening meant cutting into protected brickwork. 
-      - **Going underground meant cutting through the old water basins**: the masonry of the basin rings was as hard as reinforced concrete and needed mining equipment, in ground with a high water table. 
-      - **A rock venue beneath people's homes**: an event hall for up to about 4,200 people had to sit at the base of Gasometer B, directly below a student hostel and flats, without passing on noise or vibration. 
-      - **Four isolated cylinders, four architects**: a shared framework was needed so that four very different insertions would still work as one connected district.
+      - **Protection of the original facade and limited construction space**: every new use had to fit inside fixed cylinders about 63 m across, and each new opening meant cutting carefully into protected brickwork. 
+      - **Excavation through hard masonry**: the masonry of the basin rings was as hard as reinforced concrete and needed mining equipment, in ground with a high water table. 
+      - **Acoustic and vibration isolation**: an event hall for up to about 4,200 people had to sit at the base of Gasometer B, directly below a student hostel and flats, without passing on noise or vibration. 
+      - **Coherence across four separate designs**: a shared framework was needed so that four very different infill schemes would still work as one connected district.
     images:
       - src: pasted-image-1795111867839.webp
         caption: Construction within existing cylinder shell
