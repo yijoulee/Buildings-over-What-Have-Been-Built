@@ -1,6 +1,5 @@
 ---
 slug: trump-international-hotel-and-tower
-hidden: true
 title: Trump International Hotel and Tower
 architect: Philip Johnson Ritchie & Fiore Architects
 area_m2: 50047
