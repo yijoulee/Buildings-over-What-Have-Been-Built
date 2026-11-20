@@ -13,7 +13,7 @@ coordinates:
 original_function: Warehouse
 original_form_geometry: Triangular
 original_form_organisation: Singular
-new_function: Warehouse
+new_function: Concert Hall
 new_form_geometry: Triangular
 new_form_organisation: Singular
 strategy:
