@@ -73,12 +73,12 @@ sections:
     caption: Programme sections
     images:
       - src: av_72025.webp
-        label: services, "tube", and plaza
+        label: Service and Public
         thumbnail: false
         source_urls:
           - https://arquitecturaviva.com/works/elbphilharmonie-hamburg-6
       - src: av_72021.webp
-        label: Philharmonic and residential
+        label: Philharmonic and Residential
         thumbnail: false
         source_urls:
           - https://arquitecturaviva.com/works/elbphilharmonie-hamburg-6
