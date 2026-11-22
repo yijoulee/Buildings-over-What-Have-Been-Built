@@ -70,6 +70,6 @@ sections:
     images:
       - src: image-3.webp
         caption: Glazed upper storey and covered square beneath the kissing roofs
-        thumbnail: false
+        thumbnail: true
         credit: 'Photo: Yijou Lee, 2026'
 ---
