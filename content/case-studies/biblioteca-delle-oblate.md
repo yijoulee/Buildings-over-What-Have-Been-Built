@@ -30,7 +30,7 @@ sections:
     body: 'After bringing the whole building up to current safety codes between 1999 and 2002, the city decided in 2002 to use part of the complex for a new, modern public library, funded by the Comune and the Regione Toscana. The Biblioteca Comunale Centrale, a specialist library of Florentine and Tuscan history, was to become an open reading library and cultural centre with free services for all ages: open shelves, study places, rooms for children and families, meeting rooms and a café, open into the evening. The convent rooms, cloisters and courtyards were to be kept and opened to the public, while the academy, the prehistory museum and the Risorgimento library stayed in the complex.'
     images:
       - src: oblate-first-floor-plan_1.webp
-        caption: First-floor plan of the Biblioteca delle Oblate after the conversion
+        caption: Ground-floor plan of the Biblioteca delle Oblate after the conversion
         thumbnail: false
         rights: 'Source: redrawn after the information panel of the Comune di Firenze, Servizio Belle Arti'
   challenges:
@@ -51,7 +51,7 @@ sections:
       - **A new front door**: the Via dell'Oriuolo entrance was widened, the asphalted courtyards behind it were recovered as a central piazza joined by ramps with planters, and the connecting cloister between this piazza and the 15th-century cloister was restored. 
       - **Programme by floor around the cloister**: the historic collection, reception, children's section and conference rooms sit on the ground floor, the contemporary open-shelf collection on the first floor, and study rooms and the café on the second, all wrapped around the main cloister.
       - **Integrated building services**: in the three large first-floor halls and the second-floor hall facing the main cloister, a dense network of ducts and pipes runs inside plasterboard structures that double as the shelving framework. They set out the winding line of the shelves and carry the lighting, so the convent walls stay untouched. In a reading hall under the timber roof trusses, large air ducts instead run openly beneath the roof. 
-      - **New vertical circulation**: a fire escape stair linking the first and second floors was inserted into a rear cloister, and a lift with a glazed panoramic cabin was added.
+      - **New vertical circulation**: a fire escape stair linking the first and second floors was inserted into a rear cloister, and a lift was added.
     images:
       - src: first-floor-cloister-and-shield-capitals.webp
         caption: Study tables in the first-floor loggia of the main cloister
