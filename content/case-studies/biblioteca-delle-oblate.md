@@ -65,4 +65,9 @@ sections:
           - https://cultura.comune.fi.it/node/20298
   solutions:
     body: The Biblioteca delle Oblate opened on 25 May 2007 and turned a closed institutional building into a public meeting place in the centre of Florence. It shows how a conversion run by the city's own heritage office can fit a modern library into historic rooms almost without touching them, by building the services into the furniture and opening back courtyards as a new entrance. Further works funded by the Ente Cassa di Risparmio from 2011 brought more rooms into use.
+    images:
+      - src: piazza_after_step_in-_the_new_front_door.webp
+        caption: Portico of pietra serena Ionic columns along the garden
+        thumbnail: true
+        credit: 'Photo: Yijou Lee, 2026'
 ---
