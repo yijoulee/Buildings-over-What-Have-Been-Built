@@ -13,7 +13,7 @@ coordinates:
 original_function: Arsenal
 original_form_geometry: Rectangular
 original_form_organisation: Centralized
-new_function: Hostel
+new_function: Hotel
 new_form_geometry: Rectangular
 new_form_organisation: Centralized
 strategy:

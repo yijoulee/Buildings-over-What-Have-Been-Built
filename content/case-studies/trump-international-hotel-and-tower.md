@@ -14,7 +14,7 @@ coordinates:
 original_function: Office Building
 original_form_geometry: Rectangular
 original_form_organisation: Singular
-new_function: Hostel
+new_function: Hotel
 new_form_geometry: Rectangular
 new_form_organisation: Singular
 strategy:

@@ -5,11 +5,11 @@
 function:
   Transport:         [Train Station, Cruise Terminal]
   Industry & Energy: [Power Station, Gasometer, Fuel Depot, Warehouse, Factory]
-  Religious:         [Church, Temple]
+  Religious:         [Church, Temple, Monastery]
   Defensive:         [Defensive Wall, Castle, Arsenal]
   Cultural & Civic:  [Museum, Theatre, Congress Hall, Archaeological Site, Education Facility,
-                      Library, Courthouse, Government Building, Prison, Concert Hall]
-  Residential:       [House, Collective Housing, Hostel]
+                      Library, Courthouse, Government Building, Prison, Concert Hall, Hospital]
+  Residential:       [House, Collective Housing, Hotel]
   Commercial:        [Office Building, Retail, Book Store, Marketplace]
   Others:            [Mixed Use]
 

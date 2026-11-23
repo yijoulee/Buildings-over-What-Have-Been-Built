@@ -43,6 +43,7 @@ x-options:
     - { label: 'Industry & Energy: Factory', value: Factory }
     - { label: 'Religious: Church', value: Church }
     - { label: 'Religious: Temple', value: Temple }
+    - { label: 'Religious: Monastery', value: Monastery }
     - { label: 'Defensive: Defensive Wall', value: Defensive Wall }
     - { label: 'Defensive: Castle', value: Castle }
     - { label: 'Defensive: Arsenal', value: Arsenal }
@@ -56,9 +57,10 @@ x-options:
     - { label: 'Cultural & Civic: Government Building', value: Government Building }
     - { label: 'Cultural & Civic: Prison', value: Prison }
     - { label: 'Cultural & Civic: Concert Hall', value: Concert Hall }
+    - { label: 'Cultural & Civic: Hospital', value: Hospital }
     - { label: 'Residential: House', value: House }
     - { label: 'Residential: Collective Housing', value: Collective Housing }
-    - { label: 'Residential: Hostel', value: Hostel }
+    - { label: 'Residential: Hotel', value: Hotel }
     - { label: 'Commercial: Office Building', value: Office Building }
     - { label: 'Commercial: Retail', value: Retail }
     - { label: 'Commercial: Book Store', value: Book Store }
