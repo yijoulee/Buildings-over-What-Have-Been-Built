@@ -10,7 +10,7 @@ country: Italy
 coordinates:
   - 43.77260188766618
   - 11.259586707358112
-original_function: Church
+original_function: Hospital
 original_form_geometry: Rectangular
 original_form_organisation: Centralized
 new_function: Library
