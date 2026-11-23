@@ -73,7 +73,7 @@ sections:
           - https://bna.nl/gebouw-van-het-jaar/inzendingen/2023/arsenaal-delft/
       - src: arsenaaldelft_cepezed_lucasvanderwee_overview_0500.webp
         caption: The arsenal at the southern tip, with the restaurant's floating terrace and two added footbridges
-        thumbnail: false
+        thumbnail: true
         credit: 'Photo: Lucas Van der Wee'
         source_urls:
           - https://www.cepezed.com/projects/arsenaaldelft-hotel-horeca-and-conference-centre/
