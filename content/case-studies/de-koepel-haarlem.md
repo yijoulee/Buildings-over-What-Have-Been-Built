@@ -56,9 +56,13 @@ sections:
       - src: old_facade.webp
         label: Before
         thumbnail: false
+        source_urls:
+          - https://burovanstigt.nl/de-koepel/
       - src: new_facade.webp
         label: After
         thumbnail: false
+        source_urls:
+          - https://burovanstigt.nl/de-koepel/
   adaptive_strategy:
     body: |-
       The project worked through subtraction and infill: later additions were stripped away to bring back the original panoptic space, and a new building was then set freely into the hall and dug into the ground beneath it. 
